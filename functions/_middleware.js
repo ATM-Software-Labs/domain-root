@@ -21,6 +21,7 @@ export async function onRequest(context) {
   const isLegalOrAsset = (
     path === '/terms' || path === '/terms.html' || path === '/terms-of-service' ||
     path === '/privacy' || path === '/privacy.html' || path === '/privacy-policy' ||
+    path === '/firma' || path === '/firma.html' ||
     path.startsWith('/css/') || path.startsWith('/js/') || path === '/avatar.png' || path === '/favicon.ico'
   );
 
