@@ -1,2 +1,6 @@
+/terms /terms.html 200
+/privacy /privacy.html 200
+/terms-of-service /terms.html 301
+/privacy-policy /privacy.html 301
 / https://labs.trujillomingorance.com/ 301
 /index.html https://labs.trujillomingorance.com/ 301

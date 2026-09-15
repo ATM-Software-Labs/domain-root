@@ -18,7 +18,13 @@ export async function onRequest(context) {
   if (hostname.startsWith('guides.')) {
     return Response.redirect('https://guides.trujillomingorance.com' + path + (url.search || ''), 301);
   }
-  if (hostname === 'trujillomingorance.com' || hostname === 'www.trujillomingorance.com') {
+  const isLegalOrAsset = (
+    path === '/terms' || path === '/terms.html' || path === '/terms-of-service' ||
+    path === '/privacy' || path === '/privacy.html' || path === '/privacy-policy' ||
+    path.startsWith('/css/') || path.startsWith('/js/') || path === '/avatar.png' || path === '/favicon.ico'
+  );
+
+  if ((hostname === 'trujillomingorance.com' || hostname === 'www.trujillomingorance.com') && !isLegalOrAsset) {
     return Response.redirect('https://labs.trujillomingorance.com' + (url.search || ''), 302);
   }
 
