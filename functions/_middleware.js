@@ -19,10 +19,13 @@ export async function onRequest(context) {
     return Response.redirect('https://guides.trujillomingorance.com' + path + (url.search || ''), 301);
   }
   const isLegalOrAsset = (
+    path === '/sobre-mi' || path === '/sobre-mi/' || path === '/sobre-mi/index.html' ||
+    path === '/en/about' || path === '/en/about/' || path === '/en/about/index.html' ||
+    path === '/robots.txt' || path === '/sitemap.xml' ||
     path === '/terms' || path === '/terms.html' || path === '/terms-of-service' ||
     path === '/privacy' || path === '/privacy.html' || path === '/privacy-policy' ||
     path === '/firma' || path === '/firma.html' ||
-    path.startsWith('/css/') || path.startsWith('/js/') || path === '/avatar.png' || path === '/favicon.ico'
+    path.startsWith('/css/') || path.startsWith('/js/') || path.startsWith('/assets/') || path === '/avatar.png' || path === '/favicon.ico'
   );
 
   if ((hostname === 'trujillomingorance.com' || hostname === 'www.trujillomingorance.com') && !isLegalOrAsset) {
