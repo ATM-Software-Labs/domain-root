@@ -19,6 +19,10 @@ export async function onRequest(context) {
     return Response.redirect('https://guides.trujillomingorance.com' + path + (url.search || ''), 301);
   }
   const isLegalOrAsset = (
+    path === '/' || path === '/index.html' ||
+    path === '/sobre-mi' || path === '/sobre-mi/' || path === '/sobre-mi/index.html' ||
+    path === '/en/about' || path === '/en/about/' || path === '/en/about/index.html' ||
+    path === '/robots.txt' || path === '/sitemap.xml' ||
     path === '/terms' || path === '/terms.html' || path === '/terms-of-service' ||
     path === '/privacy' || path === '/privacy.html' || path === '/privacy-policy' ||
     path === '/firma' || path === '/firma.html' ||
