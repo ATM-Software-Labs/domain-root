@@ -21,6 +21,7 @@
   --white: #ffffff;
   --accent: #0078d4;
   --accent-cyan: #38bdf8;
+  --accent-orange: #fb923c;
   --accent-pill: #0078d4;
   --accent-pill-text: #ffffff;
   --green: #107c41;
@@ -66,6 +67,8 @@
   --dim: #64748b;
   --text-muted: #64748b;
   --white: #ffffff;
+  --accent-cyan: #0284c7;
+  --accent-orange: #d97706;
   --accent-pill: #0f172a;
   --accent-pill-text: #ffffff;
   --fill-subtle: rgba(15, 23, 42, 0.04);

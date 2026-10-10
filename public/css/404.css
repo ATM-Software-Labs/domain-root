@@ -251,7 +251,7 @@ body {
 }
 
 .console-val.cyan { color: var(--accent-cyan); }
-.console-val.orange { color: #fb923c; }
+.console-val.orange { color: var(--accent-orange); }
 .console-val.green { color: var(--success); }
 
 .diag-actions {
