@@ -18,6 +18,12 @@ export async function onRequest(context) {
   if (hostname.startsWith('guides.')) {
     return Response.redirect('https://guides.trujillomingorance.com' + path + (url.search || ''), 301);
   }
+  if (hostname.startsWith('login.')) {
+    return Response.redirect('https://myapps.microsoft.com/?tenantId=686bb631-e5e4-4fbf-bf55-835dd40fb263', 302);
+  }
+  if (hostname.startsWith('id.') || hostname.startsWith('auth.') || hostname.startsWith('security.')) {
+    return Response.redirect('https://myaccount.microsoft.com/?tenantId=686bb631-e5e4-4fbf-bf55-835dd40fb263', 302);
+  }
   const isLegalOrAsset = (
     path === '/sobre-mi' || path === '/sobre-mi/' || path === '/sobre-mi/index.html' ||
     path === '/en/about' || path === '/en/about/' || path === '/en/about/index.html' ||
