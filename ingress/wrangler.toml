@@ -1,0 +1,12 @@
+name = "atm-edge-ingress"
+main = "src/index.ts"
+compatibility_date = "2026-10-09"
+workers_dev = false
+
+[build]
+command = "node build-css.mjs"
+
+# El ápice no coincide con este patrón. Los hosts del catálogo se reenvían al origen.
+[[routes]]
+pattern = "*.trujillomingorance.com/*"
+zone_name = "trujillomingorance.com"

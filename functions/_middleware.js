@@ -1,3 +1,5 @@
+import { CABECERAS_DIAGNOSTICO, catalogoResuelto, debeDiagnosticar, hechosDesde, htmlDiagnostico, slugsEnrutados } from './lib/diagnostico.js';
+
 const SECURITY_HEADERS = {
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'X-Frame-Options': 'DENY',
@@ -34,8 +36,20 @@ export async function onRequest(context) {
     path.startsWith('/css/') || path.startsWith('/js/') || path.startsWith('/assets/') || path === '/avatar.png' || path === '/favicon.ico' || path === '/apple-touch-icon.png'
   );
 
-  if ((hostname === 'trujillomingorance.com' || hostname === 'www.trujillomingorance.com') && !isLegalOrAsset) {
+  const isApex = hostname === 'trujillomingorance.com' || hostname === 'www.trujillomingorance.com';
+  const isHome = path === '/' || path === '/index.html';
+  if (isApex && !isLegalOrAsset && !isHome) {
     return Response.redirect('https://labs.trujillomingorance.com' + (url.search || ''), 302);
+  }
+
+  if (!isApex && !isLegalOrAsset && hostname.endsWith('.trujillomingorance.com')) {
+    const lista = await catalogoResuelto(context.env);
+    if (debeDiagnosticar(hostname, slugsEnrutados(lista))) {
+      return new Response(htmlDiagnostico(hechosDesde(context.request), lista), {
+        status: 404,
+        headers: CABECERAS_DIAGNOSTICO,
+      });
+    }
   }
 
   const response = await context.next();

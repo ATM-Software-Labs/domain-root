@@ -3,22 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alberto Trujillo Mingorance | Sysadmin, cloud y ciberseguridad</title>
-  <meta name="description" content="Web de Alberto Trujillo Mingorance, administrador de sistemas en Barcelona. Informes Trujillo AI, proyectos y notas técnicas.">
+  <title>Trujillo Mingorance</title>
+  <meta name="description" content="Servicios publicados en trujillomingorance.com.">
   <link rel="canonical" href="https://trujillomingorance.com/">
   <meta name="theme-color" content="#080c14">
   <link rel="icon" type="image/png" href="/avatar.png">
-  <script src="/js/theme-boot.js"></script>
-  <link rel="stylesheet" href="/css/tokens.css?v=nf1">
-  <link rel="stylesheet" href="/css/redirect.css?v=nf1">
+  <script src="/js/theme-boot.js?v=min2"></script>
+  <link rel="stylesheet" href="/css/tokens.css?v=min2">
+  <link rel="stylesheet" href="/css/404.css?v=min2">
 </head>
 <body>
-  <main class="redirect-card">
-    <h1>Alberto Trujillo Mingorance</h1>
-    <p><a href="/sobre-mi">Alberto Trujillo Mingorance</a>, administrador de sistemas y ciberseguridad en Barcelona. Autor de <a href="https://ai.trujillomingorance.com">Trujillo AI</a>.</p>
-    <br>
-    <p>El dominio raíz redirige al directorio de servicios.</p>
-    <a href="https://labs.trujillomingorance.com/">Continuar a labs.trujillomingorance.com</a>
+  <header class="docs-topbar">
+    <a href="/" class="brand">
+      <img src="/avatar.png" alt="" class="brand-avatar" width="28" height="28">
+      <span>Trujillo Mingorance</span>
+    </a>
+    <div class="topbar-actions">
+      <button type="button" class="theme-toggle-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema">
+        <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="diag-main">
+    <p class="diag-kicker">trujillomingorance.com</p>
+    <h1 class="diag-title">Servicios publicados</h1>
+    <p class="diag-desc">Directorio del dominio. La búsqueda está en ATM Labs.</p>
+    <div class="diag-actions">
+      <a class="btn-primary" href="https://labs.trujillomingorance.com">Abrir ATM Labs</a>
+    </div>
+
+    <section class="services-nav">
+      <h2 class="services-nav-title">Servicios</h2>
+      <ul class="service-list">
+        <li><a href="https://labs.trujillomingorance.com"><span class="service-host">labs.</span><span class="service-name">ATM Labs</span></a></li>
+        <li><a href="https://ai.trujillomingorance.com"><span class="service-host">ai.</span><span class="service-name">Trujillo AI Studio</span></a></li>
+        <li><a href="https://rewrite.trujillomingorance.com"><span class="service-host">rewrite.</span><span class="service-name">Rewrite AI</span></a></li>
+        <li><a href="https://invest.trujillomingorance.com"><span class="service-host">invest.</span><span class="service-name">INVEST</span></a></li>
+        <li><a href="https://focusguard.trujillomingorance.com"><span class="service-host">focusguard.</span><span class="service-name">FocusGuard</span></a></li>
+        <li><a href="https://guides.trujillomingorance.com"><span class="service-host">guides.</span><span class="service-name">Guías de ingeniería</span></a></li>
+        <li><a href="https://savings.trujillomingorance.com"><span class="service-host">savings.</span><span class="service-name">Savings</span></a></li>
+        <li><a href="https://tools.trujillomingorance.com"><span class="service-host">tools.</span><span class="service-name">Herramientas</span></a></li>
+        <li><a href="https://alberto.trujillomingorance.com"><span class="service-host">alberto.</span><span class="service-name">Portfolio</span></a></li>
+      </ul>
+    </section>
   </main>
+
+  <footer class="diag-footer">
+    <span><a href="https://labs.trujillomingorance.com" style="color: inherit; text-decoration: none;">© 2026 ATM Software Labs</a></span>
+    <span class="diag-footer-domain">trujillomingorance.com</span>
+  </footer>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('theme-btn');
+      if (!btn) return;
+      function paint(theme) {
+        var next = theme === 'light' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('trujillo_theme', next); } catch (e) {}
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', next === 'light' ? '#ffffff' : '#080c14');
+        btn.setAttribute('aria-label', next === 'light' ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro');
+      }
+      btn.addEventListener('click', function () {
+        paint(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+      });
+    })();
+  </script>
 </body>
 </html>

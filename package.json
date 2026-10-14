@@ -5,7 +5,8 @@
   "description": "Root apex domain gateway and wildcard 404 diagnostic router for trujillomingorance.com",
   "type": "module",
   "scripts": {
-    "deploy": "npx wrangler pages deploy public --project-name=domain-root"
+    "build:ingress": "npm --prefix ingress run build",
+    "deploy": "npm run build:ingress && npx wrangler pages deploy public --project-name=domain-root"
   },
   "devDependencies": {
     "wrangler": "^4.123.0"

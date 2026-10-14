@@ -1,0 +1,16 @@
+{
+  "name": "atm-edge-ingress",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build-css.mjs",
+    "test": "npm run build && node --test test/diagnostico.test.mjs",
+    "dev": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10",
+    "tailwindcss": "3.4.17",
+    "wrangler": "4.123.0"
+  }
+}

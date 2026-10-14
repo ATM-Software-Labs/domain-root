@@ -41,31 +41,33 @@
     var isKnown = known.some(function (s) { return host.indexOf(s + '.') === 0; });
     var isSubdomain = host.indexOf('.trujillomingorance.com') !== -1 && !isKnown;
 
+    var pageTitle = document.getElementById('pageTitle');
+    var errorTitle = document.getElementById('errorTitle');
+    var badgeText = document.getElementById('badgeText');
+    var teleRouting = document.getElementById('teleRouting');
     if (isSubdomain) {
-      var pageTitle = document.getElementById('pageTitle');
-      var errorTitle = document.getElementById('errorTitle');
-      var badgeText = document.getElementById('badgeText');
-      var teleRouting = document.getElementById('teleRouting');
-      if (pageTitle) pageTitle.textContent = 'Subdominio no asignado | ATM Labs';
-      if (errorTitle) errorTitle.textContent = 'Subdominio no asignado en el perímetro';
-      if (badgeText) badgeText.textContent = 'DNS WILDCARD · SUBDOMINIO NO ASIGNADO';
-      if (teleRouting) teleRouting.textContent = 'DNS comodín activo · sin servicio mapeado';
+      if (pageTitle) pageTitle.textContent = 'Subdominio sin servicio | ATM Labs';
+      if (errorTitle) errorTitle.textContent = 'Este subdominio no tiene servicio';
+      if (badgeText) badgeText.textContent = 'Sin asignar';
+      if (teleRouting) teleRouting.textContent = 'Sin servicio publicado';
     } else {
+      if (pageTitle) pageTitle.textContent = 'Página no encontrada | ATM Labs';
+      if (errorTitle) errorTitle.textContent = 'Página no encontrada';
+      if (badgeText) badgeText.textContent = 'No encontrada';
       var desc = document.getElementById('errorDesc');
       if (desc) {
         while (desc.firstChild) desc.removeChild(desc.firstChild);
-        desc.appendChild(document.createTextNode('La ruta solicitada '));
+        desc.appendChild(document.createTextNode('La ruta '));
         var codePath = document.createElement('code');
         codePath.textContent = path;
         desc.appendChild(codePath);
-        desc.appendChild(document.createTextNode(' no existe en el servidor '));
+        desc.appendChild(document.createTextNode(' no está publicada en '));
         var codeHost = document.createElement('code');
         codeHost.textContent = host;
         desc.appendChild(codeHost);
         desc.appendChild(document.createTextNode('.'));
       }
-      var routing = document.getElementById('teleRouting');
-      if (routing) routing.textContent = 'Ruta no encontrada en el origen';
+      if (teleRouting) teleRouting.textContent = 'Ruta no publicada';
     }
   } catch (e) {}
 
@@ -74,12 +76,12 @@
   function copyDiagnostics() {
     var hostNow = (document.getElementById('teleHost') && document.getElementById('teleHost').textContent) || window.location.hostname;
     var pathNow = (document.getElementById('telePath') && document.getElementById('telePath').textContent) || window.location.pathname;
-    var text = 'Diagnóstico perimetral ATM Labs:\nHost: ' + hostNow + '\nRuta: ' + pathNow + '\nEstado: HTTP 404\nEdge: Cloudflare Anycast\nFecha: ' + new Date().toISOString();
+    var text = 'Host: ' + hostNow + '\nRuta: ' + pathNow + '\nEstado: HTTP 404\nFecha: ' + new Date().toISOString();
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function () {
         if (copyBtn) {
           copyBtn.textContent = 'Copiado';
-          setTimeout(function () { copyBtn.textContent = 'Copiar diagnóstico'; }, 2500);
+          setTimeout(function () { copyBtn.textContent = 'Copiar'; }, 2500);
         }
       }).catch(function () {});
     }

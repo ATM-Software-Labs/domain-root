@@ -1,5 +1,7 @@
 # Dependencies & Wrangler
 node_modules/
+ingress/src/.entrada.min.css
+ingress/src/estilos.gen.ts
 .wrangler/
 .env*
 !.env.example

@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="pageTitle">404 Diagnóstico Perimetral | ATM Labs</title>
-  <meta name="robots" content="noindex, nofollow">
+  <title id="pageTitle">Subdominio sin servicio | ATM Labs</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
   <meta name="theme-color" content="#080c14">
   <link rel="icon" type="image/png" href="/avatar.png">
-  <script src="/js/theme-boot.js?v=nf1"></script>
-  <link rel="stylesheet" href="/css/tokens.css?v=nf1">
-  <link rel="stylesheet" href="/css/404.css?v=nf1">
+  <script src="/js/theme-boot.js?v=min2"></script>
+  <link rel="stylesheet" href="/css/tokens.css?v=min2">
+  <link rel="stylesheet" href="/css/404.css?v=min2">
 </head>
 <body>
-  <div class="bg-ambient" aria-hidden="true"></div>
-
   <header class="docs-topbar">
     <a href="https://labs.trujillomingorance.com" class="brand">
       <img src="/avatar.png" alt="" class="brand-avatar" width="28" height="28">
@@ -28,122 +26,45 @@
   </header>
 
   <main class="diag-main">
-    <article class="diag-card">
-      <div class="diag-card-stripe"></div>
+    <p class="diag-kicker" id="badgeText">Sin asignar</p>
+    <h1 class="diag-title" id="errorTitle">Este subdominio no tiene servicio</h1>
+    <p class="diag-desc" id="errorDesc">
+      <code id="hostDisplay">trujillomingorance.com</code> resolvió por el DNS comodín y no tiene un servicio publicado.
+    </p>
 
-      <div class="diag-top">
-        <div class="error-tag" id="errorTag">
-          <span class="error-tag-dot"></span>
-          <span id="badgeText">HTTP 404 · SUBDOMINIO NO ASIGNADO</span>
-        </div>
-        <span class="routing-layer-badge">Capa 7 Edge Routing</span>
-      </div>
+    <dl class="facts">
+      <div><dt>Host</dt><dd id="teleHost">—</dd></div>
+      <div><dt>Ruta</dt><dd id="telePath">—</dd></div>
+      <div><dt>Estado</dt><dd id="teleRouting">Sin servicio publicado</dd></div>
+    </dl>
 
-      <h1 class="diag-title" id="errorTitle">Subdominio no asignado en el perímetro</h1>
-      <p class="diag-desc" id="errorDesc">
-        El host <code id="hostDisplay">trujillomingorance.com</code> resolvió correctamente mediante el registro DNS comodín (*), pero actualmente no se encuentra mapeado a ningún servicio de la red.
-      </p>
-
-      <div class="telemetry-console">
-        <div class="console-header">
-          <span>Inspección técnica del perímetro</span>
-        </div>
-        <div class="console-body">
-          <div class="console-row">
-            <span class="console-label">Host solicitado</span>
-            <span class="console-val cyan" id="teleHost">-</span>
-          </div>
-          <div class="console-row">
-            <span class="console-label">Ruta solicitada</span>
-            <span class="console-val" id="telePath">-</span>
-          </div>
-          <div class="console-row">
-            <span class="console-label">Resolución DNS</span>
-            <span class="console-val green">*.trujillomingorance.com → Proxied</span>
-          </div>
-          <div class="console-row">
-            <span class="console-label">Estado de enrutamiento</span>
-            <span class="console-val orange" id="teleRouting">Target Unmapped (HTTP 404)</span>
-          </div>
-          <div class="console-row">
-            <span class="console-label">Enrutador Edge</span>
-            <span class="console-val">Cloudflare Global Anycast</span>
-          </div>
-          <div class="console-row">
-            <span class="console-label">Transporte</span>
-            <span class="console-val">HTTPS / TLS 1.3</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="diag-actions">
-        <a href="https://labs.trujillomingorance.com" class="btn-primary">
-          <span>Ir a ATM Labs</span>
-        </a>
-        <button id="btnCopyDiag" class="btn-secondary" type="button">
-          <span id="copyBtnText">Copiar diagnóstico</span>
-        </button>
-        <button id="btnBack" class="btn-secondary" type="button">Volver atrás</button>
-      </div>
-    </article>
+    <div class="diag-actions">
+      <a href="https://labs.trujillomingorance.com" class="btn-primary">ATM Labs</a>
+      <button id="btnBack" class="btn-secondary" type="button">Volver</button>
+      <button id="btnCopyDiag" class="btn-secondary" type="button"><span id="copyBtnText">Copiar</span></button>
+    </div>
 
     <section class="services-nav">
-      <div class="services-nav-header">
-        <h2 class="services-nav-title">Servicios activos</h2>
-        <span class="services-nav-sub">6 endpoints</span>
-      </div>
-
-      <div class="services-grid">
-        <a href="https://labs.trujillomingorance.com" class="service-tile">
-          <div class="service-tile-top">
-            <span class="service-tile-domain">labs.</span>
-          </div>
-          <span class="service-tile-desc">Portal central ATM Labs</span>
-        </a>
-
-        <a href="https://ai.trujillomingorance.com" class="service-tile">
-          <div class="service-tile-top">
-            <span class="service-tile-domain">ai.</span>
-          </div>
-          <span class="service-tile-desc">Trujillo AI Studio</span>
-        </a>
-
-        <a href="https://rewrite.trujillomingorance.com" class="service-tile">
-          <div class="service-tile-top">
-            <span class="service-tile-domain">rewrite.</span>
-          </div>
-          <span class="service-tile-desc">Rewrite AI · humanizador</span>
-        </a>
-
-        <a href="https://focusguard.trujillomingorance.com" class="service-tile">
-          <div class="service-tile-top">
-            <span class="service-tile-domain">focusguard.</span>
-          </div>
-          <span class="service-tile-desc">FocusGuard DNS Zero-Trust</span>
-        </a>
-
-        <a href="https://guides.trujillomingorance.com" class="service-tile">
-          <div class="service-tile-top">
-            <span class="service-tile-domain">guides.</span>
-          </div>
-          <span class="service-tile-desc">Engineering Guides</span>
-        </a>
-
-        <a href="https://alberto.trujillomingorance.com" class="service-tile">
-          <div class="service-tile-top">
-            <span class="service-tile-domain">alberto.</span>
-          </div>
-          <span class="service-tile-desc">Portfolio profesional</span>
-        </a>
-      </div>
+      <h2 class="services-nav-title">Servicios</h2>
+      <ul class="service-list">
+        <li><a href="https://labs.trujillomingorance.com"><span class="service-host">labs.</span><span class="service-name">ATM Labs</span></a></li>
+        <li><a href="https://ai.trujillomingorance.com"><span class="service-host">ai.</span><span class="service-name">Trujillo AI Studio</span></a></li>
+        <li><a href="https://rewrite.trujillomingorance.com"><span class="service-host">rewrite.</span><span class="service-name">Rewrite AI</span></a></li>
+        <li><a href="https://invest.trujillomingorance.com"><span class="service-host">invest.</span><span class="service-name">INVEST</span></a></li>
+        <li><a href="https://focusguard.trujillomingorance.com"><span class="service-host">focusguard.</span><span class="service-name">FocusGuard</span></a></li>
+        <li><a href="https://guides.trujillomingorance.com"><span class="service-host">guides.</span><span class="service-name">Guías de ingeniería</span></a></li>
+        <li><a href="https://savings.trujillomingorance.com"><span class="service-host">savings.</span><span class="service-name">Savings</span></a></li>
+        <li><a href="https://tools.trujillomingorance.com"><span class="service-host">tools.</span><span class="service-name">Herramientas</span></a></li>
+        <li><a href="https://alberto.trujillomingorance.com"><span class="service-host">alberto.</span><span class="service-name">Portfolio</span></a></li>
+      </ul>
     </section>
   </main>
 
   <footer class="diag-footer">
-    <span>© 2026 Alberto Trujillo Mingorance</span>
+    <span><a href="https://labs.trujillomingorance.com" style="color: inherit; text-decoration: none;">© 2026 ATM Software Labs</a></span>
     <span class="diag-footer-domain">trujillomingorance.com</span>
   </footer>
 
-  <script src="/js/404.js?v=nf1"></script>
+  <script src="/js/404.js?v=min2"></script>
 </body>
 </html>
