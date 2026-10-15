@@ -7,6 +7,7 @@ export function esRecursoEstatico(path) {
     path === "/terms" || path.startsWith("/terms/") || path === "/terms.html" || path === "/terms-of-service" ||
     path === "/privacy" || path.startsWith("/privacy/") || path === "/privacy.html" || path === "/privacy-policy" ||
     path === "/firma" || path.startsWith("/firma/") || path === "/firma.html" ||
+    // /brand/labs/* is included here so the labs mark is served on the apex.
     path === "/brand" || path.startsWith("/brand/") ||
     path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/assets/") ||
     path === "/avatar.png" || path === "/favicon.ico" || path === "/favicon.svg" || path === "/apple-touch-icon.png" ||

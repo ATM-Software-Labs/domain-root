@@ -11,6 +11,10 @@ Stable files:
 - https://trujillomingorance.com/brand/favicon.svg
 - https://trujillomingorance.com/brand/logo/
 - https://trujillomingorance.com/brand/export/
+- https://trujillomingorance.com/brand/labs/favicon.svg
+- https://trujillomingorance.com/brand/labs/lockup.svg
+- https://trujillomingorance.com/brand/labs/og.png
+- https://trujillomingorance.com/brand/labs/banner.png
 
 `Access-Control-Allow-Origin: *` is set on `/brand/*` and `/css/site.css`.
 On this origin, pages load `/css/fonts.css` (relative font URLs).

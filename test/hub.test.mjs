@@ -227,7 +227,17 @@ test("shared pages match the renderer and the design system", () => {
     assert.match(about[lang], /class="brand-symbol"/);
     assert.match(brand[lang], /#8fe8c4/);
     assert.match(brand[lang], /#07080b/);
-    assert.equal(brand[lang].includes(lang === "es" ? "The symbol is the terminal prompt" : "El símbolo es el prompt de terminal"), false);
+    const own = {
+      es: "A inferior en esmeralda",
+      en: "lower A in emerald",
+      ca: "A inferior en maragda"
+    };
+    assert.match(brand[lang], new RegExp(own[lang]));
+    for (const other of LOCALES) {
+      if (other !== lang) assert.equal(brand[lang].includes(own[other]), false);
+    }
+    assert.match(brand[lang], /\/brand\/labs\/favicon\.svg/);
+    assert.match(brand[lang], /\/brand\/labs\/lockup\.svg/);
   }
   assert.equal(read("../public/terms.html"), renderLegal("terms", "es"));
   assert.equal(read("../public/privacy.html"), renderLegal("privacy", "es"));
@@ -302,13 +312,24 @@ test("brand files publish CORS for reuse", () => {
   assert.match(read("../public/site.webmanifest"), /\/icon-512\.png/);
   assert.equal(redirigeALabs("/icon-192.png"), false);
   assert.equal(redirigeALabs("/icon-512.png"), false);
+  assert.equal(redirigeALabs("/brand/labs/favicon.svg"), false);
+  assert.equal(redirigeALabs("/brand/labs/lockup.svg"), false);
+  assert.equal(redirigeALabs("/brand/labs/og.png"), false);
+  assert.equal(redirigeALabs("/brand/labs/banner.png"), false);
   const favicon = read("../public/favicon.svg");
   assert.equal(favicon, read("../public/brand/favicon.svg"));
   assert.equal(favicon, read("../brand/logo/symbol-dark.svg"));
   assert.match(favicon, /#07080b/);
+  assert.match(favicon, /#ffffff/);
   assert.match(favicon, /#8fe8c4/);
-  assert.match(favicon, /#9ad7e6/);
-  assert.doesNotMatch(favicon, /gradient|currentColor/);
+  assert.match(favicon, /fill-rule="evenodd"/);
+  assert.doesNotMatch(favicon, /#9ad7e6|gradient|currentColor|M2 3h3/);
+  const labsIcon = read("../public/brand/labs/favicon.svg");
+  assert.equal(labsIcon, read("../brand/labs/favicon.svg"));
+  assert.match(labsIcon, /#9ad7e6/);
+  assert.match(labsIcon, /#07080b/);
+  assert.doesNotMatch(labsIcon, /#8fe8c4/);
+  assert.equal(read("../public/brand/labs/lockup.svg"), read("../brand/labs/lockup.svg"));
   const pngSize = (path) => {
     const bytes = readFileSync(new URL(path, import.meta.url));
     assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
@@ -323,6 +344,15 @@ test("brand files publish CORS for reuse", () => {
   assert.deepEqual(pngSize("../brand/export/github-social.png"), [1280, 640]);
   assert.deepEqual(pngSize("../brand/export/og.png"), [1200, 630]);
   assert.deepEqual(pngSize("../public/brand/export/og.png"), [1200, 630]);
+  assert.deepEqual(pngSize("../public/brand/labs/apple-touch-icon.png"), [180, 180]);
+  assert.deepEqual(pngSize("../public/brand/labs/icon-192.png"), [192, 192]);
+  assert.deepEqual(pngSize("../public/brand/labs/icon-512.png"), [512, 512]);
+  assert.deepEqual(pngSize("../public/brand/labs/og.png"), [1200, 630]);
+  assert.deepEqual(pngSize("../public/brand/labs/banner.png"), [1128, 191]);
+  const labsIco = readFileSync(new URL("../public/brand/labs/favicon.ico", import.meta.url));
+  assert.equal(labsIco.readUInt16LE(4), 2);
+  assert.equal(labsIco[6], 16);
+  assert.equal(labsIco[22], 32);
   const ico = readFileSync(new URL("../public/favicon.ico", import.meta.url));
   assert.equal(ico.readUInt16LE(4), 2);
   assert.equal(ico[6], 16);

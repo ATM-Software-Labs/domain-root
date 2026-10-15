@@ -13,6 +13,7 @@ const LOGO_VARIANTS = ["dark", "light", "white", "black"];
 export const LOGO_MASTERS = LOGO_KINDS.flatMap((kind) => LOGO_VARIANTS.map((variant) => `${kind}-${variant}.svg`));
 export const LOGO_EXPORTS = ["github-avatar.png", "linkedin-logo.png", "linkedin-cover.png", "github-social.png", "og.png"];
 export const LOGO_ICONS = ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "icon-192.png", "icon-512.png"];
+export const LABS_FILES = ["favicon.svg", "favicon.ico", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "og.png", "lockup.svg", "banner.png"];
 
 const ABOUT = {
   es: {
@@ -55,13 +56,17 @@ const BRAND = {
     name: "Token",
     value: "Valor",
     logo: "Logotipo",
-    logoLead: "El símbolo es el prompt de terminal: chevron en esmeralda y guion en cian, sobre un cuadrado casi negro. Es el mismo dibujo que el favicon.",
+    logoLead: "El símbolo es la marca geométrica del avatar: estrellas arriba, chevrones y los triángulos que forman la A. En el ápice va en blanco sobre casi negro, con la A inferior en esmeralda.",
+    labs: "Labs",
+    labsLead: "Labs usa el mismo símbolo con la A inferior en cian y la etiqueta LABS. Los archivos están en /brand/labs/.",
+    labsAlt: "Cierre de Labs, con la A inferior en cian",
     rules: [
       "Sobre fondo oscuro, usa la versión dark o la blanca. Sobre fondo claro, la light o la negra.",
       "No pongas el esmeralda sobre blanco: no contrasta.",
+      "El ápice usa esmeralda. Labs usa cian. No intercambies los acentos.",
       "No estires, no rotes y no añadas gradiente, sombra ni contorno.",
       "Deja un margen igual a la altura del símbolo. No lo dibujes por debajo de 16 px.",
-      "La palabra es ATM Software Labs, en JetBrains Mono Medium, sin cambiar las mayúsculas."
+      "La palabra del ápice es ATM Software Labs, en JetBrains Mono Medium, sin cambiar las mayúsculas."
     ],
     downloads: "Descargas",
     masters: "Maestros SVG",
@@ -85,13 +90,17 @@ const BRAND = {
     name: "Token",
     value: "Value",
     logo: "Logo",
-    logoLead: "The symbol is the terminal prompt: an emerald chevron and a cyan underscore on a near-black rounded square. It is the same drawing as the favicon.",
+    logoLead: "The symbol is the geometric mark from the avatar: stars across the top, chevrons, and the triangles that form the A. On the hub it is white on near-black, with the lower A in emerald.",
+    labs: "Labs",
+    labsLead: "Labs uses the same symbol with the lower A in cyan and a LABS tag. The files are at /brand/labs/.",
+    labsAlt: "Labs lockup, with the lower A in cyan",
     rules: [
       "On a dark background, use the dark or white version. On a light background, use the light or black version.",
       "Do not put emerald on white: it fails contrast.",
+      "The hub uses emerald. Labs uses cyan. Do not swap the accents.",
       "Do not stretch, rotate, or add a gradient, shadow, or outline.",
       "Keep clear space equal to the symbol height. Do not draw it smaller than 16 px.",
-      "The wordmark is ATM Software Labs, set in JetBrains Mono Medium, with the capitals unchanged."
+      "The hub wordmark is ATM Software Labs, set in JetBrains Mono Medium, with the capitals unchanged."
     ],
     downloads: "Downloads",
     masters: "SVG masters",
@@ -115,13 +124,17 @@ const BRAND = {
     name: "Token",
     value: "Valor",
     logo: "Logotip",
-    logoLead: "El símbol és el prompt de terminal: un chevron maragda i un guionet cian, sobre un quadrat gairebé negre. És el mateix dibuix que el favicon.",
+    logoLead: "El símbol és la marca geomètrica de l'avatar: estrelles a dalt, xebrons i els triangles que formen la A. A l'àpex va en blanc sobre gairebé negre, amb la A inferior en maragda.",
+    labs: "Labs",
+    labsLead: "Labs fa servir el mateix símbol amb la A inferior en cian i l'etiqueta LABS. Els fitxers són a /brand/labs/.",
+    labsAlt: "Tancament de Labs, amb la A inferior en cian",
     rules: [
       "Sobre fons fosc, fes servir la versió dark o la blanca. Sobre fons clar, la light o la negra.",
       "No posis el maragda sobre blanc: no contrasta.",
+      "L'àpex fa servir maragda. Labs fa servir cian. No intercanviïs els accents.",
       "No l'estiris, no el giris i no hi afegeixis degradat, ombra ni contorn.",
       "Deixa un marge igual a l'alçada del símbol. No el dibuixis per sota de 16 px.",
-      "La paraula és ATM Software Labs, en JetBrains Mono Medium, sense canviar les majúscules."
+      "La paraula de l'àpex és ATM Software Labs, en JetBrains Mono Medium, sense canviar les majúscules."
     ],
     downloads: "Descàrregues",
     masters: "Mestres SVG",
@@ -337,6 +350,10 @@ export function renderBrand(lang) {
         <h3>${esc(copy.icons)}</h3>
         ${linkList(LOGO_ICONS.map((name) => [`/brand/${name}`, name]))}
         <p><a href="/favicon.svg">/favicon.svg</a> · <a href="/favicon.ico">/favicon.ico</a> · <a href="/apple-touch-icon.png">/apple-touch-icon.png</a> · <a href="/icon-192.png">/icon-192.png</a> · <a href="/icon-512.png">/icon-512.png</a></p>
+        <h3>${esc(copy.labs)}</h3>
+        <p>${esc(copy.labsLead)}</p>
+        <figure class="logo-card"><img src="/brand/labs/lockup.svg" alt="${esc(copy.labsAlt)}"></figure>
+        ${linkList(LABS_FILES.map((name) => [`/brand/labs/${name}`, name]))}
       </div>
     </section>
     <section class="block" id="uso">
@@ -458,6 +475,10 @@ Stable files:
 - ${ORIGIN}/brand/favicon.svg
 - ${ORIGIN}/brand/logo/
 - ${ORIGIN}/brand/export/
+- ${ORIGIN}/brand/labs/favicon.svg
+- ${ORIGIN}/brand/labs/lockup.svg
+- ${ORIGIN}/brand/labs/og.png
+- ${ORIGIN}/brand/labs/banner.png
 
 \`Access-Control-Allow-Origin: *\` is set on \`/brand/*\` and \`/css/site.css\`.
 On this origin, pages load \`/css/fonts.css\` (relative font URLs).

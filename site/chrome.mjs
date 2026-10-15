@@ -1,7 +1,7 @@
 import { COPY, LOCALES } from "./copy.mjs";
 
 export const ORIGIN = "https://trujillomingorance.com";
-export const ASSET = "20261015c";
+export const ASSET = "20261015d";
 
 export const FAMILIES = {
   hub: { es: "/", en: "/en/", ca: "/ca/" },
@@ -83,9 +83,9 @@ export function footer(lang, { ids = false } = {}) {
 }
 
 export function headAssets() {
-  return `<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="/favicon.ico" sizes="32x32">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  return `<link rel="icon" href="/favicon.svg?v=${ASSET}" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico?v=${ASSET}" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=${ASSET}" sizes="180x180">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
