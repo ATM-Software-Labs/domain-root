@@ -1,14 +1,16 @@
 /** Apex paths that must not be sent to Labs. Language homes live in redirigeALabs. */
 export function esRecursoEstatico(path) {
   return (
-    path === "/sobre-mi" || path === "/sobre-mi/" || path === "/sobre-mi/index.html" ||
-    path === "/en/about" || path === "/en/about/" || path === "/en/about/index.html" ||
+    path === "/sobre-mi" || path.startsWith("/sobre-mi/") ||
+    path === "/en/about" || path.startsWith("/en/about/") ||
     path === "/robots.txt" || path === "/sitemap.xml" || path === "/site.webmanifest" ||
-    path === "/terms" || path === "/terms.html" || path === "/terms-of-service" ||
-    path === "/privacy" || path === "/privacy.html" || path === "/privacy-policy" ||
-    path === "/firma" || path === "/firma.html" ||
+    path === "/terms" || path.startsWith("/terms/") || path === "/terms.html" || path === "/terms-of-service" ||
+    path === "/privacy" || path.startsWith("/privacy/") || path === "/privacy.html" || path === "/privacy-policy" ||
+    path === "/firma" || path.startsWith("/firma/") || path === "/firma.html" ||
+    path === "/brand" || path.startsWith("/brand/") ||
     path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/assets/") ||
-    path === "/avatar.png" || path === "/favicon.ico" || path === "/favicon.svg" || path === "/apple-touch-icon.png"
+    path === "/avatar.png" || path === "/favicon.ico" || path === "/favicon.svg" || path === "/apple-touch-icon.png" ||
+    path === "/icon-192.png" || path === "/icon-512.png"
   );
 }
 

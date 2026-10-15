@@ -8,60 +8,110 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#07080b">
-  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/css/hub.css?v=20261015b">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/brand/tokens.css">
+  <link rel="stylesheet" href="/css/fonts.css?v=20261015c">
+  <link rel="stylesheet" href="/css/site.css?v=20261015c">
 </head>
 <body>
-  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <a class="skip" id="skip-link" href="#contenido">Saltar al contenido</a>
   <div class="grid-overlay" aria-hidden="true"></div>
   <header class="site-header">
     <div class="wrap header-row">
-      <a class="brand" href="/" id="miss-brand" aria-label="ATM Software Labs">
-        <span class="brand-mark">ATM</span>
-        <span>Software Labs</span>
-      </a>
-      <nav class="lang" aria-label="Idioma"><a href="/" hreflang="es" lang="es" data-lang-switch="es" aria-current="page">ES<span class="visually-hidden"> Español</span></a><a href="/en/" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> English</span></a><a href="/ca/" hreflang="ca" lang="ca" data-lang-switch="ca">CA<span class="visually-hidden"> Català</span></a></nav>
+      <a class="brand" id="miss-brand" href="/"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="Secciones">
+          <a id="nav-eco" href="/#ecosistema">Ecosistema</a>
+          <a id="nav-status" href="/#estado">Estado</a>
+          <a id="nav-contact" href="/sobre-mi">Contacto</a>
+        </nav>
+        <nav class="lang" aria-label="Idioma"><a href="/" hreflang="es" lang="es" data-lang-switch="es" aria-current="page">ES<span class="visually-hidden"> Español</span></a><a href="/en/" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> English</span></a><a href="/ca/" hreflang="ca" lang="ca" data-lang-switch="ca">CA<span class="visually-hidden"> Català</span></a></nav>
+      </div>
     </div>
   </header>
-  <main id="contenido" class="hero wrap miss">
-    <p class="kicker"><span>404</span>ATM Software Labs</p>
-    <h1 id="miss-title">Página no encontrada</h1>
-    <p class="statement" id="miss-body">Esta ruta no existe en el ápice.</p>
-    <p class="contact-links"><a class="btn" id="miss-home" href="/">Volver al inicio</a></p>
-    <div hidden id="miss-store">
+  <main id="contenido">
+    <section class="hero wrap miss">
+      <p class="kicker"><span>404</span>ATM Software Labs</p>
+      <h1 id="miss-title">Página no encontrada</h1>
+      <p class="statement" id="miss-body">Esta ruta no existe en el ápice.</p>
+      <p class="contact-links"><a class="btn" id="miss-home" href="/">Volver al inicio</a></p>
+      <div hidden id="miss-store">
       <div data-lang="es">
       <p data-field="title">Página no encontrada</p>
       <p data-field="body">Esta ruta no existe en el ápice.</p>
       <p data-field="home">Volver al inicio</p>
       <p data-field="href">/</p>
+      <p data-field="skip">Saltar al contenido</p>
+      <p data-field="navEco">Ecosistema</p>
+      <p data-field="navStatus">Estado</p>
+      <p data-field="navContact">Contacto</p>
+      <p data-field="navAria">Secciones</p>
+      <p data-field="langLabel">Idioma</p>
+      <p data-field="terms">Términos</p>
+      <p data-field="privacy">Privacidad</p>
+      <p data-field="footerAria">Pie de página</p>
+      <p data-field="newTab">se abre en una pestaña nueva</p>
+      <p data-field="about">/sobre-mi</p>
     </div>
       <div data-lang="en">
       <p data-field="title">Page not found</p>
       <p data-field="body">This path does not exist on the apex.</p>
       <p data-field="home">Back to home</p>
       <p data-field="href">/en/</p>
+      <p data-field="skip">Skip to content</p>
+      <p data-field="navEco">Ecosystem</p>
+      <p data-field="navStatus">Status</p>
+      <p data-field="navContact">Contact</p>
+      <p data-field="navAria">Sections</p>
+      <p data-field="langLabel">Language</p>
+      <p data-field="terms">Terms</p>
+      <p data-field="privacy">Privacy</p>
+      <p data-field="footerAria">Footer</p>
+      <p data-field="newTab">opens in a new tab</p>
+      <p data-field="about">/en/about</p>
     </div>
       <div data-lang="ca">
       <p data-field="title">Pàgina no trobada</p>
       <p data-field="body">Aquesta ruta no existeix a l'àpex.</p>
       <p data-field="home">Torna a l'inici</p>
       <p data-field="href">/ca/</p>
+      <p data-field="skip">Ves al contingut</p>
+      <p data-field="navEco">Ecosistema</p>
+      <p data-field="navStatus">Estat</p>
+      <p data-field="navContact">Contacte</p>
+      <p data-field="navAria">Seccions</p>
+      <p data-field="langLabel">Llengua</p>
+      <p data-field="terms">Termes</p>
+      <p data-field="privacy">Privadesa</p>
+      <p data-field="footerAria">Peu</p>
+      <p data-field="newTab">s'obre en una pestanya nova</p>
+      <p data-field="about">/ca/about</p>
     </div>
-    </div>
+      </div>
+    </section>
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <nav class="footer-nav" aria-label="Perfiles">
-        <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
-        <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      <a class="brand" id="foot-brand" href="/"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
+      <nav class="footer-nav" aria-label="Pie de página">
+        <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden" data-newtab> (se abre en una pestaña nueva)</span></a>
+        <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden" data-newtab> (se abre en una pestaña nueva)</span></a>
+        <a id="foot-terms" href="/terms">Términos</a>
+        <a id="foot-privacy" href="/privacy">Privacidad</a>
       </nav>
       <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
     </div>
   </footer>
   <script>
     (function () {
+      function text(block, field) {
+        return block.querySelector('[data-field="' + field + '"]').textContent;
+      }
       function pick() {
         var path = location.pathname || "/";
         if (path === "/en" || path.indexOf("/en/") === 0) return "en";
@@ -79,18 +129,33 @@
         var block = document.querySelector('#miss-store [data-lang="' + lang + '"]');
         if (!block) return;
         document.documentElement.lang = lang;
-        var title = block.querySelector('[data-field="title"]').textContent;
-        var body = block.querySelector('[data-field="body"]').textContent;
-        var home = block.querySelector('[data-field="home"]').textContent;
-        var href = block.querySelector('[data-field="href"]').textContent;
+        var title = text(block, "title");
+        var href = text(block, "href");
         document.title = title + " · ATM Software Labs";
         document.getElementById("miss-title").textContent = title;
-        document.getElementById("miss-body").textContent = body;
+        document.getElementById("miss-body").textContent = text(block, "body");
+        document.getElementById("skip-link").textContent = text(block, "skip");
         var homeLink = document.getElementById("miss-home");
-        homeLink.textContent = home;
+        homeLink.textContent = text(block, "home");
         homeLink.setAttribute("href", href);
-        var brand = document.getElementById("miss-brand");
-        if (brand) brand.setAttribute("href", href);
+        document.getElementById("miss-brand").setAttribute("href", href);
+        var footBrand = document.getElementById("foot-brand");
+        if (footBrand) footBrand.setAttribute("href", href);
+        document.getElementById("nav-eco").textContent = text(block, "navEco");
+        document.getElementById("nav-eco").setAttribute("href", href + "#ecosistema");
+        document.getElementById("nav-status").textContent = text(block, "navStatus");
+        document.getElementById("nav-status").setAttribute("href", href + "#estado");
+        document.getElementById("nav-contact").textContent = text(block, "navContact");
+        document.getElementById("nav-contact").setAttribute("href", text(block, "about"));
+        document.querySelector(".site-nav").setAttribute("aria-label", text(block, "navAria"));
+        document.querySelector(".lang").setAttribute("aria-label", text(block, "langLabel"));
+        document.querySelector(".footer-nav").setAttribute("aria-label", text(block, "footerAria"));
+        document.getElementById("foot-terms").textContent = text(block, "terms");
+        document.getElementById("foot-terms").setAttribute("href", lang === "es" ? "/terms" : "/" + lang + "/terms");
+        document.getElementById("foot-privacy").textContent = text(block, "privacy");
+        document.getElementById("foot-privacy").setAttribute("href", lang === "es" ? "/privacy" : "/" + lang + "/privacy");
+        var tab = " (" + text(block, "newTab") + ")";
+        document.querySelectorAll("[data-newtab]").forEach(function (node) { node.textContent = tab; });
         document.querySelectorAll("[data-lang-switch]").forEach(function (link) {
           if (link.getAttribute("data-lang-switch") === lang) link.setAttribute("aria-current", "page");
           else link.removeAttribute("aria-current");

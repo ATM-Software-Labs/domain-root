@@ -28,13 +28,15 @@
   <meta name="twitter:title" content="ATM Software Labs · Alberto Trujillo Mingorance">
   <meta name="twitter:description" content="Hub de ATM Software Labs y Alberto Trujillo Mingorance. Ingeniería de sistemas, arquitectura de red, Web3 y código abierto.">
   <meta name="twitter:image" content="https://trujillomingorance.com/assets/og-hub.png">
-  <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/hub.css?v=20261015b">
+  <link rel="stylesheet" href="/brand/tokens.css">
+  <link rel="stylesheet" href="/css/fonts.css?v=20261015c">
+  <link rel="stylesheet" href="/css/site.css?v=20261015c">
   <script>(function(){try{var h=location.hostname;if(h!=="trujillomingorance.com"&&h!=="www.trujillomingorance.com")return;var p=location.pathname;if(p!=="/"&&p!=="/index.html")return;if(localStorage.getItem("atm_lang_choice")||localStorage.getItem("atm_lang_auto"))return;var n=(navigator.language||"").toLowerCase();var w=n.indexOf("en")===0?"en":n.indexOf("ca")===0?"ca":"es";var ua=navigator.userAgent||"";var bot=navigator.webdriver||/bot|crawl|spider|slurp|lighthouse|headless/i.test(ua);localStorage.setItem("atm_lang_auto",w);if(bot||w==="es")return;location.replace(w==="en"?"/en/":"/ca/");}catch(e){}})();</script>
   <script type="application/ld+json">
   {
@@ -62,15 +64,12 @@
   <div class="grid-overlay" aria-hidden="true"></div>
   <header class="site-header">
     <div class="wrap header-row">
-      <a class="brand" href="/" aria-label="ATM Software Labs">
-        <span class="brand-mark">ATM</span>
-        <span>Software Labs</span>
-      </a>
+      <a class="brand" href="/"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
       <div class="header-tools">
         <nav class="site-nav" aria-label="Secciones">
-          <a href="#ecosistema">Ecosistema</a>
-          <a href="#estado">Estado</a>
-          <a href="#contacto">Contacto</a>
+          <a href="/#ecosistema">Ecosistema</a>
+          <a href="/#estado">Estado</a>
+          <a href="/sobre-mi">Contacto</a>
         </nav>
         <nav class="lang" aria-label="Idioma"><a href="/" hreflang="es" lang="es" data-lang-switch="es" aria-current="page">ES<span class="visually-hidden"> Español</span></a><a href="/en/" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> English</span></a><a href="/ca/" hreflang="ca" lang="ca" data-lang-switch="ca">CA<span class="visually-hidden"> Català</span></a></nav>
       </div>
@@ -203,14 +202,17 @@
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <nav class="footer-nav" aria-label="Perfiles">
-        <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
-        <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      <a class="brand" href="/"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
+      <nav class="footer-nav" aria-label="Pie de página">
+        <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden" data-newtab> (se abre en una pestaña nueva)</span></a>
+        <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden" data-newtab> (se abre en una pestaña nueva)</span></a>
+        <a href="/terms">Términos</a>
+        <a href="/privacy">Privacidad</a>
       </nav>
       <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
     </div>
   </footer>
   <script type="application/json" id="hub-copy">{"phrases":["ingeniería de sistemas","arquitectura de red","Web3","código abierto"],"online":"en línea","offline":"sin respuesta","checking":"Comprobando {n} hosts…","checkingLabel":"comprobando","summary":"{up} en línea · {down} sin respuesta","browser":"Este navegador no puede comprobar el alcance."}</script>
-  <script src="/js/hub.js?v=20261015b" defer></script>
+  <script src="/js/hub.js?v=20261015c" defer></script>
 </body>
 </html>

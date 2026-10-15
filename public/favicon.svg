@@ -1,5 +1,2 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ATM">
-  <rect width="32" height="32" rx="7" fill="#07080b"/>
-  <rect width="32" height="2" fill="#8fe8c4"/>
-  <path fill="#8fe8c4" d="M6.2 23 9.7 9h2.2l3.5 14h-2.1l-.7-2.8H9l-.7 2.8H6.2Zm3.2-4.6h2.8L11.2 13l-1.8 5.4ZM18 9h2.1v14H18V9Zm4.2 0H25l3.2 9.2V9H30v14h-2.1l-3.3-9.4V23h-2.4V9Z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" role="img" aria-label="ATM">
+<rect width="16" height="16" rx="3" fill="#07080b"/><g transform="translate(0 0) scale(1)"><path fill="#8fe8c4" d="M2 3h3l5 5-5 5H2l5-5-5-5z"/><rect x="11" y="11" width="3" height="2" fill="#9ad7e6"/></g></svg>

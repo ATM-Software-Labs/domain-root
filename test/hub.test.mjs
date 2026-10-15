@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
-import { COPY, LOCALES, PROJECTS } from "../site/copy.mjs";
-import { render404, renderHub } from "../site/render-hub.mjs";
 import { redirigeALabs } from "../functions/rutas-hub.js";
+import { COPY, LOCALES, PROJECTS } from "../site/copy.mjs";
+import { FAMILIES } from "../site/chrome.mjs";
+import { legalPage } from "../site/legal.mjs";
+import { renderAbout, renderBrand, renderBrandReadme, renderFirma, renderLegal, renderSitemap } from "../site/render-pages.mjs";
+import { render404, renderHub } from "../site/render-hub.mjs";
 
 const read = (path) => readFileSync(new URL(path, import.meta.url), "utf8");
 const pages = {
@@ -11,7 +14,8 @@ const pages = {
   en: read("../public/en/index.html"),
   ca: read("../public/ca/index.html")
 };
-const css = read("../public/css/hub.css");
+const css = read("../public/css/site.css");
+const tokens = read("../public/brand/tokens.css");
 const js = read("../public/js/hub.js");
 const headers = read("../public/_headers");
 const middleware = read("../functions/_middleware.js");
@@ -19,6 +23,7 @@ const redirects = read("../public/_redirects");
 const sitemap = read("../public/sitemap.xml");
 const notFound = read("../public/404.html");
 const LIVE = PROJECTS.filter((item) => item.live).map((item) => item.slug);
+const tokenNames = [...tokens.matchAll(/--atm-[a-z0-9-]+/g)].map((match) => match[0]);
 
 test("generated pages match the renderer", () => {
   for (const lang of LOCALES) {
@@ -72,8 +77,11 @@ test("live hosts are linked and charts is not", () => {
     assert.deepEqual([...new Set(linked)].sort(), [...LIVE].sort());
     assert.equal(html.includes('href="https://charts.trujillomingorance.com"'), false);
     assert.match(html, /charts\.trujillomingorance\.com/);
-    assert.match(html, /href="\/sobre-mi"/);
+    assert.match(html, new RegExp(`href="${COPY[html === pages.es ? "es" : html === pages.en ? "en" : "ca"].aboutPath}"`));
     assert.match(html, /mailto:contact@trujillomingorance.com/);
+    assert.match(html, /\/brand\/tokens\.css/);
+    assert.match(html, /\/css\/site\.css/);
+    assert.doesNotMatch(html, /hub\.css|legal\.css|cdnjs|font-awesome|styles-Mxz/);
     assert.match(html, /data-lang-switch="es"/);
     assert.match(html, /data-lang-switch="en"/);
     assert.match(html, /data-lang-switch="ca"/);
@@ -131,7 +139,13 @@ test("language routes are not sent to labs", () => {
   assert.equal(redirigeALabs("/ca/"), false);
   assert.equal(redirigeALabs("/en/about"), false);
   assert.equal(redirigeALabs("/sobre-mi"), false);
-  assert.equal(redirigeALabs("/css/hub.css"), false);
+  assert.equal(redirigeALabs("/css/site.css"), false);
+  assert.equal(redirigeALabs("/brand/tokens.css"), false);
+  assert.equal(redirigeALabs("/brand/"), false);
+  assert.equal(redirigeALabs("/ca/about"), false);
+  assert.equal(redirigeALabs("/en/terms"), false);
+  assert.equal(redirigeALabs("/ca/privacy"), false);
+  assert.equal(redirigeALabs("/firma/"), false);
   assert.equal(redirigeALabs("/favicon.svg"), false);
   assert.equal(redirigeALabs("/en/missing"), false);
   assert.equal(redirigeALabs("/no-such"), true);
@@ -169,6 +183,153 @@ test("self-hosted fonts and svg favicon exist", () => {
   ]) {
     const bytes = readFileSync(new URL(`../public/assets/fonts/${name}`, import.meta.url));
     assert.equal(bytes.subarray(0, 4).toString(), "wOF2");
+    assert.match(read("../public/css/fonts.css"), new RegExp(`/assets/fonts/${name}`));
+    assert.match(read("../public/brand/fonts.css"), new RegExp(`https://trujillomingorance.com/assets/fonts/${name}`));
   }
   assert.match(read("../public/favicon.svg"), /<svg/);
+  assert.doesNotMatch(css, /@font-face/);
+  assert.doesNotMatch(tokens, /@font-face/);
+});
+
+test("shared pages match the renderer and the design system", () => {
+  const about = {
+    es: read("../public/sobre-mi/index.html"),
+    en: read("../public/en/about/index.html"),
+    ca: read("../public/ca/about/index.html")
+  };
+  const brand = {
+    es: read("../public/brand/index.html"),
+    en: read("../public/en/brand/index.html"),
+    ca: read("../public/ca/brand/index.html")
+  };
+  const firma = {
+    es: read("../public/firma/index.html"),
+    en: read("../public/en/firma/index.html"),
+    ca: read("../public/ca/firma/index.html")
+  };
+  for (const lang of LOCALES) {
+    assert.equal(about[lang], renderAbout(lang));
+    assert.equal(brand[lang], renderBrand(lang));
+    assert.equal(firma[lang], renderFirma(lang));
+    assert.equal(read(`../public/${lang === "es" ? "terms" : `${lang}/terms`}/index.html`), renderLegal("terms", lang));
+    assert.equal(read(`../public/${lang === "es" ? "privacy" : `${lang}/privacy`}/index.html`), renderLegal("privacy", lang));
+    for (const html of [about[lang], brand[lang], firma[lang], renderLegal("terms", lang), renderLegal("privacy", lang)]) {
+      assert.match(html, /href="\/brand\/tokens\.css"/);
+      assert.match(html, /href="\/css\/site\.css/);
+      assert.match(html, /class="site-header"/);
+      assert.match(html, /class="site-footer"/);
+      assert.match(html, /data-lang-switch="es"/);
+      assert.match(html, /data-lang-switch="en"/);
+      assert.match(html, /data-lang-switch="ca"/);
+      assert.match(html, new RegExp(`href="${FAMILIES.about[lang]}"`));
+      assert.doesNotMatch(html, /legal\.css|hub\.css|cdnjs|font-awesome|styles-Mxz|data-theme|theme-boot/);
+    }
+    assert.match(about[lang], /class="brand-symbol"/);
+    assert.match(brand[lang], /#8fe8c4/);
+    assert.match(brand[lang], /#07080b/);
+    assert.equal(brand[lang].includes(lang === "es" ? "The symbol is the terminal prompt" : "El símbolo es el prompt de terminal"), false);
+  }
+  assert.equal(read("../public/terms.html"), renderLegal("terms", "es"));
+  assert.equal(read("../public/privacy.html"), renderLegal("privacy", "es"));
+  assert.equal(read("../public/firma.html"), renderFirma("es"));
+  assert.equal(sitemap, renderSitemap());
+  assert.equal(read("../public/brand/README.md"), renderBrandReadme());
+  assert.match(about.es, /Soy Alberto Trujillo Mingorance, administrador de sistemas y ciberseguridad en Barcelona/);
+  assert.match(about.en, /I am Alberto Trujillo Mingorance, a systems administrator and cybersecurity specialist in Barcelona/);
+  assert.match(about.ca, /Sóc Alberto Trujillo Mingorance, administrador de sistemes i ciberseguretat a Barcelona/);
+  assert.equal(about.en.includes("Soy Alberto"), false);
+  assert.equal(about.ca.includes("I am Alberto"), false);
+  for (const lang of LOCALES) {
+    const terms = legalPage("terms", lang);
+    const privacy = legalPage("privacy", lang);
+    assert.match(renderLegal("terms", lang), new RegExp(terms.fingerprint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.match(renderLegal("privacy", lang), new RegExp(privacy.fingerprint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.match(renderLegal("terms", lang), /mailto:alberto@trujillomingorance.com/);
+    assert.match(renderLegal("terms", lang), /OAuth 2\.0 PKCE/);
+    assert.match(renderLegal("terms", lang), /localStorage/);
+    assert.match(renderLegal("privacy", lang), /ta_session/);
+    for (const other of LOCALES) {
+      if (other === lang) continue;
+      assert.equal(renderLegal("terms", lang).includes(legalPage("terms", other).fingerprint), false);
+      assert.equal(renderLegal("privacy", lang).includes(legalPage("privacy", other).fingerprint), false);
+    }
+    for (const name of tokenNames) assert.match(brand[lang], new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+  assert.match(firma.es, /id="firma-container"/);
+  assert.match(firma.es, /copiarFirma/);
+  assert.match(firma.es, /ClipboardItem/);
+  assert.match(firma.es, /data:image\/png;base64,/);
+  assert.match(firma.en, /Change the role if you want/);
+  assert.equal(firma.en.includes("Personaliza el cargo si quieres"), false);
+  assert.match(notFound, /\/brand\/tokens\.css/);
+  assert.match(notFound, /id="nav-eco"/);
+  assert.match(notFound, /id="foot-terms"/);
+  for (const dead of [
+    "../public/css/hub.css",
+    "../public/css/legal.css",
+    "../public/css/tokens.css",
+    "../public/css/404.css",
+    "../public/css/redirect.css",
+    "../public/js/404.js",
+    "../public/js/theme-boot.js",
+    "../public/assets/styles-MxzP0LLl.css"
+  ]) {
+    assert.equal(existsSync(new URL(dead, import.meta.url)), false, dead);
+  }
+});
+
+test("brand files publish CORS for reuse", () => {
+  assert.match(headers, /\/brand\/\*[\s\S]*Access-Control-Allow-Origin: \*/);
+  assert.match(headers, /\/css\/site\.css[\s\S]*Access-Control-Allow-Origin: \*/);
+  assert.match(headers, /\/assets\/fonts\/\*[\s\S]*Access-Control-Allow-Origin: \*/);
+  assert.match(tokens, /--atm-bg:\s*#07080b/);
+  assert.match(tokens, /--atm-text-hero:/);
+  assert.match(tokens, /--atm-space-4:/);
+  assert.match(tokens, /--atm-radius-md:/);
+  assert.match(tokens, /--atm-motion:/);
+  assert.match(css, /var\(--atm-bg\)/);
+  assert.match(css, /var\(--atm-font-sans\)/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(sitemap, /\/brand\//);
+  assert.match(sitemap, /\/ca\/about/);
+  assert.match(sitemap, /\/en\/terms/);
+  assert.match(sitemap, /\/ca\/privacy/);
+  assert.match(sitemap, /\/firma/);
+  assert.match(read("../public/brand/README.md"), /\/brand\/tokens\.css/);
+  assert.match(pages.es, /class="brand-symbol"/);
+  assert.match(pages.es, /\/brand\/logo\/symbol-dark\.svg/);
+  assert.match(read("../public/site.webmanifest"), /\/icon-192\.png/);
+  assert.match(read("../public/site.webmanifest"), /\/icon-512\.png/);
+  assert.equal(redirigeALabs("/icon-192.png"), false);
+  assert.equal(redirigeALabs("/icon-512.png"), false);
+  const favicon = read("../public/favicon.svg");
+  assert.equal(favicon, read("../public/brand/favicon.svg"));
+  assert.equal(favicon, read("../brand/logo/symbol-dark.svg"));
+  assert.match(favicon, /#07080b/);
+  assert.match(favicon, /#8fe8c4/);
+  assert.match(favicon, /#9ad7e6/);
+  assert.doesNotMatch(favicon, /gradient|currentColor/);
+  const pngSize = (path) => {
+    const bytes = readFileSync(new URL(path, import.meta.url));
+    assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+    return [bytes.readUInt32BE(16), bytes.readUInt32BE(20)];
+  };
+  assert.deepEqual(pngSize("../public/apple-touch-icon.png"), [180, 180]);
+  assert.deepEqual(pngSize("../public/icon-192.png"), [192, 192]);
+  assert.deepEqual(pngSize("../public/icon-512.png"), [512, 512]);
+  assert.deepEqual(pngSize("../brand/export/github-avatar.png"), [500, 500]);
+  assert.deepEqual(pngSize("../brand/export/linkedin-logo.png"), [400, 400]);
+  assert.deepEqual(pngSize("../brand/export/linkedin-cover.png"), [1128, 191]);
+  assert.deepEqual(pngSize("../brand/export/github-social.png"), [1280, 640]);
+  assert.deepEqual(pngSize("../brand/export/og.png"), [1200, 630]);
+  assert.deepEqual(pngSize("../public/brand/export/og.png"), [1200, 630]);
+  const ico = readFileSync(new URL("../public/favicon.ico", import.meta.url));
+  assert.equal(ico.readUInt16LE(4), 2);
+  assert.equal(ico[6], 16);
+  assert.equal(ico[22], 32);
+  for (const name of ["symbol-dark.svg", "symbol-light.svg", "symbol-white.svg", "symbol-black.svg", "lockup-horizontal-dark.svg", "lockup-stacked-dark.svg", "wordmark-dark.svg"]) {
+    assert.equal(existsSync(new URL(`../brand/logo/${name}`, import.meta.url)), true, name);
+    assert.equal(existsSync(new URL(`../public/brand/logo/${name}`, import.meta.url)), true, name);
+    assert.match(read("../public/brand/index.html"), new RegExp(name.replace(".", "\\.")));
+  }
 });
