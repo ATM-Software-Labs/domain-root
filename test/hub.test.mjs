@@ -214,7 +214,7 @@ test("shared pages match the renderer and the design system", () => {
     assert.equal(read(`../public/${lang === "es" ? "terms" : `${lang}/terms`}/index.html`), renderLegal("terms", lang));
     assert.equal(read(`../public/${lang === "es" ? "privacy" : `${lang}/privacy`}/index.html`), renderLegal("privacy", lang));
     for (const html of [about[lang], brand[lang], firma[lang], renderLegal("terms", lang), renderLegal("privacy", lang)]) {
-      assert.match(html, /href="\/brand\/tokens\.css"/);
+      assert.match(html, new RegExp(`href="/brand/tokens\\.css\\?v=${ASSET}"`));
       assert.match(html, /href="\/css\/site\.css/);
       assert.match(html, /class="site-header"/);
       assert.match(html, /class="site-footer"/);

@@ -89,7 +89,7 @@ export function headAssets() {
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/brand/tokens.css">
+  <link rel="stylesheet" href="/brand/tokens.css?v=${ASSET}">
   <link rel="stylesheet" href="/css/fonts.css?v=${ASSET}">
   <link rel="stylesheet" href="/css/site.css?v=${ASSET}">`;
 }
