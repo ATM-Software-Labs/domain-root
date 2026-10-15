@@ -11,6 +11,8 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://trujillomingorance.com/">
   <link rel="alternate" hreflang="es" href="https://trujillomingorance.com/">
+  <link rel="alternate" hreflang="en" href="https://trujillomingorance.com/en/">
+  <link rel="alternate" hreflang="ca" href="https://trujillomingorance.com/ca/">
   <link rel="alternate" hreflang="x-default" href="https://trujillomingorance.com/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
@@ -21,18 +23,19 @@
   <meta property="og:image" content="https://trujillomingorance.com/assets/og-hub.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="ATM Software Labs. Alberto Trujillo Mingorance. Ingeniería de sistemas, arquitectura de red, Web3 y código abierto.">
+  <meta property="og:image:alt" content="Ingeniería de sistemas, arquitectura de red, Web3 y código abierto. Publicamos infraestructura y herramientas que se pueden operar.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="ATM Software Labs · Alberto Trujillo Mingorance">
   <meta name="twitter:description" content="Hub de ATM Software Labs y Alberto Trujillo Mingorance. Ingeniería de sistemas, arquitectura de red, Web3 y código abierto.">
   <meta name="twitter:image" content="https://trujillomingorance.com/assets/og-hub.png">
   <link rel="icon" href="/favicon.ico" sizes="32x32">
-  <link rel="icon" href="/avatar.png" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/hub.css?v=20261015">
+  <link rel="stylesheet" href="/css/hub.css?v=20261015b">
+  <script>(function(){try{var h=location.hostname;if(h!=="trujillomingorance.com"&&h!=="www.trujillomingorance.com")return;var p=location.pathname;if(p!=="/"&&p!=="/index.html")return;if(localStorage.getItem("atm_lang_choice")||localStorage.getItem("atm_lang_auto"))return;var n=(navigator.language||"").toLowerCase();var w=n.indexOf("en")===0?"en":n.indexOf("ca")===0?"ca":"es";var ua=navigator.userAgent||"";var bot=navigator.webdriver||/bot|crawl|spider|slurp|lighthouse|headless/i.test(ua);localStorage.setItem("atm_lang_auto",w);if(bot||w==="es")return;location.replace(w==="en"?"/en/":"/ca/");}catch(e){}})();</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -41,6 +44,7 @@
         "@type": "Organization",
         "name": "ATM Software Labs",
         "url": "https://trujillomingorance.com/",
+        "inLanguage": "es",
         "sameAs": ["https://github.com/ATM-Software-Labs"]
       },
       {
@@ -55,24 +59,36 @@
 </head>
 <body>
   <a class="skip" href="#contenido">Saltar al contenido</a>
+  <div class="grid-overlay" aria-hidden="true"></div>
   <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="/" aria-label="ATM Software Labs, inicio">
+    <div class="wrap header-row">
+      <a class="brand" href="/" aria-label="ATM Software Labs">
         <span class="brand-mark">ATM</span>
         <span>Software Labs</span>
       </a>
-      <nav class="site-nav" aria-label="Secciones">
-        <a href="#ecosistema">Ecosistema</a>
-        <a href="#estado">Estado</a>
-      </nav>
+      <div class="header-tools">
+        <nav class="site-nav" aria-label="Secciones">
+          <a href="#ecosistema">Ecosistema</a>
+          <a href="#estado">Estado</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+        <nav class="lang" aria-label="Idioma"><a href="/" hreflang="es" lang="es" data-lang-switch="es" aria-current="page">ES<span class="visually-hidden"> Español</span></a><a href="/en/" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> English</span></a><a href="/ca/" hreflang="ca" lang="ca" data-lang-switch="ca">CA<span class="visually-hidden"> Català</span></a></nav>
+      </div>
     </div>
   </header>
-
   <main id="contenido">
     <section class="hero wrap" aria-labelledby="identidad">
       <p class="kicker"><span>01</span>Manifiesto</p>
       <h1 id="identidad">Alberto Trujillo Mingorance</h1>
       <p class="statement">Ingeniería de sistemas, arquitectura de red, Web3 y código abierto. Publicamos infraestructura y herramientas que se pueden operar.</p>
+      <p class="term" aria-hidden="true"><span class="term-prompt">atm@labs:~$</span> <span id="term-line"></span><span class="caret"></span></p>
+      <ul class="stack" aria-label="Ámbitos">
+        <li>Cloudflare</li>
+        <li>Linux</li>
+        <li>Redes</li>
+        <li>Web3</li>
+        <li>Código abierto</li>
+      </ul>
     </section>
 
     <section class="block" id="ecosistema" aria-labelledby="ecosistema-titulo">
@@ -80,78 +96,18 @@
         <p class="section-kicker"><span>02</span>Ecosistema</p>
         <h2 id="ecosistema-titulo">Subdominios</h2>
         <p class="section-lead">Hay enlace cuando el host responde. El resto queda como próximamente.</p>
-        <ul class="hub-grid">
-          <li>
-            <a class="hub-card" href="https://labs.trujillomingorance.com">
-              <span class="hub-host">labs.trujillomingorance.com</span>
-              <span class="hub-name">ATM Labs</span>
-              <span class="hub-desc">Directorio y laboratorio del ecosistema.</span>
-            </a>
-          </li>
-          <li>
-            <a class="hub-card" href="https://guides.trujillomingorance.com">
-              <span class="hub-host">guides.trujillomingorance.com</span>
-              <span class="hub-name">Guías</span>
-              <span class="hub-desc">Guías técnicas de ingeniería.</span>
-            </a>
-          </li>
-          <li>
-            <a class="hub-card" href="https://ai.trujillomingorance.com">
-              <span class="hub-host">ai.trujillomingorance.com</span>
-              <span class="hub-name">Trujillo AI</span>
-              <span class="hub-desc">Workspace de inteligencia empresarial.</span>
-            </a>
-          </li>
-          <li>
-            <a class="hub-card" href="https://rewrite.trujillomingorance.com">
-              <span class="hub-host">rewrite.trujillomingorance.com</span>
-              <span class="hub-name">Rewrite</span>
-              <span class="hub-desc">Reescritura, corrección y traducción.</span>
-            </a>
-          </li>
-          <li>
-            <a class="hub-card" href="https://nutri.trujillomingorance.com">
-              <span class="hub-host">nutri.trujillomingorance.com</span>
-              <span class="hub-name">NutriFit</span>
-              <span class="hub-desc">Nutrición, macros y código abierto.</span>
-            </a>
-          </li>
-          <li>
-            <a class="hub-card" href="https://invest.trujillomingorance.com">
-              <span class="hub-host">invest.trujillomingorance.com</span>
-              <span class="hub-name">INVEST</span>
-              <span class="hub-desc">Acciones, ETF y cripto con datos públicos.</span>
-            </a>
-          </li>
-          <li>
-            <div class="hub-card is-soon">
-              <span class="hub-host">charts.trujillomingorance.com</span>
-              <span class="hub-name">Charts</span>
-              <span class="hub-desc">Series y gráficos de mercado.</span>
-              <span class="hub-state">próximamente</span>
-            </div>
-          </li>
-          <li>
-            <a class="hub-card" href="https://savings.trujillomingorance.com">
-              <span class="hub-host">savings.trujillomingorance.com</span>
-              <span class="hub-name">Savings</span>
-              <span class="hub-desc">Liquidez familiar y runway.</span>
-            </a>
-          </li>
-          <li>
-            <a class="hub-card" href="https://focusguard.trujillomingorance.com">
-              <span class="hub-host">focusguard.trujillomingorance.com</span>
-              <span class="hub-name">FocusGuard</span>
-              <span class="hub-desc">DNS filtrado y control parental.</span>
-            </a>
-          </li>
-          <li>
-            <a class="hub-card" href="https://tools.trujillomingorance.com">
-              <span class="hub-host">tools.trujillomingorance.com</span>
-              <span class="hub-name">Tools</span>
-              <span class="hub-desc">Utilidades publicadas por el laboratorio.</span>
-            </a>
-          </li>
+        <p class="visually-hidden" id="hub-hint">Con el foco en una ficha, las flechas mueven la selección.</p>
+        <ul class="hub-grid" id="hub" aria-describedby="hub-hint">
+          <li><a class="hub-card" data-hub-item href="https://labs.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/></g></svg><span class="hub-host">labs.trujillomingorance.com</span></span><span class="hub-name">ATM Labs</span><span class="hub-desc">Directorio y laboratorio del ecosistema.</span></a></li>
+          <li><a class="hub-card" data-hub-item href="https://guides.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5.2A2.2 2.2 0 0 1 7.2 3H20v15.2H7.2A2.2 2.2 0 0 0 5 20.4z"/><path d="M5 5.2A2.2 2.2 0 0 1 7.2 7.4H20"/></g></svg><span class="hub-host">guides.trujillomingorance.com</span></span><span class="hub-name">Guías</span><span class="hub-desc">Guías técnicas de ingeniería.</span></a></li>
+          <li><a class="hub-card" data-hub-item href="https://ai.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2l1.5 4.8 4.8 1.5-4.8 1.5L12 16.8l-1.5-4.8L5.7 10.5l4.8-1.5z"/></g></svg><span class="hub-host">ai.trujillomingorance.com</span></span><span class="hub-name">Trujillo AI</span><span class="hub-desc">Workspace de inteligencia empresarial.</span></a></li>
+          <li><a class="hub-card" data-hub-item href="https://rewrite.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18.2 9.8 14.2 5.8 4 16z"/><path d="M13 7.2l3.8 3.8"/></g></svg><span class="hub-host">rewrite.trujillomingorance.com</span></span><span class="hub-name">Rewrite</span><span class="hub-desc">Reescritura, corrección y traducción.</span></a></li>
+          <li><a class="hub-card" data-hub-item href="https://nutri.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19.2C5 11.5 11.2 5 20 4c-1 8.5-7.2 15.2-15 15.2z"/><path d="M8.2 16.2c2-2.2 4.2-5 7.2-8"/></g></svg><span class="hub-host">nutri.trujillomingorance.com</span></span><span class="hub-name">NutriFit</span><span class="hub-desc">Nutrición, macros y código abierto.</span></a></li>
+          <li><a class="hub-card" data-hub-item href="https://invest.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V10"/><path d="M10 19.5V5"/><path d="M16 19.5v-6.5"/><path d="M3.5 19.5h17"/></g></svg><span class="hub-host">invest.trujillomingorance.com</span></span><span class="hub-name">INVEST</span><span class="hub-desc">Acciones, ETF y cripto con datos públicos.</span></a></li>
+          <li><div class="hub-card is-soon" data-hub-item tabindex="0"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.5l4.8-4.8 3.2 3.2 7.5-7.6"/><path d="M14.8 7.3H20v5.2"/></g></svg><span class="hub-host">charts.trujillomingorance.com</span></span><span class="hub-name">Charts</span><span class="hub-desc">Series y gráficos de mercado.</span><span class="hub-state">próximamente</span></div></li>
+          <li><a class="hub-card" data-hub-item href="https://savings.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6.5" width="18" height="12" rx="2"/><path d="M3 10.5h18"/><path d="M16 14.6h.1"/></g></svg><span class="hub-host">savings.trujillomingorance.com</span></span><span class="hub-name">Savings</span><span class="hub-desc">Liquidez familiar y runway.</span></a></li>
+          <li><a class="hub-card" data-hub-item href="https://focusguard.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2l7.5 2.8v5.6c0 4.6-3.1 7.4-7.5 8.6-4.4-1.2-7.5-4-7.5-8.6V6z"/></g></svg><span class="hub-host">focusguard.trujillomingorance.com</span></span><span class="hub-name">FocusGuard</span><span class="hub-desc">DNS filtrado y control parental.</span></a></li>
+          <li><a class="hub-card" data-hub-item href="https://tools.trujillomingorance.com"><span class="hub-top"><svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.4a3.6 3.6 0 0 0-5 5L4.2 16.9 7.1 19.8l5.5-5.5a3.6 3.6 0 0 0 5-5L15.2 11.7 12.3 8.8z"/></g></svg><span class="hub-host">tools.trujillomingorance.com</span></span><span class="hub-name">Tools</span><span class="hub-desc">Utilidades publicadas por el laboratorio.</span></a></li>
         </ul>
       </div>
     </section>
@@ -166,9 +122,7 @@
             <p id="estado-resumen" aria-live="polite">Pendiente de comprobación.</p>
             <button type="button" class="btn" id="estado-btn">Comprobar de nuevo</button>
           </div>
-          <noscript>
-            <p class="note">La comprobación de alcance necesita JavaScript. El directorio sigue disponible.</p>
-          </noscript>
+          <noscript><p class="note">La comprobación de alcance necesita JavaScript. El directorio sigue disponible.</p></noscript>
           <table class="status-table" id="estado-tabla">
             <caption>Alcance de los subdominios del hub</caption>
             <thead>
@@ -179,32 +133,32 @@
               </tr>
             </thead>
             <tbody>
-              <tr data-slug="labs" data-state="idle">
+              <tr data-slug="labs" data-state="idle" data-probe="1">
                 <th scope="row">labs<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
               </tr>
-              <tr data-slug="guides" data-state="idle">
+              <tr data-slug="guides" data-state="idle" data-probe="1">
                 <th scope="row">guides<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
               </tr>
-              <tr data-slug="ai" data-state="idle">
+              <tr data-slug="ai" data-state="idle" data-probe="1">
                 <th scope="row">ai<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
               </tr>
-              <tr data-slug="rewrite" data-state="idle">
+              <tr data-slug="rewrite" data-state="idle" data-probe="1">
                 <th scope="row">rewrite<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
               </tr>
-              <tr data-slug="nutri" data-state="idle">
+              <tr data-slug="nutri" data-state="idle" data-probe="1">
                 <th scope="row">nutri<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
               </tr>
-              <tr data-slug="invest" data-state="idle">
+              <tr data-slug="invest" data-state="idle" data-probe="1">
                 <th scope="row">invest<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
@@ -214,17 +168,17 @@
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">próximamente</span></td>
                 <td class="js-ms ms">—</td>
               </tr>
-              <tr data-slug="savings" data-state="idle">
+              <tr data-slug="savings" data-state="idle" data-probe="1">
                 <th scope="row">savings<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
               </tr>
-              <tr data-slug="focusguard" data-state="idle">
+              <tr data-slug="focusguard" data-state="idle" data-probe="1">
                 <th scope="row">focusguard<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
               </tr>
-              <tr data-slug="tools" data-state="idle">
+              <tr data-slug="tools" data-state="idle" data-probe="1">
                 <th scope="row">tools<span class="fqdn">.trujillomingorance.com</span></th>
                 <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">pendiente</span></td>
                 <td class="js-ms ms">—</td>
@@ -234,8 +188,19 @@
         </div>
       </div>
     </section>
-  </main>
 
+    <section class="block" id="contacto" aria-labelledby="contacto-titulo">
+      <div class="wrap contact-block">
+        <p class="section-kicker"><span>04</span>Contacto</p>
+        <h2 id="contacto-titulo">Sobre mí</h2>
+        <p class="section-lead">Perfil y contacto de Alberto Trujillo Mingorance.</p>
+        <div class="contact-links">
+          <a class="btn" href="/sobre-mi">Sobre mí</a>
+          <a class="btn" href="mailto:contact@trujillomingorance.com">contact@trujillomingorance.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
   <footer class="site-footer">
     <div class="wrap">
       <nav class="footer-nav" aria-label="Perfiles">
@@ -245,6 +210,7 @@
       <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
     </div>
   </footer>
-  <script src="/js/hub.js?v=20261015" defer></script>
+  <script type="application/json" id="hub-copy">{"phrases":["ingeniería de sistemas","arquitectura de red","Web3","código abierto"],"online":"en línea","offline":"sin respuesta","checking":"Comprobando {n} hosts…","checkingLabel":"comprobando","summary":"{up} en línea · {down} sin respuesta","browser":"Este navegador no puede comprobar el alcance."}</script>
+  <script src="/js/hub.js?v=20261015b" defer></script>
 </body>
 </html>

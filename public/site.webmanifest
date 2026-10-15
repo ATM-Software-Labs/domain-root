@@ -5,6 +5,12 @@
   "description": "Hub de ATM Software Labs y Alberto Trujillo Mingorance.",
   "icons": [
     {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
       "src": "/avatar.png",
       "sizes": "192x192",
       "type": "image/png"

@@ -1,4 +1,5 @@
 import { CABECERAS_DIAGNOSTICO, catalogoResuelto, debeDiagnosticar, hechosDesde, htmlDiagnostico, slugsEnrutados } from './lib/diagnostico.js';
+import { esRecursoEstatico, redirigeALabs } from './rutas-hub.js';
 
 // connect-src lists hub origins so the apex status widget can probe them with no-cors fetch.
 const SECURITY_HEADERS = {
@@ -27,23 +28,12 @@ export async function onRequest(context) {
   if (hostname.startsWith('id.') || hostname.startsWith('auth.') || hostname.startsWith('security.')) {
     return Response.redirect('https://myaccount.microsoft.com/?tenantId=686bb631-e5e4-4fbf-bf55-835dd40fb263', 302);
   }
-  const isLegalOrAsset = (
-    path === '/sobre-mi' || path === '/sobre-mi/' || path === '/sobre-mi/index.html' ||
-    path === '/en/about' || path === '/en/about/' || path === '/en/about/index.html' ||
-    path === '/robots.txt' || path === '/sitemap.xml' || path === '/site.webmanifest' ||
-    path === '/terms' || path === '/terms.html' || path === '/terms-of-service' ||
-    path === '/privacy' || path === '/privacy.html' || path === '/privacy-policy' ||
-    path === '/firma' || path === '/firma.html' ||
-    path.startsWith('/css/') || path.startsWith('/js/') || path.startsWith('/assets/') || path === '/avatar.png' || path === '/favicon.ico' || path === '/apple-touch-icon.png'
-  );
-
   const isApex = hostname === 'trujillomingorance.com' || hostname === 'www.trujillomingorance.com';
-  const isHome = path === '/' || path === '/index.html';
-  if (isApex && !isLegalOrAsset && !isHome) {
+  if (isApex && redirigeALabs(path)) {
     return Response.redirect('https://labs.trujillomingorance.com' + (url.search || ''), 302);
   }
 
-  if (!isApex && !isLegalOrAsset && hostname.endsWith('.trujillomingorance.com')) {
+  if (!isApex && !esRecursoEstatico(path) && hostname.endsWith('.trujillomingorance.com')) {
     const lista = await catalogoResuelto(context.env);
     if (debeDiagnosticar(hostname, slugsEnrutados(lista))) {
       return new Response(htmlDiagnostico(hechosDesde(context.request), lista), {

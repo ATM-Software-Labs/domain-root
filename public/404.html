@@ -1,70 +1,113 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="pageTitle">Subdominio sin servicio | ATM Labs</title>
-  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-  <meta name="theme-color" content="#080c14">
-  <link rel="icon" type="image/png" href="/avatar.png">
-  <script src="/js/theme-boot.js?v=min2"></script>
-  <link rel="stylesheet" href="/css/tokens.css?v=min2">
-  <link rel="stylesheet" href="/css/404.css?v=min2">
+  <title>Página no encontrada · ATM Software Labs</title>
+  <meta name="description" content="Esta ruta no existe en el ápice.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#07080b">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/css/hub.css?v=20261015b">
 </head>
 <body>
-  <header class="docs-topbar">
-    <a href="https://labs.trujillomingorance.com" class="brand">
-      <img src="/avatar.png" alt="" class="brand-avatar" width="28" height="28">
-      <span>ATM Labs</span>
-    </a>
-    <div class="topbar-actions">
-      <button type="button" class="theme-toggle-btn" id="theme-btn" title="Cambiar tema" aria-label="Cambiar tema">
-        <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-        <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="/" id="miss-brand" aria-label="ATM Software Labs">
+        <span class="brand-mark">ATM</span>
+        <span>Software Labs</span>
+      </a>
+      <nav class="lang" aria-label="Idioma"><a href="/" hreflang="es" lang="es" data-lang-switch="es" aria-current="page">ES<span class="visually-hidden"> Español</span></a><a href="/en/" hreflang="en" lang="en" data-lang-switch="en">EN<span class="visually-hidden"> English</span></a><a href="/ca/" hreflang="ca" lang="ca" data-lang-switch="ca">CA<span class="visually-hidden"> Català</span></a></nav>
     </div>
   </header>
-
-  <main class="diag-main">
-    <p class="diag-kicker" id="badgeText">Sin asignar</p>
-    <h1 class="diag-title" id="errorTitle">Este subdominio no tiene servicio</h1>
-    <p class="diag-desc" id="errorDesc">
-      <code id="hostDisplay">trujillomingorance.com</code> resolvió por el DNS comodín y no tiene un servicio publicado.
-    </p>
-
-    <dl class="facts">
-      <div><dt>Host</dt><dd id="teleHost">—</dd></div>
-      <div><dt>Ruta</dt><dd id="telePath">—</dd></div>
-      <div><dt>Estado</dt><dd id="teleRouting">Sin servicio publicado</dd></div>
-    </dl>
-
-    <div class="diag-actions">
-      <a href="https://labs.trujillomingorance.com" class="btn-primary">ATM Labs</a>
-      <button id="btnBack" class="btn-secondary" type="button">Volver</button>
-      <button id="btnCopyDiag" class="btn-secondary" type="button"><span id="copyBtnText">Copiar</span></button>
+  <main id="contenido" class="hero wrap miss">
+    <p class="kicker"><span>404</span>ATM Software Labs</p>
+    <h1 id="miss-title">Página no encontrada</h1>
+    <p class="statement" id="miss-body">Esta ruta no existe en el ápice.</p>
+    <p class="contact-links"><a class="btn" id="miss-home" href="/">Volver al inicio</a></p>
+    <div hidden id="miss-store">
+      <div data-lang="es">
+      <p data-field="title">Página no encontrada</p>
+      <p data-field="body">Esta ruta no existe en el ápice.</p>
+      <p data-field="home">Volver al inicio</p>
+      <p data-field="href">/</p>
     </div>
-
-    <section class="services-nav">
-      <h2 class="services-nav-title">Servicios</h2>
-      <ul class="service-list">
-        <li><a href="https://labs.trujillomingorance.com"><span class="service-host">labs.</span><span class="service-name">ATM Labs</span></a></li>
-        <li><a href="https://ai.trujillomingorance.com"><span class="service-host">ai.</span><span class="service-name">Trujillo AI Studio</span></a></li>
-        <li><a href="https://rewrite.trujillomingorance.com"><span class="service-host">rewrite.</span><span class="service-name">Rewrite AI</span></a></li>
-        <li><a href="https://invest.trujillomingorance.com"><span class="service-host">invest.</span><span class="service-name">INVEST</span></a></li>
-        <li><a href="https://focusguard.trujillomingorance.com"><span class="service-host">focusguard.</span><span class="service-name">FocusGuard</span></a></li>
-        <li><a href="https://guides.trujillomingorance.com"><span class="service-host">guides.</span><span class="service-name">Guías de ingeniería</span></a></li>
-        <li><a href="https://savings.trujillomingorance.com"><span class="service-host">savings.</span><span class="service-name">Savings</span></a></li>
-        <li><a href="https://tools.trujillomingorance.com"><span class="service-host">tools.</span><span class="service-name">Herramientas</span></a></li>
-        <li><a href="https://alberto.trujillomingorance.com"><span class="service-host">alberto.</span><span class="service-name">Portfolio</span></a></li>
-      </ul>
-    </section>
+      <div data-lang="en">
+      <p data-field="title">Page not found</p>
+      <p data-field="body">This path does not exist on the apex.</p>
+      <p data-field="home">Back to home</p>
+      <p data-field="href">/en/</p>
+    </div>
+      <div data-lang="ca">
+      <p data-field="title">Pàgina no trobada</p>
+      <p data-field="body">Aquesta ruta no existeix a l'àpex.</p>
+      <p data-field="home">Torna a l'inici</p>
+      <p data-field="href">/ca/</p>
+    </div>
+    </div>
   </main>
-
-  <footer class="diag-footer">
-    <span><a href="https://labs.trujillomingorance.com" style="color: inherit; text-decoration: none;">© 2026 ATM Software Labs</a></span>
-    <span class="diag-footer-domain">trujillomingorance.com</span>
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav class="footer-nav" aria-label="Perfiles">
+        <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+        <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>
+      </nav>
+      <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
+    </div>
   </footer>
-
-  <script src="/js/404.js?v=min2"></script>
+  <script>
+    (function () {
+      function pick() {
+        var path = location.pathname || "/";
+        if (path === "/en" || path.indexOf("/en/") === 0) return "en";
+        if (path === "/ca" || path.indexOf("/ca/") === 0) return "ca";
+        try {
+          var choice = localStorage.getItem("atm_lang_choice");
+          if (choice === "es" || choice === "en" || choice === "ca") return choice;
+        } catch (e) {}
+        var nav = (navigator.language || "").toLowerCase();
+        if (nav.indexOf("en") === 0) return "en";
+        if (nav.indexOf("ca") === 0) return "ca";
+        return "es";
+      }
+      function apply(lang) {
+        var block = document.querySelector('#miss-store [data-lang="' + lang + '"]');
+        if (!block) return;
+        document.documentElement.lang = lang;
+        var title = block.querySelector('[data-field="title"]').textContent;
+        var body = block.querySelector('[data-field="body"]').textContent;
+        var home = block.querySelector('[data-field="home"]').textContent;
+        var href = block.querySelector('[data-field="href"]').textContent;
+        document.title = title + " · ATM Software Labs";
+        document.getElementById("miss-title").textContent = title;
+        document.getElementById("miss-body").textContent = body;
+        var homeLink = document.getElementById("miss-home");
+        homeLink.textContent = home;
+        homeLink.setAttribute("href", href);
+        var brand = document.getElementById("miss-brand");
+        if (brand) brand.setAttribute("href", href);
+        document.querySelectorAll("[data-lang-switch]").forEach(function (link) {
+          if (link.getAttribute("data-lang-switch") === lang) link.setAttribute("aria-current", "page");
+          else link.removeAttribute("aria-current");
+        });
+      }
+      document.addEventListener("click", function (event) {
+        var node = event.target;
+        while (node && node !== document) {
+          if (node.getAttribute && node.getAttribute("data-lang-switch")) {
+            try { localStorage.setItem("atm_lang_choice", node.getAttribute("data-lang-switch")); } catch (e) {}
+            return;
+          }
+          node = node.parentNode;
+        }
+      });
+      apply(pick());
+    })();
+  </script>
 </body>
 </html>
