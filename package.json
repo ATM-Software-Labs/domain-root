@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build:ingress": "npm --prefix ingress run build",
+    "test": "node --test test/hub.test.mjs",
     "deploy": "npm run build:ingress && npx wrangler pages deploy public --project-name=domain-root"
   },
   "devDependencies": {

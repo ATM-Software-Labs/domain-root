@@ -22,3 +22,11 @@ jobs:
           test -f public/_headers || exit 1
           test -f public/_redirects || exit 1
           echo "All apex domain routing assets verified successfully."
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify hub landing
+        run: node --test test/hub.test.mjs

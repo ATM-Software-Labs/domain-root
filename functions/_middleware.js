@@ -1,12 +1,13 @@
 import { CABECERAS_DIAGNOSTICO, catalogoResuelto, debeDiagnosticar, hechosDesde, htmlDiagnostico, slugsEnrutados } from './lib/diagnostico.js';
 
+// connect-src lists hub origins so the apex status widget can probe them with no-cors fetch.
 const SECURITY_HEADERS = {
   'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
-  'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+  'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://cloudflareinsights.com https://static.cloudflareinsights.com https://labs.trujillomingorance.com https://guides.trujillomingorance.com https://ai.trujillomingorance.com https://rewrite.trujillomingorance.com https://nutri.trujillomingorance.com https://invest.trujillomingorance.com https://savings.trujillomingorance.com https://focusguard.trujillomingorance.com https://tools.trujillomingorance.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
 };
 
 export async function onRequest(context) {
