@@ -1,7 +1,8 @@
 /* ATM Software Labs — public design tokens.
    Stable URL: https://trujillomingorance.com/brand/tokens.css
    Load /brand/fonts.css on another origin, or /css/fonts.css on this one.
-   Colors meet WCAG AA on --atm-bg for body text, muted text, emerald and the soon tone. */
+   --atm-emerald and --atm-cyan keep their names for stylesheets that already alias them.
+   The values are neutral greys. Body text, muted text, and these greys meet WCAG AA on --atm-bg. */
 
 :root {
   --atm-bg: #07080b;
@@ -11,9 +12,9 @@
   --atm-text: #f4f7fb;
   --atm-body: #c5d0dc;
   --atm-muted: #9aabbd;
-  --atm-emerald: #8fe8c4;
-  --atm-cyan: #9ad7e6;
-  --atm-soon: #e4d2b0;
+  --atm-emerald: #e6e8ec;
+  --atm-cyan: #c8cdd4;
+  --atm-soon: #9aa3ae;
   --atm-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --atm-font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --atm-text-xs: 0.8125rem;

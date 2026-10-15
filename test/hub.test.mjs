@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 import { redirigeALabs } from "../functions/rutas-hub.js";
 import { COPY, LOCALES, PROJECTS } from "../site/copy.mjs";
-import { FAMILIES } from "../site/chrome.mjs";
+import { ASSET, FAMILIES } from "../site/chrome.mjs";
 import { legalPage } from "../site/legal.mjs";
 import { renderAbout, renderBrand, renderBrandReadme, renderFirma, renderLegal, renderSitemap } from "../site/render-pages.mjs";
 import { render404, renderHub } from "../site/render-hub.mjs";
@@ -225,12 +225,13 @@ test("shared pages match the renderer and the design system", () => {
       assert.doesNotMatch(html, /legal\.css|hub\.css|cdnjs|font-awesome|styles-Mxz|data-theme|theme-boot/);
     }
     assert.match(about[lang], /class="brand-symbol"/);
-    assert.match(brand[lang], /#8fe8c4/);
+    assert.match(brand[lang], /#e6e8ec/);
     assert.match(brand[lang], /#07080b/);
+    assert.doesNotMatch(brand[lang], /#8fe8c4|#9ad7e6/);
     const own = {
-      es: "A inferior en esmeralda",
-      en: "lower A in emerald",
-      ca: "A inferior en maragda"
+      es: "trazo blanco, sin color de acento",
+      en: "white line, with no accent color",
+      ca: "traç blanc, sense color d'accent"
     };
     assert.match(brand[lang], new RegExp(own[lang]));
     for (const other of LOCALES) {
@@ -321,15 +322,20 @@ test("brand files publish CORS for reuse", () => {
   assert.equal(favicon, read("../brand/logo/symbol-dark.svg"));
   assert.match(favicon, /#07080b/);
   assert.match(favicon, /#ffffff/);
-  assert.match(favicon, /#8fe8c4/);
   assert.match(favicon, /fill-rule="evenodd"/);
-  assert.doesNotMatch(favicon, /#9ad7e6|gradient|currentColor|M2 3h3/);
+  assert.doesNotMatch(favicon, /#8fe8c4|#9ad7e6|gradient|currentColor|M2 3h3/);
   const labsIcon = read("../public/brand/labs/favicon.svg");
+  assert.equal(labsIcon, favicon);
   assert.equal(labsIcon, read("../brand/labs/favicon.svg"));
-  assert.match(labsIcon, /#9ad7e6/);
-  assert.match(labsIcon, /#07080b/);
-  assert.doesNotMatch(labsIcon, /#8fe8c4/);
-  assert.equal(read("../public/brand/labs/lockup.svg"), read("../brand/labs/lockup.svg"));
+  const labsLockup = read("../public/brand/labs/lockup.svg");
+  assert.equal(labsLockup, read("../brand/labs/lockup.svg"));
+  assert.match(labsLockup, /aria-label="ATM Software Labs\. Labs"/);
+  assert.doesNotMatch(labsLockup, /#8fe8c4|#9ad7e6/);
+  assert.match(pages.es, new RegExp(`/assets/favicon\\.ico\\?v=${ASSET}`));
+  assert.match(pages.es, new RegExp(`/assets/og-hub\\.png\\?v=${ASSET}`));
+  assert.match(middleware, new RegExp(`/assets/favicon\\.ico\\?v=${ASSET}`));
+  assert.match(redirects, new RegExp(`/favicon\\.ico /assets/favicon\\.ico\\?v=${ASSET} 302`));
+  assert.equal(existsSync(new URL("../public/assets/favicon.ico", import.meta.url)), true);
   const pngSize = (path) => {
     const bytes = readFileSync(new URL(path, import.meta.url));
     assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");

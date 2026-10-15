@@ -2,9 +2,10 @@
 """Build the ATM Software Labs logo from the geometric avatar mark.
 
 The source drawing is public/avatar.png: white line art on black (stars,
-chevrons, and the triangles that form the A). Strokes are dilated by one
-pixel so the same vectors stay readable at 16px. Domain-root uses an emerald
-accent on the lower A. Labs uses cyan on that same A, plus a LABS tag.
+chevrons, and the triangles that form the A). Strokes stay at the bitmap
+weight. No part of the mark is tinted. Labs uses the same white mark and is
+distinguished only by the word Labs. The 16/32 favicon.ico may use a one-pixel
+weight bump when the faithful drawing does not hold together at those sizes.
 """
 
 from __future__ import annotations
@@ -32,24 +33,26 @@ SANS = Path("/usr/share/fonts/truetype/macos/Inter-Regular.ttf")
 BG = "#07080b"
 INK = "#07080b"
 PAPER = "#f4f7fb"
-EMERALD = "#8fe8c4"
-CYAN = "#9ad7e6"
 MUTED = "#9aabbd"
 WHITE = "#ffffff"
 
 STATEMENTS = {
-    "es": "Ingeniería de sistemas, arquitectura de red, Web3 y código abierto.",
-    "en": "Systems engineering, network architecture, Web3, and open source.",
-    "ca": "Enginyeria de sistemes, arquitectura de xarxa, Web3 i codi obert.",
+    "es": "Trabajo en sistemas, cloud y ciberseguridad desde Barcelona.",
+    "en": "I work in systems, cloud, and cybersecurity from Barcelona.",
+    "ca": "Treballo en sistemes, cloud i ciberseguretat des de Barcelona.",
+}
+ROLES = {
+    "es": "Administración de sistemas, cloud y ciberseguridad · Barcelona",
+    "en": "Systems administration, cloud, and cybersecurity · Barcelona",
+    "ca": "Administració de sistemes, cloud i ciberseguretat · Barcelona",
 }
 
 
 class Mark:
-    def __init__(self, d: str, width: float, height: float, accent_y: float) -> None:
+    def __init__(self, d: str, width: float, height: float) -> None:
         self.d = d
         self.width = width
         self.height = height
-        self.accent_y = accent_y
 
 
 def svg_text(view_w: float, view_h: float, body: str, label: str) -> str:
@@ -98,10 +101,9 @@ def cap_height(font: TTFont, size: float) -> float:
     return font["OS/2"].sCapHeight * scale
 
 
-def word_paths(font: TTFont, size: float, x: float, baseline: float, atm_fill: str, rest_fill: str) -> str:
-    atm, atm_w = font_path(font, "ATM", size, x, baseline)
-    rest, _rest_w = font_path(font, " Software Labs", size, x + atm_w, baseline)
-    return f'<path fill="{atm_fill}" d="{atm}"/><path fill="{rest_fill}" d="{rest}"/>'
+def word_paths(font: TTFont, text: str, size: float, x: float, baseline: float, fill: str) -> tuple[str, float]:
+    path, width = font_path(font, text, size, x, baseline)
+    return f'<path fill="{fill}" d="{path}"/>', width
 
 
 def dilate(mask: np.ndarray, radius: int) -> np.ndarray:
@@ -144,7 +146,7 @@ def curve_box(curve) -> tuple[float, float, float, float]:
     return min(xs), min(ys), max(xs), max(ys)
 
 
-def load_mark() -> Mark:
+def load_mark(radius: int = 0) -> Mark:
     image = Image.open(AVATAR).convert("RGBA")
     arr = np.array(image)
     ink = (arr[:, :, 3] > 160) & (arr[:, :, 0] > 180)
@@ -153,7 +155,8 @@ def load_mark() -> Mark:
     x0, x1 = int(xs.min()) - 1, int(xs.max()) + 1
     mask = ink[y0 : y1 + 1, x0 : x1 + 1]
     mask = mask | mask[:, ::-1]
-    mask = dilate(mask, 1)
+    if radius:
+        mask = dilate(mask, radius)
     height, width = mask.shape
     # potrace foreground is the dark pixels after its internal invert,
     # so the ink is passed as black.
@@ -161,34 +164,18 @@ def load_mark() -> Mark:
     curves = Bitmap(bitmap).trace(turdsize=2, alphamax=1.0, opticurve=True, opttolerance=0.45)
     if len(curves) < 2:
         raise SystemExit("trace did not keep the counters of the mark")
-    holes = []
-    for curve in curves:
-        if curve._path.sign:
-            continue
-        left, top, right, bottom = curve_box(curve)
-        holes.append((top, bottom, (top + bottom) / 2, left, right))
-    a_holes = [hole for hole in holes if hole[2] > height * 0.72]
-    if len(a_holes) < 2:
-        raise SystemExit(f"expected the two counters of the A, found {len(a_holes)}")
-    accent_y = min(hole[0] for hole in a_holes) - 8
-    others = [hole for hole in holes if hole not in a_holes]
-    if others:
-        accent_y = max(accent_y, max(hole[1] for hole in others) + 2)
-    return Mark(" ".join(curve_d(curve) for curve in curves), float(width), float(height), accent_y)
+    holes = [curve for curve in curves if not curve._path.sign]
+    if len(holes) < 7:
+        raise SystemExit(f"expected the original counters, found {len(holes)}")
+    return Mark(" ".join(curve_d(curve) for curve in curves), float(width), float(height))
 
 
-def mark_group(mark: Mark, fill: str, accent: str | None, scale: float, x: float, y: float, clip_id: str) -> str:
-    body = (
+def mark_group(mark: Mark, fill: str, scale: float, x: float, y: float) -> str:
+    return (
         f'<g transform="translate({x:g} {y:g}) scale({scale:g})">'
         f'<path fill="{fill}" fill-rule="evenodd" d="{mark.d}"/>'
+        f"</g>"
     )
-    if accent:
-        body += (
-            f'<clipPath id="{clip_id}"><rect x="0" y="{mark.accent_y:g}" '
-            f'width="{mark.width:g}" height="{mark.height - mark.accent_y:g}"/></clipPath>'
-            f'<path fill="{accent}" fill-rule="evenodd" clip-path="url(#{clip_id})" d="{mark.d}"/>'
-        )
-    return body + "</g>"
 
 
 def render_png(svg: str, width: int) -> Image.Image:
@@ -223,7 +210,7 @@ def composite(image: Image.Image, color: str = BG) -> Image.Image:
     return base.convert("RGB")
 
 
-def icon_svg(mark: Mark, background: str | None, fill: str, accent: str | None, label: str) -> str:
+def icon_svg(mark: Mark, background: str | None, fill: str, label: str) -> str:
     size = 32
     pad = 1.4
     scale = min((size - pad * 2) / mark.width, (size - pad * 2) / mark.height)
@@ -234,68 +221,66 @@ def icon_svg(mark: Mark, background: str | None, fill: str, accent: str | None, 
     body = []
     if background:
         body.append(plate(size, size, background, rx=6))
-    body.append(mark_group(mark, fill, accent, scale, x, y, "accent"))
+    body.append(mark_group(mark, fill, scale, x, y))
     return svg_text(size, size, "".join(body), label)
 
 
-def placed_mark(mark: Mark, fill: str, accent: str | None, box: float, x: float, y: float, clip_id: str) -> str:
+def placed_mark(mark: Mark, fill: str, box: float, x: float, y: float) -> str:
     scale = box / max(mark.width, mark.height)
     drawn_w = mark.width * scale
     drawn_h = mark.height * scale
-    return mark_group(mark, fill, accent, scale, x + (box - drawn_w) / 2, y + (box - drawn_h) / 2, clip_id)
+    return mark_group(mark, fill, scale, x + (box - drawn_w) / 2, y + (box - drawn_h) / 2)
 
 
-def field_svg(mark: Mark, size: int, fill: str, accent: str | None) -> str:
+def field_svg(mark: Mark, size: int, fill: str) -> str:
     # Longer side stays inside 68% so a circular crop keeps a margin.
     box = size * 0.68
     offset = (size - box) / 2
-    body = plate(size, size, BG) + placed_mark(mark, fill, accent, box, offset, offset, "accent")
+    body = plate(size, size, BG) + placed_mark(mark, fill, box, offset, offset)
     return svg_text(size, size, body, "ATM")
 
 
-def labs_tag(font: TTFont, x: float, center_y: float, fill: str, text_fill: str) -> tuple[str, float]:
-    size = 18
-    label = "LABS"
-    width = text_width(font, label, size)
-    cap = cap_height(font, size)
-    pad_x = 10
-    pad_y = 6
-    box_w = width + pad_x * 2
-    box_h = cap + pad_y * 2
-    box_y = center_y - box_h / 2
-    baseline = box_y + pad_y + cap
-    path, _ = font_path(font, label, size, x + pad_x, baseline)
-    body = (
-        f'<rect x="{x:g}" y="{box_y:g}" width="{box_w:g}" height="{box_h:g}" rx="8" fill="{fill}"/>'
-        f'<path fill="{text_fill}" d="{path}"/>'
-    )
-    return body, box_w
-
-
-def assert_legible(mark: Mark) -> None:
-    tile = icon_svg(mark, BG, WHITE, EMERALD, "ATM")
-    small = np.array(composite(render_png(tile, 16)).convert("L"))
-    medium = np.array(composite(render_png(tile, 32)).convert("L"))
-    white16 = int((small > 140).sum())
-    if not 50 <= white16 <= 180:
-        raise SystemExit(f"16px mark collapsed or flooded ({white16} light pixels)")
-    # 32px must still show a counter: a dark pixel fully inside the light drawing.
-    ink = medium > 140
+def light_stats(image: Image.Image) -> tuple[int, int]:
+    ink = np.array(image.convert("L")) > 140
+    total = int(ink.sum())
+    if total == 0:
+        return 0, 0
+    seen = np.zeros_like(ink)
+    best = 0
     height, width = ink.shape
-    ys, xs = np.where(ink)
-    x0, x1, y0, y1 = xs.min(), xs.max(), ys.min(), ys.max()
-    interior = ~ink[y0 + 1 : y1, x0 + 1 : x1]
-    if int(interior.sum()) < 8:
-        raise SystemExit("32px mark has no counter")
-    print(f"16px light pixels {white16}; 32px interior {int(interior.sum())}")
+    for y in range(height):
+        for x in range(width):
+            if not ink[y, x] or seen[y, x]:
+                continue
+            stack = [(y, x)]
+            seen[y, x] = True
+            count = 0
+            while stack:
+                cy, cx = stack.pop()
+                count += 1
+                for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    ny, nx = cy + dy, cx + dx
+                    if 0 <= ny < height and 0 <= nx < width and ink[ny, nx] and not seen[ny, nx]:
+                        seen[ny, nx] = True
+                        stack.append((ny, nx))
+            best = max(best, count)
+    return total, best
+
+
+def ico_needs_bump(mark: Mark) -> bool:
+    tile = icon_svg(mark, BG, WHITE, "ATM")
+    small = composite(render_png(tile, 16))
+    total, largest = light_stats(small)
+    # A faithful 16px raster falls apart when no single stroke run holds the drawing.
+    return largest < total * 0.55 or total < 40
 
 
 def build_svgs(mark: Mark, mono: TTFont) -> dict[str, str]:
     files: dict[str, str] = {
-        "symbol-dark.svg": icon_svg(mark, BG, WHITE, EMERALD, "ATM"),
-        "symbol-light.svg": icon_svg(mark, PAPER, INK, None, "ATM"),
-        "symbol-white.svg": icon_svg(mark, None, WHITE, None, "ATM"),
-        "symbol-black.svg": icon_svg(mark, None, INK, None, "ATM"),
+        "symbol-dark.svg": icon_svg(mark, BG, WHITE, "ATM"),
+        "symbol-light.svg": icon_svg(mark, PAPER, INK, "ATM"),
+        "symbol-white.svg": icon_svg(mark, None, WHITE, "ATM"),
+        "symbol-black.svg": icon_svg(mark, None, INK, "ATM"),
     }
     size = 42
     cap = cap_height(mono, size)
@@ -306,18 +291,19 @@ def build_svgs(mark: Mark, mono: TTFont) -> dict[str, str]:
     lock_w = pad + symbol + gap + text_w + pad
     lock_h = pad + symbol + pad
     baseline = (lock_h + cap) / 2
-    accents = {
-        "dark": (BG, WHITE, EMERALD, EMERALD, PAPER, True),
-        "light": (PAPER, INK, None, INK, INK, True),
-        "white": (None, WHITE, None, WHITE, WHITE, False),
-        "black": (None, INK, None, INK, INK, False),
+    plates = {
+        "dark": (BG, WHITE, PAPER),
+        "light": (PAPER, INK, INK),
+        "white": (None, WHITE, WHITE),
+        "black": (None, INK, INK),
     }
-    for name, (background, fill, accent, atm, rest, _plated) in accents.items():
+    for name, (background, fill, word) in plates.items():
         body = []
         if background:
             body.append(plate(lock_w, lock_h, background))
-        body.append(placed_mark(mark, fill, accent, symbol, pad, pad, "accent"))
-        body.append(word_paths(mono, size, pad + symbol + gap, baseline, atm, rest))
+        body.append(placed_mark(mark, fill, symbol, pad, pad))
+        word_svg, _width = word_paths(mono, "ATM Software Labs", size, pad + symbol + gap, baseline, word)
+        body.append(word_svg)
         files[f"lockup-horizontal-{name}.svg"] = svg_text(lock_w, lock_h, "".join(body), "ATM Software Labs")
 
     stack_symbol = 120
@@ -328,12 +314,13 @@ def build_svgs(mark: Mark, mono: TTFont) -> dict[str, str]:
     text_x = (stack_w - text_w) / 2
     stack_baseline = stack_pad + stack_symbol + stack_gap + cap
     symbol_x = (stack_w - stack_symbol) / 2
-    for name, (background, fill, accent, atm, rest, _plated) in accents.items():
+    for name, (background, fill, word) in plates.items():
         body = []
         if background:
             body.append(plate(stack_w, stack_h, background))
-        body.append(placed_mark(mark, fill, accent, stack_symbol, symbol_x, stack_pad, "accent"))
-        body.append(word_paths(mono, size, text_x, stack_baseline, atm, rest))
+        body.append(placed_mark(mark, fill, stack_symbol, symbol_x, stack_pad))
+        word_svg, _width = word_paths(mono, "ATM Software Labs", size, text_x, stack_baseline, word)
+        body.append(word_svg)
         files[f"lockup-stacked-{name}.svg"] = svg_text(stack_w, stack_h, "".join(body), "ATM Software Labs")
 
     word_pad_x = 28
@@ -341,13 +328,24 @@ def build_svgs(mark: Mark, mono: TTFont) -> dict[str, str]:
     word_w = text_w + word_pad_x * 2
     word_h = cap + word_pad_y * 2
     word_baseline = word_pad_y + cap
-    for name, (background, _fill, _accent, atm, rest, _plated) in accents.items():
+    for name, (background, _fill, word) in plates.items():
         body = []
         if background:
             body.append(plate(word_w, word_h, background))
-        body.append(word_paths(mono, size, word_pad_x, word_baseline, atm, rest))
+        word_svg, _width = word_paths(mono, "ATM Software Labs", size, word_pad_x, word_baseline, word)
+        body.append(word_svg)
         files[f"wordmark-{name}.svg"] = svg_text(word_w, word_h, "".join(body), "ATM Software Labs")
     return files
+
+
+def labs_line(mono: TTFont, size: float, x: float, baseline: float, fill: str) -> tuple[str, float]:
+    main, main_w = word_paths(mono, "ATM Software Labs", size, x, baseline, fill)
+    tag_size = size * 0.62
+    cap = cap_height(mono, size)
+    tag_cap = cap_height(mono, tag_size)
+    tag_baseline = baseline - (cap - tag_cap) / 2
+    tag, tag_w = word_paths(mono, "Labs", tag_size, x + main_w + size * 0.55, tag_baseline, fill)
+    return main + tag, main_w + size * 0.55 + tag_w
 
 
 def labs_lockup(mark: Mark, mono: TTFont) -> str:
@@ -356,75 +354,84 @@ def labs_lockup(mark: Mark, mono: TTFont) -> str:
     symbol = 96
     gap = 28
     pad = 36
-    atm_w = text_width(mono, "ATM", size)
-    tag_gap = 16
-    _tag, tag_w = labs_tag(mono, 0, 0, CYAN, INK)
-    lock_w = pad + symbol + gap + atm_w + tag_gap + tag_w + pad
+    line, line_w = labs_line(mono, size, 0, 0, WHITE)
+    lock_w = pad + symbol + gap + line_w + pad
     lock_h = pad + symbol + pad
     baseline = (lock_h + cap) / 2
-    text_x = pad + symbol + gap
-    tag, _tag_w = labs_tag(mono, text_x + atm_w + tag_gap, baseline - cap / 2, CYAN, INK)
-    atm_path, _ = font_path(mono, "ATM", size, text_x, baseline)
+    line, _line_w = labs_line(mono, size, pad + symbol + gap, baseline, WHITE)
     body = [
         plate(lock_w, lock_h, BG),
-        placed_mark(mark, WHITE, CYAN, symbol, pad, pad, "accent"),
-        f'<path fill="{CYAN}" d="{atm_path}"/>',
-        tag,
+        placed_mark(mark, WHITE, symbol, pad, pad),
+        line,
     ]
-    return svg_text(lock_w, lock_h, "".join(body), "ATM Labs")
+    return svg_text(lock_w, lock_h, "".join(body), "ATM Software Labs. Labs")
 
 
-def social_card(mark: Mark, width: int, height: int, mono: TTFont, sans: TTFont, statement: str | None, accent: str) -> str:
+def social_card(mark: Mark, width: int, height: int, mono: TTFont, sans: TTFont, role: str, statement: str | None) -> str:
     pad_x = 72
-    symbol = min(176, height * 0.4)
-    title = 54 if width >= 1200 else 42
-    name_size = 28
-    line_size = 24
-    cap = cap_height(mono, title)
+    symbol = min(168, height * 0.36)
+    name_size = 48 if width >= 1200 else 40
+    role_size = 22
+    org_size = 26
+    line_size = 22
     name_cap = cap_height(sans, name_size)
+    role_cap = cap_height(sans, role_size)
+    org_cap = cap_height(mono, org_size)
     line_cap = cap_height(sans, line_size) if statement else 0
-    block_h = cap + (18 + name_cap) + ((16 + line_cap) if statement else 0)
+    block_h = name_cap + 14 + role_cap + 18 + org_cap + ((16 + line_cap) if statement else 0)
     block_y = (height - block_h) / 2
     symbol_y = (height - symbol) / 2
-    title_baseline = block_y + cap
-    name_baseline = title_baseline + 18 + name_cap
+    name_baseline = block_y + name_cap
+    role_baseline = name_baseline + 14 + role_cap
+    org_baseline = role_baseline + 18 + org_cap
     text_x = pad_x + symbol + 36
-    body = [plate(width, height, BG), plate(width, 8, accent)]
-    body.append(placed_mark(mark, WHITE, accent, symbol, pad_x, symbol_y, "accent"))
-    body.append(word_paths(mono, title, text_x, title_baseline, accent, PAPER))
+    body = [plate(width, height, BG)]
+    body.append(placed_mark(mark, WHITE, symbol, pad_x, symbol_y))
     name_path, _name_w = font_path(sans, "Alberto Trujillo Mingorance", name_size, text_x, name_baseline)
-    body.append(f'<path fill="{MUTED}" d="{name_path}"/>')
+    role_path, role_w = font_path(sans, role, role_size, text_x, role_baseline)
+    org_path, _org_w = word_paths(mono, "ATM Software Labs", org_size, text_x, org_baseline, PAPER)
+    if text_x + role_w > width - pad_x:
+        raise SystemExit(f"role overflows {width}: {role}")
+    body.append(f'<path fill="{PAPER}" d="{name_path}"/>')
+    body.append(f'<path fill="{MUTED}" d="{role_path}"/>')
+    body.append(org_path)
     if statement:
-        line_baseline = name_baseline + 16 + line_cap
+        line_baseline = org_baseline + 16 + line_cap
         line_path, line_w = font_path(sans, statement, line_size, text_x, line_baseline)
         if text_x + line_w > width - pad_x:
             raise SystemExit(f"statement overflows {width}: {statement}")
         body.append(f'<path fill="{PAPER}" d="{line_path}"/>')
-    return svg_text(width, height, "".join(body), "ATM Software Labs")
+    return svg_text(width, height, "".join(body), "Alberto Trujillo Mingorance")
 
 
-def cover(mark: Mark, mono: TTFont, accent: str) -> str:
+def cover(mark: Mark, mono: TTFont, sans: TTFont, role: str) -> str:
     width, height = 1128, 191
-    symbol = 132
-    size = 36
-    text_w = text_width(mono, "ATM Software Labs", size)
-    group_w = symbol + 28 + text_w
+    symbol = 128
+    name_size = 36
+    role_size = 18
+    name_cap = cap_height(sans, name_size)
+    role_cap = cap_height(sans, role_size)
+    block_h = name_cap + 10 + role_cap
+    text_x_gap = 28
+    name_w = text_width(sans, "Alberto Trujillo Mingorance", name_size)
+    group_w = symbol + text_x_gap + name_w
     x = (width - group_w) / 2
     y = (height - symbol) / 2
-    baseline = (height + cap_height(mono, size)) / 2
+    block_y = (height - block_h) / 2
+    text_x = x + symbol + text_x_gap
     body = [
         plate(width, height, BG),
-        plate(width, 6, accent),
-        placed_mark(mark, WHITE, accent, symbol, x, y, "accent"),
-        word_paths(mono, size, x + symbol + 28, baseline, accent, PAPER),
+        placed_mark(mark, WHITE, symbol, x, y),
+        f'<path fill="{PAPER}" d="{font_path(sans, "Alberto Trujillo Mingorance", name_size, text_x, block_y + name_cap)[0]}"/>',
+        f'<path fill="{MUTED}" d="{font_path(sans, role, role_size, text_x, block_y + name_cap + 10 + role_cap)[0]}"/>',
     ]
-    return svg_text(width, height, "".join(body), "ATM Software Labs")
+    return svg_text(width, height, "".join(body), "Alberto Trujillo Mingorance")
 
 
 def labs_card(mark: Mark, mono: TTFont, sans: TTFont, width: int, height: int) -> str:
     pad_x = 64 if width > 800 else 36
-    symbol = min(168, height * 0.62)
-    title = 48 if width >= 1000 else 36
+    symbol = min(160, height * 0.46)
+    title = 42 if width >= 1000 else 32
     host_size = 22
     cap = cap_height(mono, title)
     host_cap = cap_height(sans, host_size)
@@ -433,52 +440,44 @@ def labs_card(mark: Mark, mono: TTFont, sans: TTFont, width: int, height: int) -
     symbol_y = (height - symbol) / 2
     baseline = block_y + cap
     text_x = pad_x + symbol + 32
-    atm_w = text_width(mono, "ATM", title)
-    tag, _tag_w = labs_tag(mono, text_x + atm_w + 14, baseline - cap / 2, CYAN, INK)
-    atm_path, _ = font_path(mono, "ATM", title, text_x, baseline)
+    line, line_w = labs_line(mono, title, text_x, baseline, PAPER)
     host_path, host_w = font_path(sans, "labs.trujillomingorance.com", host_size, text_x, baseline + 16 + host_cap)
-    if text_x + host_w > width - pad_x:
-        raise SystemExit("labs host overflows the card")
+    if text_x + max(line_w, host_w) > width - pad_x:
+        raise SystemExit("labs card overflows")
     body = [
         plate(width, height, BG),
-        plate(width, 8 if height > 400 else 6, CYAN),
-        placed_mark(mark, WHITE, CYAN, symbol, pad_x, symbol_y, "accent"),
-        f'<path fill="{CYAN}" d="{atm_path}"/>',
-        tag,
+        placed_mark(mark, WHITE, symbol, pad_x, symbol_y),
+        line,
         f'<path fill="{MUTED}" d="{host_path}"/>',
     ]
-    return svg_text(width, height, "".join(body), "ATM Labs")
+    return svg_text(width, height, "".join(body), "ATM Software Labs. Labs")
 
 
 def labs_banner(mark: Mark, mono: TTFont) -> str:
     width, height = 1128, 191
-    symbol = 132
-    size = 40
-    atm_w = text_width(mono, "ATM", size)
-    tag, tag_w = labs_tag(mono, 0, 0, CYAN, INK)
-    group_w = symbol + 28 + atm_w + 16 + tag_w
+    symbol = 128
+    size = 36
+    cap = cap_height(mono, size)
+    line, line_w = labs_line(mono, size, 0, 0, PAPER)
+    group_w = symbol + 28 + line_w
     x = (width - group_w) / 2
     y = (height - symbol) / 2
-    cap = cap_height(mono, size)
     baseline = (height + cap) / 2
-    atm_path, _ = font_path(mono, "ATM", size, x + symbol + 28, baseline)
-    tag, _tag_w = labs_tag(mono, x + symbol + 28 + atm_w + 16, baseline - cap / 2, CYAN, INK)
+    line, _line_w = labs_line(mono, size, x + symbol + 28, baseline, PAPER)
     body = [
         plate(width, height, BG),
-        plate(width, 6, CYAN),
-        placed_mark(mark, WHITE, CYAN, symbol, x, y, "accent"),
-        f'<path fill="{CYAN}" d="{atm_path}"/>',
-        tag,
+        placed_mark(mark, WHITE, symbol, x, y),
+        line,
     ]
-    return svg_text(width, height, "".join(body), "ATM Labs")
+    return svg_text(width, height, "".join(body), "ATM Software Labs. Labs")
 
 
 def write_readme() -> None:
     text = """# ATM Software Labs logo
 
-The symbol is the geometric mark from `public/avatar.png`: white line art on black, with stars across the top, chevrons, and triangles that form an A. It is the same drawing as the favicon. Strokes are one pixel heavier than the bitmap so the mark still reads at 16px.
+The symbol is the geometric mark from `public/avatar.png`: a pure white line drawing on black, with stars across the top, chevrons, and triangles that form an A. Stroke weight matches the original bitmap. No part of the mark is tinted. The favicon is that same drawing.
 
-Domain-root uses that mark in white on `#07080b`, with the lower A in emerald `#8fe8c4`. Labs uses the same mark with the lower A in cyan `#9ad7e6` and a LABS tag. Labs files are in `labs/`.
+Labs uses the same white mark. It is distinguished only by the word Labs next to the wordmark, in `labs/lockup.svg`, `labs/banner.png`, and `labs/og.png`.
 
 ## Files
 
@@ -497,33 +496,42 @@ Published copies live at `https://trujillomingorance.com/brand/` and `https://tr
 - Near black `#07080b` for dark backgrounds.
 - Paper `#f4f7fb` for light backgrounds and for type on dark.
 - White `#ffffff` for the mark on dark.
-- Emerald `#8fe8c4` for the hub accent (the lower A, and ATM in the wordmark).
-- Cyan `#9ad7e6` for the labs accent.
-- On a light background use the light or black master. Emerald on white does not meet contrast.
+- Muted `#9aabbd` for secondary lines on cards.
+
+The mark itself stays white on dark and ink on light. Do not add an accent color to any stroke.
 
 ## Type
 
-The wordmark is JetBrains Mono Medium. Do not restack the letters, change the case, or add a gradient, shadow, or outline. Keep clear space equal to the symbol height. Do not draw the symbol smaller than 16px.
+The wordmark is JetBrains Mono Medium. Do not restack the letters, change the case, or add a gradient, shadow, or outline. Keep clear space equal to the symbol height. Do not draw the symbol smaller than 16px. Only `favicon.ico` at 16 and 32 may use a one-pixel weight bump, and only when the faithful drawing does not hold together at those sizes.
 
 Regenerate with `python3 brand/build_logo.py` when the avatar changes.
 """
     (BRAND / "README.md").write_text(text)
 
 
-def write_icons(svg: str, directory: Path, ico_name: str = "favicon.ico") -> None:
+def write_png_icons(svg: str, directory: Path) -> None:
     directory.mkdir(parents=True, exist_ok=True)
     for size, filename in ((180, "apple-touch-icon.png"), (192, "icon-192.png"), (512, "icon-512.png")):
         save_png(composite(render_png(svg, size)), directory / filename, (size, size))
-    icon16 = composite(render_png(svg, 16))
-    icon32 = composite(render_png(svg, 32))
-    ico_path = directory / ico_name
-    icon32.save(ico_path, format="ICO", sizes=[(16, 16), (32, 32)], append_images=[icon16])
+
+
+def write_ico(svg16: str, svg32: str, path: Path) -> None:
+    icon16 = composite(render_png(svg16, 16))
+    icon32 = composite(render_png(svg32, 32))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    icon32.save(path, format="ICO", sizes=[(16, 16), (32, 32)], append_images=[icon16])
+
+
+def reject_accent(name: str, svg: str) -> None:
+    banned = ("gradient", "currentColor", "#8fe8c4", "#9ad7e6")
+    for token in banned:
+        if token in svg:
+            raise SystemExit(f"unexpected paint {token} in {name}")
 
 
 def main() -> None:
-    mark = load_mark()
-    print(f"mark {mark.width:g}x{mark.height:g} accent_y {mark.accent_y:g}")
-    assert_legible(mark)
+    mark = load_mark(0)
+    print(f"mark {mark.width:g}x{mark.height:g}")
     mono = TTFont(str(MONO))
     sans = TTFont(str(SANS))
     logo_dir = BRAND / "logo"
@@ -535,40 +543,53 @@ def main() -> None:
 
     svgs = build_svgs(mark, mono)
     for name, svg in svgs.items():
-        if "gradient" in svg or "currentColor" in svg:
-            raise SystemExit(f"unexpected paint in {name}")
+        reject_accent(name, svg)
         (logo_dir / name).write_text(svg)
 
     favicon = svgs["symbol-dark.svg"]
-    (PUBLIC / "favicon.svg").write_text(favicon)
     public_brand = PUBLIC / "brand"
     public_brand.mkdir(parents=True, exist_ok=True)
+    (PUBLIC / "favicon.svg").write_text(favicon)
     (public_brand / "favicon.svg").write_text(favicon)
+    (labs_dir / "favicon.svg").write_text(favicon)
 
-    for size, filename in ((180, "apple-touch-icon.png"), (192, "icon-192.png"), (512, "icon-512.png")):
-        image = composite(render_png(favicon, size))
-        save_png(image, PUBLIC / filename, (size, size))
-        save_png(image, public_brand / filename, (size, size))
-    icon16 = composite(render_png(favicon, 16))
-    icon32 = composite(render_png(favicon, 32))
+    write_png_icons(favicon, PUBLIC)
+    write_png_icons(favicon, public_brand)
+    write_png_icons(favicon, labs_dir)
+
+    # 16px of the faithful trace falls apart. 32px still reads, so only the
+    # 16px ICO frame gets the one-pixel bump.
+    bump16 = ico_needs_bump(mark)
+    ico16 = icon_svg(load_mark(1), BG, WHITE, "ATM") if bump16 else favicon
+    print(f"favicon.ico 16px weight bump: {bump16}")
     ico_path = PUBLIC / "favicon.ico"
-    icon32.save(ico_path, format="ICO", sizes=[(16, 16), (32, 32)], append_images=[icon16])
+    write_ico(ico16, favicon, ico_path)
     shutil.copyfile(ico_path, public_brand / "favicon.ico")
+    shutil.copyfile(ico_path, PUBLIC / "assets" / "favicon.ico")
+    shutil.copyfile(ico_path, labs_dir / "favicon.ico")
 
-    save_png(composite(render_png(field_svg(mark, 500, WHITE, EMERALD), 500)), export_dir / "github-avatar.png", (500, 500))
-    save_png(composite(render_png(field_svg(mark, 400, WHITE, EMERALD), 400)), export_dir / "linkedin-logo.png", (400, 400))
-    save_png(composite(render_png(cover(mark, mono, EMERALD), 1128)), export_dir / "linkedin-cover.png", (1128, 191))
-    save_png(composite(render_png(social_card(mark, 1280, 640, mono, sans, None, EMERALD), 1280)), export_dir / "github-social.png", (1280, 640))
-    save_png(composite(render_png(social_card(mark, 1200, 630, mono, sans, None, EMERALD), 1200)), export_dir / "og.png", (1200, 630))
-    for lang, statement in STATEMENTS.items():
-        card = social_card(mark, 1200, 630, mono, sans, statement, EMERALD)
+    role = ROLES["es"]
+    statement = STATEMENTS["es"]
+    save_png(composite(render_png(field_svg(mark, 500, WHITE), 500)), export_dir / "github-avatar.png", (500, 500))
+    save_png(composite(render_png(field_svg(mark, 400, WHITE), 400)), export_dir / "linkedin-logo.png", (400, 400))
+    save_png(composite(render_png(cover(mark, mono, sans, role), 1128)), export_dir / "linkedin-cover.png", (1128, 191))
+    save_png(
+        composite(render_png(social_card(mark, 1280, 640, mono, sans, role, statement), 1280)),
+        export_dir / "github-social.png",
+        (1280, 640),
+    )
+    save_png(
+        composite(render_png(social_card(mark, 1200, 630, mono, sans, role, statement), 1200)),
+        export_dir / "og.png",
+        (1200, 630),
+    )
+    for lang in STATEMENTS:
+        card = social_card(mark, 1200, 630, mono, sans, ROLES[lang], STATEMENTS[lang])
         name = "og-hub.png" if lang == "es" else f"og-hub-{lang}.png"
         save_png(composite(render_png(card, 1200)), PUBLIC / "assets" / name, (1200, 630))
 
-    labs_favicon = icon_svg(mark, BG, WHITE, CYAN, "ATM Labs")
-    (labs_dir / "favicon.svg").write_text(labs_favicon)
+    reject_accent("labs/lockup.svg", labs_lockup(mark, mono))
     (labs_dir / "lockup.svg").write_text(labs_lockup(mark, mono))
-    write_icons(labs_favicon, labs_dir)
     save_png(composite(render_png(labs_card(mark, mono, sans, 1200, 630), 1200)), labs_dir / "og.png", (1200, 630))
     save_png(composite(render_png(labs_banner(mark, mono), 1128)), labs_dir / "banner.png", (1128, 191))
 

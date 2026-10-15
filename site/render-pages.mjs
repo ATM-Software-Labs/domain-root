@@ -56,14 +56,14 @@ const BRAND = {
     name: "Token",
     value: "Valor",
     logo: "Logotipo",
-    logoLead: "El símbolo es la marca geométrica del avatar: estrellas arriba, chevrones y los triángulos que forman la A. En el ápice va en blanco sobre casi negro, con la A inferior en esmeralda.",
+    logoLead: "El símbolo es la marca geométrica del avatar: un trazo blanco, sin color de acento, con el mismo grosor que el dibujo original.",
     labs: "Labs",
-    labsLead: "Labs usa el mismo símbolo con la A inferior en cian y la etiqueta LABS. Los archivos están en /brand/labs/.",
-    labsAlt: "Cierre de Labs, con la A inferior en cian",
+    labsLead: "Labs usa la misma marca blanca. Solo se distingue por la palabra Labs. Los archivos están en /brand/labs/.",
+    labsAlt: "Cierre de Labs, con la palabra Labs",
     rules: [
       "Sobre fondo oscuro, usa la versión dark o la blanca. Sobre fondo claro, la light o la negra.",
-      "No pongas el esmeralda sobre blanco: no contrasta.",
-      "El ápice usa esmeralda. Labs usa cian. No intercambies los acentos.",
+      "El trazo es blanco sobre oscuro y tinta sobre claro. No lleva color de acento.",
+      "Labs usa la misma marca. La palabra Labs es lo único que la distingue.",
       "No estires, no rotes y no añadas gradiente, sombra ni contorno.",
       "Deja un margen igual a la altura del símbolo. No lo dibujes por debajo de 16 px.",
       "La palabra del ápice es ATM Software Labs, en JetBrains Mono Medium, sin cambiar las mayúsculas."
@@ -90,14 +90,14 @@ const BRAND = {
     name: "Token",
     value: "Value",
     logo: "Logo",
-    logoLead: "The symbol is the geometric mark from the avatar: stars across the top, chevrons, and the triangles that form the A. On the hub it is white on near-black, with the lower A in emerald.",
+    logoLead: "The symbol is the geometric mark from the avatar: a white line, with no accent color, at the same weight as the original drawing.",
     labs: "Labs",
-    labsLead: "Labs uses the same symbol with the lower A in cyan and a LABS tag. The files are at /brand/labs/.",
-    labsAlt: "Labs lockup, with the lower A in cyan",
+    labsLead: "Labs uses the same white mark. It is distinguished only by the word Labs. The files are at /brand/labs/.",
+    labsAlt: "Labs lockup, with the word Labs",
     rules: [
       "On a dark background, use the dark or white version. On a light background, use the light or black version.",
-      "Do not put emerald on white: it fails contrast.",
-      "The hub uses emerald. Labs uses cyan. Do not swap the accents.",
+      "The stroke is white on dark and ink on light. It has no accent color.",
+      "Labs uses the same mark. The word Labs is the only difference.",
       "Do not stretch, rotate, or add a gradient, shadow, or outline.",
       "Keep clear space equal to the symbol height. Do not draw it smaller than 16 px.",
       "The hub wordmark is ATM Software Labs, set in JetBrains Mono Medium, with the capitals unchanged."
@@ -124,14 +124,14 @@ const BRAND = {
     name: "Token",
     value: "Valor",
     logo: "Logotip",
-    logoLead: "El símbol és la marca geomètrica de l'avatar: estrelles a dalt, xebrons i els triangles que formen la A. A l'àpex va en blanc sobre gairebé negre, amb la A inferior en maragda.",
+    logoLead: "El símbol és la marca geomètrica de l'avatar: un traç blanc, sense color d'accent, amb el mateix gruix que el dibuix original.",
     labs: "Labs",
-    labsLead: "Labs fa servir el mateix símbol amb la A inferior en cian i l'etiqueta LABS. Els fitxers són a /brand/labs/.",
-    labsAlt: "Tancament de Labs, amb la A inferior en cian",
+    labsLead: "Labs fa servir la mateixa marca blanca. Només es distingeix per la paraula Labs. Els fitxers són a /brand/labs/.",
+    labsAlt: "Tancament de Labs, amb la paraula Labs",
     rules: [
       "Sobre fons fosc, fes servir la versió dark o la blanca. Sobre fons clar, la light o la negra.",
-      "No posis el maragda sobre blanc: no contrasta.",
-      "L'àpex fa servir maragda. Labs fa servir cian. No intercanviïs els accents.",
+      "El traç és blanc sobre fosc i tinta sobre clar. No porta color d'accent.",
+      "Labs fa servir la mateixa marca. La paraula Labs és l'única diferència.",
       "No l'estiris, no el giris i no hi afegeixis degradat, ombra ni contorn.",
       "Deixa un marge igual a l'alçada del símbol. No el dibuixis per sota de 16 px.",
       "La paraula de l'àpex és ATM Software Labs, en JetBrains Mono Medium, sense canviar les majúscules."
@@ -349,7 +349,7 @@ export function renderBrand(lang) {
         ${linkList(LOGO_EXPORTS.map((name) => [`/brand/export/${name}?v=${ASSET}`, name]))}
         <h3>${esc(copy.icons)}</h3>
         ${linkList(LOGO_ICONS.map((name) => [`/brand/${name}?v=${ASSET}`, name]))}
-        <p><a href="/favicon.svg?v=${ASSET}">/favicon.svg</a> · <a href="/favicon.ico?v=${ASSET}">/favicon.ico</a> · <a href="/apple-touch-icon.png?v=${ASSET}">/apple-touch-icon.png</a> · <a href="/icon-192.png?v=${ASSET}">/icon-192.png</a> · <a href="/icon-512.png?v=${ASSET}">/icon-512.png</a></p>
+        <p><a href="/favicon.svg?v=${ASSET}">/favicon.svg</a> · <a href="/assets/favicon.ico?v=${ASSET}">/assets/favicon.ico</a> · <a href="/apple-touch-icon.png?v=${ASSET}">/apple-touch-icon.png</a> · <a href="/icon-192.png?v=${ASSET}">/icon-192.png</a> · <a href="/icon-512.png?v=${ASSET}">/icon-512.png</a></p>
         <h3>${esc(copy.labs)}</h3>
         <p>${esc(copy.labsLead)}</p>
         <figure class="logo-card"><img src="/brand/labs/lockup.svg?v=${ASSET}" alt="${esc(copy.labsAlt)}"></figure>
@@ -372,7 +372,7 @@ export function renderBrand(lang) {
         </table>
         <h2 id="fuentes">${esc(copy.fontsHeading)}</h2>
         <p>${esc(copy.fontsBody)}</p>
-        <p><code>#07080b</code> · <code>#f4f7fb</code> · <code>#8fe8c4</code> · <code>#9ad7e6</code></p>
+        <p><code>#07080b</code> · <code>#f4f7fb</code> · <code>#ffffff</code> · <code>#9aabbd</code></p>
         <h2 id="shell">${esc(copy.shell)}</h2>
         <pre class="spec">${sample}</pre>
       </div>

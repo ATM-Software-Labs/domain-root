@@ -35,9 +35,9 @@ On another origin, load `/brand/fonts.css` (absolute font URLs) before `site.css
 - `--atm-text`: #f4f7fb
 - `--atm-body`: #c5d0dc
 - `--atm-muted`: #9aabbd
-- `--atm-emerald`: #8fe8c4
-- `--atm-cyan`: #9ad7e6
-- `--atm-soon`: #e4d2b0
+- `--atm-emerald`: #e6e8ec
+- `--atm-cyan`: #c8cdd4
+- `--atm-soon`: #9aa3ae
 - `--atm-font-sans`: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif
 - `--atm-font-mono`: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace
 - `--atm-text-xs`: 0.8125rem

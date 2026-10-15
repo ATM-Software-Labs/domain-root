@@ -33,6 +33,12 @@ export async function onRequest(context) {
     return Response.redirect('https://labs.trujillomingorance.com' + (url.search || ''), 302);
   }
 
+  // The zone cache ignores query strings on /favicon.ico, so the bare path
+  // redirects to a versioned file. HTML links that file directly.
+  if (path === '/favicon.ico') {
+    return Response.redirect(`${url.origin}/assets/favicon.ico?v=20261015e`, 302);
+  }
+
   if (!isApex && !esRecursoEstatico(path) && hostname.endsWith('.trujillomingorance.com')) {
     const lista = await catalogoResuelto(context.env);
     if (debeDiagnosticar(hostname, slugsEnrutados(lista))) {

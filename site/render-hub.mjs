@@ -63,7 +63,7 @@ export function renderHub(lang) {
     browser: copy.browser
   };
   const json = JSON.stringify(client).replaceAll("<", "\\u003c");
-  const og = lang === "es" ? "/assets/og-hub.png" : `/assets/og-hub-${lang}.png`;
+  const og = `${lang === "es" ? "/assets/og-hub.png" : `/assets/og-hub-${lang}.png`}?v=${ASSET}`;
   return `<!DOCTYPE html>
 <html lang="${copy.lang}">
 <head>
@@ -120,11 +120,16 @@ ${hreflangLinks(FAMILIES.hub)}
     <section class="hero wrap" aria-labelledby="identidad">
       <p class="kicker"><span>01</span>${esc(copy.kicker)}</p>
       <h1 id="identidad">Alberto Trujillo Mingorance</h1>
+      <p class="role">${esc(copy.role)}</p>
       <p class="statement">${esc(copy.statement)}</p>
-      <p class="term" aria-hidden="true"><span class="term-prompt">atm@labs:~$</span> <span id="term-line"></span><span class="caret"></span></p>
       <ul class="stack" aria-label="${esc(copy.stackLabel)}">
         ${copy.stack.map((item) => `<li>${esc(item)}</li>`).join("\n        ")}
       </ul>
+      <div class="contact-links">
+        <a class="btn" href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden"> (${esc(copy.newTab)})</span></a>
+        <a class="btn" href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden"> (${esc(copy.newTab)})</span></a>
+        <a class="btn" href="mailto:contact@trujillomingorance.com">${esc(copy.contact)}</a>
+      </div>
     </section>
 
     <section class="block" id="ecosistema" aria-labelledby="ecosistema-titulo">
