@@ -292,7 +292,7 @@ function shellSample(lang) {
   const copy = COPY[lang];
   return `<header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="${copy.path}"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
+    <a class="brand" href="${copy.path}"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg?v=${ASSET}" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
     <nav class="site-nav" aria-label="${esc(copy.navAria)}">
       <a href="${copy.path}#ecosistema">${esc(copy.navEco)}</a>
       <a href="${copy.path}#estado">${esc(copy.navStatus)}</a>
@@ -336,24 +336,24 @@ export function renderBrand(lang) {
         <h2>${esc(copy.logo)}</h2>
         <p>${esc(copy.logoLead)}</p>
         <div class="logo-grid">
-          <figure class="logo-card"><img src="/brand/logo/lockup-horizontal-dark.svg" alt="${esc(copy.previewDark)}"></figure>
-          <figure class="logo-card is-light"><img src="/brand/logo/lockup-horizontal-light.svg" alt="${esc(copy.previewLight)}"></figure>
-          <figure class="logo-card"><img class="logo-symbol" src="/brand/logo/symbol-white.svg" alt=""></figure>
-          <figure class="logo-card is-light"><img class="logo-symbol" src="/brand/logo/symbol-black.svg" alt=""></figure>
+          <figure class="logo-card"><img src="/brand/logo/lockup-horizontal-dark.svg?v=${ASSET}" alt="${esc(copy.previewDark)}"></figure>
+          <figure class="logo-card is-light"><img src="/brand/logo/lockup-horizontal-light.svg?v=${ASSET}" alt="${esc(copy.previewLight)}"></figure>
+          <figure class="logo-card"><img class="logo-symbol" src="/brand/logo/symbol-white.svg?v=${ASSET}" alt=""></figure>
+          <figure class="logo-card is-light"><img class="logo-symbol" src="/brand/logo/symbol-black.svg?v=${ASSET}" alt=""></figure>
         </div>
         <ul>${rules}</ul>
         <h2 id="descargas">${esc(copy.downloads)}</h2>
         <h3>${esc(copy.masters)}</h3>
-        ${linkList(LOGO_MASTERS.map((name) => [`/brand/logo/${name}`, name]))}
+        ${linkList(LOGO_MASTERS.map((name) => [`/brand/logo/${name}?v=${ASSET}`, name]))}
         <h3>${esc(copy.exports)}</h3>
-        ${linkList(LOGO_EXPORTS.map((name) => [`/brand/export/${name}`, name]))}
+        ${linkList(LOGO_EXPORTS.map((name) => [`/brand/export/${name}?v=${ASSET}`, name]))}
         <h3>${esc(copy.icons)}</h3>
-        ${linkList(LOGO_ICONS.map((name) => [`/brand/${name}`, name]))}
-        <p><a href="/favicon.svg">/favicon.svg</a> · <a href="/favicon.ico">/favicon.ico</a> · <a href="/apple-touch-icon.png">/apple-touch-icon.png</a> · <a href="/icon-192.png">/icon-192.png</a> · <a href="/icon-512.png">/icon-512.png</a></p>
+        ${linkList(LOGO_ICONS.map((name) => [`/brand/${name}?v=${ASSET}`, name]))}
+        <p><a href="/favicon.svg?v=${ASSET}">/favicon.svg</a> · <a href="/favicon.ico?v=${ASSET}">/favicon.ico</a> · <a href="/apple-touch-icon.png?v=${ASSET}">/apple-touch-icon.png</a> · <a href="/icon-192.png?v=${ASSET}">/icon-192.png</a> · <a href="/icon-512.png?v=${ASSET}">/icon-512.png</a></p>
         <h3>${esc(copy.labs)}</h3>
         <p>${esc(copy.labsLead)}</p>
-        <figure class="logo-card"><img src="/brand/labs/lockup.svg" alt="${esc(copy.labsAlt)}"></figure>
-        ${linkList(LABS_FILES.map((name) => [`/brand/labs/${name}`, name]))}
+        <figure class="logo-card"><img src="/brand/labs/lockup.svg?v=${ASSET}" alt="${esc(copy.labsAlt)}"></figure>
+        ${linkList(LABS_FILES.map((name) => [`/brand/labs/${name}?v=${ASSET}`, name]))}
       </div>
     </section>
     <section class="block" id="uso">

@@ -41,7 +41,7 @@ export function langNav(current, paths) {
 
 function brandLockup(href, id = "") {
   const idAttr = id ? ` id="${id}"` : "";
-  return `<a class="brand"${idAttr} href="${href}"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>`;
+  return `<a class="brand"${idAttr} href="${href}"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg?v=${ASSET}" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>`;
 }
 
 export function header(lang, paths, { ids = false } = {}) {
@@ -106,7 +106,7 @@ export function documentPage({
 }) {
   const copy = COPY[lang];
   const canonical = `${ORIGIN}${paths[lang]}`;
-  const image = lang === "es" ? "/assets/og-hub.png" : `/assets/og-hub-${lang}.png`;
+  const image = `${lang === "es" ? "/assets/og-hub.png" : `/assets/og-hub-${lang}.png`}?v=${ASSET}`;
   return `<!DOCTYPE html>
 <html lang="${copy.lang}">
 <head>
