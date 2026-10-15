@@ -72,11 +72,12 @@ test("each language has hreflang, lang, meta and its own copy", () => {
 });
 
 test("live hosts are linked and charts is not", () => {
+  const shown = PROJECTS.filter((item) => item.highlight).map((item) => item.slug);
   for (const html of Object.values(pages)) {
     const linked = [...html.matchAll(/href="https:\/\/([a-z0-9-]+)\.trujillomingorance\.com"/g)].map((match) => match[1]);
-    assert.deepEqual([...new Set(linked)].sort(), [...LIVE].sort());
-    assert.equal(html.includes('href="https://charts.trujillomingorance.com"'), false);
-    assert.match(html, /charts\.trujillomingorance\.com/);
+    assert.deepEqual([...new Set(linked)].sort(), [...shown, "labs"].sort());
+    assert.equal(html.includes("charts.trujillomingorance.com"), false);
+    assert.equal(html.includes("savings.trujillomingorance.com"), false);
     assert.match(html, new RegExp(`href="${COPY[html === pages.es ? "es" : html === pages.en ? "en" : "ca"].aboutPath}"`));
     assert.match(html, /mailto:contact@trujillomingorance.com/);
     assert.match(html, /\/brand\/tokens\.css/);
@@ -90,15 +91,13 @@ test("live hosts are linked and charts is not", () => {
   }
 });
 
-test("status probe is a silent no-cors check", () => {
-  assert.match(js, /mode:\s*"no-cors"/);
-  assert.match(js, /method:\s*"HEAD"/);
+test("hub script stays quiet", () => {
   assert.match(js, /atm_lang_choice/);
   assert.match(js, /prefers-reduced-motion/);
   assert.match(js, /ArrowRight/);
-  assert.match(js, /tr\[data-probe\]/);
   assert.doesNotMatch(js, /console\./);
   assert.doesNotMatch(js, /charts/);
+  assert.doesNotMatch(js, /fetch\s*\(/);
   assert.doesNotMatch(js, /100\s*%|uptime/i);
 });
 
@@ -109,9 +108,19 @@ test("motion, landmarks and focus are present", () => {
   assert.match(pages.es, /<header/);
   assert.match(pages.es, /<main[^>]*id="contenido"/);
   assert.match(pages.es, /<footer/);
-  assert.match(pages.es, /aria-live="polite"/);
   assert.match(pages.es, /class="stack"/);
-  assert.match(pages.es, /class="hub-icon"/);
+  assert.match(pages.es, /class="gh-mark"/);
+  assert.match(pages.es, /github\.com\/ATM-Software-Labs\/domain-root/);
+  for (const project of PROJECTS.filter((item) => item.highlight)) {
+    assert.match(pages.es, new RegExp(`github\\.com/ATM-Software-Labs/${project.repo}`));
+    assert.equal(typeof project.repo, "string");
+  }
+  assert.match(pages.es, /Ver todos los servicios/);
+  assert.match(pages.en, /View all services/);
+  assert.match(pages.ca, /Veure tots els serveis/);
+  assert.match(pages.es, /Repositorio de Guías en GitHub/);
+  assert.match(pages.en, /GitHub repository for Guides/);
+  assert.match(pages.ca, /Repositori de Guies a GitHub/);
 });
 
 test("404 contains every language", () => {
@@ -274,6 +283,7 @@ test("shared pages match the renderer and the design system", () => {
   assert.equal(firma.en.includes("Personaliza el cargo si quieres"), false);
   assert.match(notFound, /\/brand\/tokens\.css/);
   assert.match(notFound, /id="nav-eco"/);
+  assert.doesNotMatch(notFound, /getElementById\("nav-status"\)/);
   assert.match(notFound, /id="foot-terms"/);
   for (const dead of [
     "../public/css/hub.css",

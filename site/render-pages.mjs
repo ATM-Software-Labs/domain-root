@@ -295,7 +295,6 @@ function shellSample(lang) {
     <a class="brand" href="${copy.path}"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg?v=${ASSET}" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
     <nav class="site-nav" aria-label="${esc(copy.navAria)}">
       <a href="${copy.path}#ecosistema">${esc(copy.navEco)}</a>
-      <a href="${copy.path}#estado">${esc(copy.navStatus)}</a>
       <a href="${FAMILIES.about[lang]}">${esc(copy.navContact)}</a>
     </nav>
     <nav class="lang" aria-label="${esc(copy.langLabel)}">
@@ -309,6 +308,7 @@ function shellSample(lang) {
   <div class="wrap">
     <nav class="footer-nav" aria-label="${esc(copy.footerAria)}">
       <a href="https://github.com/ATM-Software-Labs">GitHub</a>
+      <a href="https://github.com/ATM-Software-Labs/domain-root">domain-root</a>
       <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266">LinkedIn</a>
       <a href="${FAMILIES.terms[lang]}">${esc(copy.termsLabel)}</a>
       <a href="${FAMILIES.privacy[lang]}">${esc(copy.privacyLabel)}</a>
@@ -498,9 +498,9 @@ ${names.join("\n")}
 
 Use \`header.site-header\`, \`a.brand\`, \`nav.site-nav\`, \`nav.lang\` and \`footer.site-footer\`.
 The language switcher sets \`localStorage["atm_lang_choice"]\` from \`data-lang-switch\`.
-Section links point at the language home plus \`#ecosistema\` or \`#estado\`.
+Section links point at the language home plus \`#ecosistema\`.
 Contact points at the about page for that language.
-The footer links GitHub, LinkedIn, terms and privacy.
+The footer links GitHub, the domain-root repository, LinkedIn, terms and privacy.
 Credits: © 2026 ATM Software Labs · Alberto Trujillo Mingorance.
 `;
 }

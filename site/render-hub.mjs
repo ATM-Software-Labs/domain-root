@@ -6,63 +6,29 @@ import { COPY, LOCALES, PROJECTS, projectName } from "./copy.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-const ICONS = {
-  labs: '<rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/>',
-  guides: '<path d="M5 5.2A2.2 2.2 0 0 1 7.2 3H20v15.2H7.2A2.2 2.2 0 0 0 5 20.4z"/><path d="M5 5.2A2.2 2.2 0 0 1 7.2 7.4H20"/>',
-  ai: '<path d="M12 3.2l1.5 4.8 4.8 1.5-4.8 1.5L12 16.8l-1.5-4.8L5.7 10.5l4.8-1.5z"/>',
-  rewrite: '<path d="M4 20h4L18.2 9.8 14.2 5.8 4 16z"/><path d="M13 7.2l3.8 3.8"/>',
-  nutri: '<path d="M5 19.2C5 11.5 11.2 5 20 4c-1 8.5-7.2 15.2-15 15.2z"/><path d="M8.2 16.2c2-2.2 4.2-5 7.2-8"/>',
-  invest: '<path d="M4 19.5V10"/><path d="M10 19.5V5"/><path d="M16 19.5v-6.5"/><path d="M3.5 19.5h17"/>',
-  charts: '<path d="M4 16.5l4.8-4.8 3.2 3.2 7.5-7.6"/><path d="M14.8 7.3H20v5.2"/>',
-  savings: '<rect x="3" y="6.5" width="18" height="12" rx="2"/><path d="M3 10.5h18"/><path d="M16 14.6h.1"/>',
-  focusguard: '<path d="M12 3.2l7.5 2.8v5.6c0 4.6-3.1 7.4-7.5 8.6-4.4-1.2-7.5-4-7.5-8.6V6z"/>',
-  tools: '<path d="M14.7 6.4a3.6 3.6 0 0 0-5 5L4.2 16.9 7.1 19.8l5.5-5.5a3.6 3.6 0 0 0 5-5L15.2 11.7 12.3 8.8z"/>'
-};
-
-function icon(name) {
-  return `<svg class="hub-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICONS[name]}</g></svg>`;
-}
+const GITHUB_MARK = `<svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>`;
 
 const REDIRECT = `<script>(function(){try{var h=location.hostname;if(h!=="trujillomingorance.com"&&h!=="www.trujillomingorance.com")return;var p=location.pathname;if(p!=="/"&&p!=="/index.html")return;if(localStorage.getItem("atm_lang_choice")||localStorage.getItem("atm_lang_auto"))return;var n=(navigator.language||"").toLowerCase();var w=n.indexOf("en")===0?"en":n.indexOf("ca")===0?"ca":"es";var ua=navigator.userAgent||"";var bot=navigator.webdriver||/bot|crawl|spider|slurp|lighthouse|headless/i.test(ua);localStorage.setItem("atm_lang_auto",w);if(bot||w==="es")return;location.replace(w==="en"?"/en/":"/ca/");}catch(e){}})();</script>`;
 
-function cards(copy) {
-  return PROJECTS.map((project) => {
+function highlights(copy) {
+  return PROJECTS.filter((project) => project.highlight).map((project) => {
     const name = projectName(project, copy.lang);
-    const desc = project.desc[copy.lang];
     const host = `${project.slug}.trujillomingorance.com`;
-    const inner = `<span class="hub-top">${icon(project.icon)}<span class="hub-host">${host}</span></span><span class="hub-name">${esc(name)}</span><span class="hub-desc">${esc(desc)}</span>`;
-    if (!project.live) {
-      return `<li><div class="hub-card is-soon" data-hub-item tabindex="0">${inner}<span class="hub-state">${esc(copy.soon)}</span></div></li>`;
-    }
-    return `<li><a class="hub-card" data-hub-item href="https://${host}">${inner}</a></li>`;
+    const label = copy.githubLabel.replaceAll("{name}", name);
+    return `<li class="work-item">
+            <div>
+              <a class="work-name" data-hub-item href="https://${host}">${esc(name)}</a>
+              <p class="work-desc">${esc(project.desc[copy.lang])}</p>
+              <p class="work-host">${host}</p>
+            </div>
+            <a class="gh-link" href="https://github.com/ATM-Software-Labs/${project.repo}" aria-label="${esc(label)}" rel="noopener noreferrer" target="_blank">${GITHUB_MARK}<span class="visually-hidden"> (${esc(copy.newTab)})</span></a>
+          </li>`;
   }).join("\n          ");
-}
-
-function rows(copy) {
-  return PROJECTS.map((project) => {
-    const probe = project.live ? ' data-probe="1"' : "";
-    const state = project.live ? "idle" : "soon";
-    const label = project.live ? copy.pending : copy.soon;
-    return `<tr data-slug="${project.slug}" data-state="${state}"${probe}>
-                <th scope="row">${project.slug}<span class="fqdn">.trujillomingorance.com</span></th>
-                <td class="js-state"><span class="dot" aria-hidden="true"></span><span class="js-label">${esc(label)}</span></td>
-                <td class="js-ms ms">—</td>
-              </tr>`;
-  }).join("\n              ");
 }
 
 export function renderHub(lang) {
   const copy = COPY[lang];
-  const client = {
-    phrases: copy.phrases,
-    online: copy.online,
-    offline: copy.offline,
-    checking: copy.checking,
-    checkingLabel: copy.checkingLabel,
-    summary: copy.summary,
-    browser: copy.browser
-  };
-  const json = JSON.stringify(client).replaceAll("<", "\\u003c");
+  const json = "{}";
   const og = `${lang === "es" ? "/assets/og-hub.png" : `/assets/og-hub-${lang}.png`}?v=${ASSET}`;
   return `<!DOCTYPE html>
 <html lang="${copy.lang}">
@@ -118,7 +84,7 @@ ${hreflangLinks(FAMILIES.hub)}
   ${header(copy.lang, FAMILIES.hub)}
   <main id="contenido">
     <section class="hero wrap" aria-labelledby="identidad">
-      <p class="kicker"><span>01</span>${esc(copy.kicker)}</p>
+      <p class="kicker">${esc(copy.kicker)}</p>
       <h1 id="identidad">Alberto Trujillo Mingorance</h1>
       <p class="role">${esc(copy.role)}</p>
       <p class="statement">${esc(copy.statement)}</p>
@@ -134,52 +100,25 @@ ${hreflangLinks(FAMILIES.hub)}
 
     <section class="block" id="ecosistema" aria-labelledby="ecosistema-titulo">
       <div class="wrap">
-        <p class="section-kicker"><span>02</span>${esc(copy.ecoKicker)}</p>
+        <p class="section-kicker">${esc(copy.ecoKicker)}</p>
         <h2 id="ecosistema-titulo">${esc(copy.ecoTitle)}</h2>
         <p class="section-lead">${esc(copy.ecoLead)}</p>
         <p class="visually-hidden" id="hub-hint">${esc(copy.hubHint)}</p>
-        <ul class="hub-grid" id="hub" aria-describedby="hub-hint">
-          ${cards(copy)}
+        <ul class="work-list" id="hub" aria-describedby="hub-hint">
+          ${highlights(copy)}
         </ul>
-      </div>
-    </section>
-
-    <section class="block" id="estado" aria-labelledby="estado-titulo">
-      <div class="wrap">
-        <p class="section-kicker"><span>03</span>${esc(copy.statusKicker)}</p>
-        <h2 id="estado-titulo">${esc(copy.statusTitle)}</h2>
-        <p class="section-lead">${esc(copy.statusLead)}</p>
-        <div class="status-panel">
-          <div class="status-bar">
-            <p id="estado-resumen" aria-live="polite">${esc(copy.pendingSummary)}</p>
-            <button type="button" class="btn" id="estado-btn">${esc(copy.recheck)}</button>
-          </div>
-          <noscript><p class="note">${esc(copy.noscript)}</p></noscript>
-          <table class="status-table" id="estado-tabla">
-            <caption>${esc(copy.caption)}</caption>
-            <thead>
-              <tr>
-                <th scope="col">${esc(copy.colHost)}</th>
-                <th scope="col">${esc(copy.colState)}</th>
-                <th scope="col">${esc(copy.colLatency)}</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${rows(copy)}
-            </tbody>
-          </table>
-        </div>
+        <p class="services"><a href="https://labs.trujillomingorance.com">${esc(copy.services)}</a></p>
       </div>
     </section>
 
     <section class="block" id="contacto" aria-labelledby="contacto-titulo">
       <div class="wrap contact-block">
-        <p class="section-kicker"><span>04</span>${esc(copy.aboutKicker)}</p>
+        <p class="section-kicker">${esc(copy.aboutKicker)}</p>
         <h2 id="contacto-titulo">${esc(copy.aboutTitle)}</h2>
         <p class="section-lead">${esc(copy.aboutBody)}</p>
+        <p><a class="contact-mail" href="mailto:contact@trujillomingorance.com">contact@trujillomingorance.com</a></p>
         <div class="contact-links">
           <a class="btn" href="${copy.aboutPath}">${esc(copy.aboutLink)}</a>
-          <a class="btn" href="mailto:contact@trujillomingorance.com">contact@trujillomingorance.com</a>
         </div>
       </div>
     </section>
@@ -279,8 +218,6 @@ export function render404() {
         if (footBrand) footBrand.setAttribute("href", href);
         document.getElementById("nav-eco").textContent = text(block, "navEco");
         document.getElementById("nav-eco").setAttribute("href", href + "#ecosistema");
-        document.getElementById("nav-status").textContent = text(block, "navStatus");
-        document.getElementById("nav-status").setAttribute("href", href + "#estado");
         document.getElementById("nav-contact").textContent = text(block, "navContact");
         document.getElementById("nav-contact").setAttribute("href", text(block, "about"));
         document.querySelector(".site-nav").setAttribute("aria-label", text(block, "navAria"));

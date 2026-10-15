@@ -64,7 +64,7 @@ On another origin, load `/brand/fonts.css` (absolute font URLs) before `site.css
 
 Use `header.site-header`, `a.brand`, `nav.site-nav`, `nav.lang` and `footer.site-footer`.
 The language switcher sets `localStorage["atm_lang_choice"]` from `data-lang-switch`.
-Section links point at the language home plus `#ecosistema` or `#estado`.
+Section links point at the language home plus `#ecosistema`.
 Contact points at the about page for that language.
-The footer links GitHub, LinkedIn, terms and privacy.
+The footer links GitHub, the domain-root repository, LinkedIn, terms and privacy.
 Credits: © 2026 ATM Software Labs · Alberto Trujillo Mingorance.

@@ -1,7 +1,7 @@
 import { COPY, LOCALES } from "./copy.mjs";
 
 export const ORIGIN = "https://trujillomingorance.com";
-export const ASSET = "20261015e";
+export const ASSET = "20261015f";
 
 export const FAMILIES = {
   hub: { es: "/", en: "/en/", ca: "/ca/" },
@@ -56,7 +56,6 @@ export function header(lang, paths, { ids = false } = {}) {
       <div class="header-tools">
         <nav class="site-nav" aria-label="${esc(copy.navAria)}">
           <a${id("nav-eco")} href="${hub}#ecosistema">${esc(copy.navEco)}</a>
-          <a${id("nav-status")} href="${hub}#estado">${esc(copy.navStatus)}</a>
           <a${id("nav-contact")} href="${FAMILIES.about[lang]}">${esc(copy.navContact)}</a>
         </nav>
         ${langNav(lang, paths)}
@@ -73,6 +72,7 @@ export function footer(lang, { ids = false } = {}) {
       ${brandLockup(copy.path, ids ? "foot-brand" : "")}
       <nav class="footer-nav" aria-label="${esc(copy.footerAria)}">
         <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden" data-newtab> (${esc(copy.newTab)})</span></a>
+        <a href="https://github.com/ATM-Software-Labs/domain-root" rel="noopener noreferrer" target="_blank">domain-root<span class="visually-hidden" data-newtab> (${esc(copy.newTab)})</span></a>
         <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden" data-newtab> (${esc(copy.newTab)})</span></a>
         <a${id("foot-terms")} href="${FAMILIES.terms[lang]}">${esc(copy.termsLabel)}</a>
         <a${id("foot-privacy")} href="${FAMILIES.privacy[lang]}">${esc(copy.privacyLabel)}</a>

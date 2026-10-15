@@ -36,7 +36,7 @@ export async function onRequest(context) {
   // The zone cache ignores query strings on /favicon.ico, so the bare path
   // redirects to a versioned file. HTML links that file directly.
   if (path === '/favicon.ico') {
-    return Response.redirect(`${url.origin}/assets/favicon.ico?v=20261015e`, 302);
+    return Response.redirect(`${url.origin}/assets/favicon.ico?v=20261015f`, 302);
   }
 
   if (!isApex && !esRecursoEstatico(path) && hostname.endsWith('.trujillomingorance.com')) {

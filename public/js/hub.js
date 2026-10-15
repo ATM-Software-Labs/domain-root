@@ -1,11 +1,9 @@
-/* Hub behavior: language memory, terminal line, keyboard grid, no-cors reachability.
-   An opaque no-cors response means the host answered. Do not read response.ok. */
+/* Hub behavior: language memory, keyboard across the selected projects.
+   prefers-reduced-motion skips the unused type line when that node is absent. */
 (function () {
   "use strict";
 
   var CHOICE = "atm_lang_choice";
-  var TIMEOUT_MS = 4500;
-  var runId = 0;
 
   function ready(fn) {
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fn);
@@ -16,12 +14,6 @@
     var node = document.getElementById("hub-copy");
     if (!node) return null;
     try { return JSON.parse(node.textContent); } catch (e) { return null; }
-  }
-
-  function fill(template, map) {
-    return String(template || "").replace(/\{(\w+)\}/g, function (_, key) {
-      return map[key] == null ? "" : String(map[key]);
-    });
   }
 
   function rememberLanguage() {
@@ -109,85 +101,11 @@
     tick();
   }
 
-  function probe(slug) {
-    var controller = new AbortController();
-    var timer = setTimeout(function () { controller.abort(); }, TIMEOUT_MS);
-    var started = performance.now();
-    return fetch("https://" + slug + ".trujillomingorance.com/", {
-      method: "HEAD",
-      mode: "no-cors",
-      cache: "no-store",
-      redirect: "follow",
-      credentials: "omit",
-      referrerPolicy: "no-referrer",
-      signal: controller.signal
-    }).then(
-      function () {
-        clearTimeout(timer);
-        return { ok: true, ms: Math.max(0, Math.round(performance.now() - started)) };
-      },
-      function () {
-        clearTimeout(timer);
-        return { ok: false, ms: null };
-      }
-    );
-  }
-
-  function setRow(slug, state, label, ms) {
-    var row = document.querySelector('tr[data-slug="' + slug + '"]');
-    if (!row) return;
-    row.setAttribute("data-state", state);
-    var stateEl = row.querySelector(".js-label");
-    var msEl = row.querySelector(".js-ms");
-    if (stateEl) stateEl.textContent = label;
-    if (msEl) msEl.textContent = ms == null ? "—" : ms + " ms";
-  }
-
-  function status(copy) {
-    var resumen = document.getElementById("estado-resumen");
-    var button = document.getElementById("estado-btn");
-    var table = document.getElementById("estado-tabla");
-    if (!resumen || !button || !table || !copy) return;
-    var hosts = Array.prototype.map.call(table.querySelectorAll("tr[data-probe]"), function (row) {
-      return row.getAttribute("data-slug");
-    });
-    if (typeof fetch !== "function" || typeof AbortController !== "function") {
-      resumen.textContent = copy.browser || "";
-      button.hidden = true;
-      return;
-    }
-    function run() {
-      var id = ++runId;
-      var pending = hosts.length;
-      var up = 0;
-      button.disabled = true;
-      table.setAttribute("aria-busy", "true");
-      resumen.textContent = fill(copy.checking, { n: hosts.length });
-      hosts.forEach(function (slug) {
-        setRow(slug, "checking", copy.checkingLabel, null);
-        probe(slug).then(function (result) {
-          if (id !== runId) return;
-          if (result.ok) up += 1;
-          setRow(slug, result.ok ? "online" : "down", result.ok ? copy.online : copy.offline, result.ok ? result.ms : null);
-          pending -= 1;
-          if (pending === 0) {
-            resumen.textContent = fill(copy.summary, { up: up, down: hosts.length - up });
-            button.disabled = false;
-            table.setAttribute("aria-busy", "false");
-          }
-        });
-      });
-    }
-    button.addEventListener("click", run);
-    run();
-  }
-
   rememberLanguage();
   ready(function () {
     var copy = readCopy();
     var hub = document.getElementById("hub");
     if (hub) keyboard(hub);
     typeLine(copy);
-    status(copy);
   });
 })();
