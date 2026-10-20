@@ -15,6 +15,7 @@ const T = {
   en: { nav: 'ATM Software Labs sites', priv: 'Privacy', terms: 'Terms', guides: 'Guides' },
   ca: { nav: 'Llocs d’ATM Software Labs', priv: 'Privacitat', terms: 'Termes', guides: 'Guies' }
 };
+// Pass priv === false to omit the © / legal line on sites whose own footer already carries it.
 function atmNet(cur, lang, priv, terms) {
   const t = T[lang] || T.es;
   const cp = (k) => (k === cur ? ' aria-current="page"' : '');
@@ -22,7 +23,7 @@ function atmNet(cur, lang, priv, terms) {
   return '<div class="atm-net"><div class="atm-net__in">' +
     '<a class="atm-net__brand" href="https://trujillomingorance.com/"' + cp('apex') + '>ATM Software Labs</a>' +
     '<nav aria-label="' + t.nav + '"><ul class="atm-net__sites">' + li + '</ul></nav>' +
-    '<p class="atm-net__legal">© 2026 ATM Software Labs · Alberto Trujillo Mingorance · <a href="' + priv + '">' + t.priv + '</a> · <a href="' + terms + '">' + t.terms + '</a></p>' +
+    (priv === false ? '' : '<p class="atm-net__legal">© 2026 ATM Software Labs · Alberto Trujillo Mingorance · <a href="' + priv + '">' + t.priv + '</a> · <a href="' + terms + '">' + t.terms + '</a></p>') +
     '</div></div>';
 }
 module.exports = { atmNet, SITES };
