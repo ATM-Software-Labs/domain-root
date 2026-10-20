@@ -6,8 +6,9 @@
   <title>Alberto Trujillo Mingorance · ATM Software Labs</title>
   <meta name="description" content="Alberto Trujillo Mingorance. Systems administration, cloud, and cybersecurity in Barcelona. ATM Software Labs is his personal organization.">
   <meta name="author" content="Alberto Trujillo Mingorance">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#07080b">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#07080b" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://trujillomingorance.com/en/">
   <link rel="alternate" hreflang="es" href="https://trujillomingorance.com/">
@@ -20,23 +21,26 @@
   <meta property="og:title" content="Alberto Trujillo Mingorance · ATM Software Labs">
   <meta property="og:description" content="Alberto Trujillo Mingorance. Systems administration, cloud, and cybersecurity in Barcelona. ATM Software Labs is his personal organization.">
   <meta property="og:url" content="https://trujillomingorance.com/en/">
-  <meta property="og:image" content="https://trujillomingorance.com/assets/og-hub-en.png?v=20261015f">
+  <meta property="og:image" content="https://trujillomingorance.com/assets/og-hub-en.png?v=20261020a">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Systems administrator and cybersecurity specialist in Barcelona. This page gathers the projects, infrastructure notes, and tools I maintain.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Alberto Trujillo Mingorance · ATM Software Labs">
   <meta name="twitter:description" content="Alberto Trujillo Mingorance. Systems administration, cloud, and cybersecurity in Barcelona. ATM Software Labs is his personal organization.">
-  <meta name="twitter:image" content="https://trujillomingorance.com/assets/og-hub-en.png?v=20261015f">
-  <link rel="icon" href="/favicon.svg?v=20261015f" type="image/svg+xml">
-  <link rel="icon" href="/assets/favicon.ico?v=20261015f" sizes="16x16 32x32">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20261015f" sizes="180x180">
-  <link rel="manifest" href="/site.webmanifest">
+  <meta name="twitter:image" content="https://trujillomingorance.com/assets/og-hub-en.png?v=20261020a">
+  <meta name="twitter:image:alt" content="Systems administrator and cybersecurity specialist in Barcelona. This page gathers the projects, infrastructure notes, and tools I maintain.">
+  <link rel="icon" href="/favicon.svg?v=20261020a" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon.ico?v=20261020a" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=20261020a">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20261020a" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest?v=20261020a">
   <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/brand/tokens.css?v=20261015f">
-  <link rel="stylesheet" href="/css/fonts.css?v=20261015f">
-  <link rel="stylesheet" href="/css/site.css?v=20261015f">
+  <link rel="stylesheet" href="/brand/tokens.css?v=20261020a">
+  <link rel="stylesheet" href="/css/fonts.css?v=20261020a">
+  <link rel="stylesheet" href="/css/site.css?v=20261020a">
+  <link rel="stylesheet" href="/css/apex.css?v=20261020a">
   <script>(function(){try{var h=location.hostname;if(h!=="trujillomingorance.com"&&h!=="www.trujillomingorance.com")return;var p=location.pathname;if(p!=="/"&&p!=="/index.html")return;if(localStorage.getItem("atm_lang_choice")||localStorage.getItem("atm_lang_auto"))return;var n=(navigator.language||"").toLowerCase();var w=n.indexOf("en")===0?"en":n.indexOf("ca")===0?"ca":"es";var ua=navigator.userAgent||"";var bot=navigator.webdriver||/bot|crawl|spider|slurp|lighthouse|headless/i.test(ua);localStorage.setItem("atm_lang_auto",w);if(bot||w==="es")return;location.replace(w==="en"?"/en/":"/ca/");}catch(e){}})();</script>
   <script type="application/ld+json">
   {
@@ -64,7 +68,7 @@
   <div class="grid-overlay" aria-hidden="true"></div>
   <header class="site-header">
     <div class="wrap header-row">
-      <a class="brand" href="/en/"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg?v=20261015f" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
+      <a class="brand" href="/en/"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg?v=20261020a" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
       <div class="header-tools">
         <nav class="site-nav" aria-label="Sections">
           <a href="/en/#ecosistema">Projects</a>
@@ -75,23 +79,51 @@
     </div>
   </header>
   <main id="contenido">
-    <section class="hero wrap" aria-labelledby="identidad">
-      <p class="kicker">ATM Software Labs</p>
-      <h1 id="identidad">Alberto Trujillo Mingorance</h1>
-      <p class="role">Systems administration, cloud, and cybersecurity · Barcelona</p>
-      <p class="statement">Systems administrator and cybersecurity specialist in Barcelona. This page gathers the projects, infrastructure notes, and tools I maintain.</p>
-      <ul class="stack" aria-label="Focus">
-        <li>Systems</li>
-        <li>Cloud</li>
-        <li>Cybersecurity</li>
-        <li>Identity</li>
-        <li>Open source</li>
-      </ul>
-      <div class="contact-links">
-        <a class="btn" href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
-        <a class="btn" href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
-        <a class="btn" href="mailto:contact@trujillomingorance.com">Contact</a>
+    <section class="hero wrap hero-split" aria-labelledby="identidad">
+      <div class="hero-copy">
+        <p class="kicker">ATM Software Labs</p>
+        <h1 id="identidad">Alberto Trujillo Mingorance</h1>
+        <p class="role">Systems administration, cloud, and cybersecurity · Barcelona</p>
+        <p class="statement">Systems administrator and cybersecurity specialist in Barcelona. This page gathers the projects, infrastructure notes, and tools I maintain.</p>
+        <ul class="stack" aria-label="Focus">
+          <li>Systems</li>
+          <li>Cloud</li>
+          <li>Cybersecurity</li>
+          <li>Identity</li>
+          <li>Open source</li>
+        </ul>
+        <div class="contact-links">
+          <a class="btn btn-solid" href="mailto:contact@trujillomingorance.com">Contact</a>
+          <a class="btn" href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+          <a class="btn" href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a>
+        </div>
       </div>
+      <aside class="sites-card" aria-labelledby="sitios-titulo">
+        <p class="section-kicker">Shortcuts</p>
+        <h2 id="sitios-titulo" class="sites-title">My sites</h2>
+        <ul class="sites-list" aria-label="Ecosystem sites">
+            <li><a class="site-link" href="https://labs.trujillomingorance.com">
+              <span class="site-ico"><svg class="site-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></span>
+              <span class="site-copy"><span class="site-name">ATM Labs</span><span class="site-desc">Directory of services in production.</span><span class="site-host">labs.trujillomingorance.com</span></span>
+              <svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a></li>
+            <li><a class="site-link" href="https://invest.trujillomingorance.com">
+              <span class="site-ico"><svg class="site-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15l4-4 3 3 5-6"/><path d="M15 8h3v3"/></svg></span>
+              <span class="site-copy"><span class="site-name">INVEST</span><span class="site-desc">Stocks, ETFs, and crypto from public data.</span><span class="site-host">invest.trujillomingorance.com</span></span>
+              <svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a></li>
+            <li><a class="site-link" href="https://charts.trujillomingorance.com">
+              <span class="site-ico"><svg class="site-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></span>
+              <span class="site-copy"><span class="site-name">Markets Briefing</span><span class="site-desc">Daily markets briefing, with sourced figures.</span><span class="site-host">charts.trujillomingorance.com</span></span>
+              <svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a></li>
+            <li><a class="site-link" href="https://alberto.trujillomingorance.com">
+              <span class="site-ico"><svg class="site-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 3.8-5.5 7-5.5s5.8 1.9 7 5.5"/></svg></span>
+              <span class="site-copy"><span class="site-name">Alberto</span><span class="site-desc">Personal site: Trujillo AI reports, projects, and technical notes.</span><span class="site-host">alberto.trujillomingorance.com</span></span>
+              <svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a></li>
+        </ul>
+      </aside>
     </section>
 
     <section class="block" id="ecosistema" aria-labelledby="ecosistema-titulo">
@@ -102,32 +134,32 @@
         <p class="visually-hidden" id="hub-hint">With focus on a project, arrow keys move the selection.</p>
         <ul class="work-list" id="hub" aria-describedby="hub-hint">
           <li class="work-item">
-            <div>
-              <a class="work-name" data-hub-item href="https://guides.trujillomingorance.com">Guides</a>
+            <div class="work-copy">
+              <a class="work-name" data-hub-item href="https://guides.trujillomingorance.com">Guides<svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
               <p class="work-desc">Technical engineering guides.</p>
               <p class="work-host">guides.trujillomingorance.com</p>
             </div>
             <a class="gh-link" href="https://github.com/ATM-Software-Labs/trujillo-guides" aria-label="GitHub repository for Guides" rel="noopener noreferrer" target="_blank"><svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg><span class="visually-hidden"> (opens in a new tab)</span></a>
           </li>
           <li class="work-item">
-            <div>
-              <a class="work-name" data-hub-item href="https://ai.trujillomingorance.com">Trujillo AI</a>
+            <div class="work-copy">
+              <a class="work-name" data-hub-item href="https://ai.trujillomingorance.com">Trujillo AI<svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
               <p class="work-desc">Enterprise intelligence workspace.</p>
               <p class="work-host">ai.trujillomingorance.com</p>
             </div>
             <a class="gh-link" href="https://github.com/ATM-Software-Labs/trujillo-ai-studio" aria-label="GitHub repository for Trujillo AI" rel="noopener noreferrer" target="_blank"><svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg><span class="visually-hidden"> (opens in a new tab)</span></a>
           </li>
           <li class="work-item">
-            <div>
-              <a class="work-name" data-hub-item href="https://invest.trujillomingorance.com">INVEST</a>
+            <div class="work-copy">
+              <a class="work-name" data-hub-item href="https://invest.trujillomingorance.com">INVEST<svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
               <p class="work-desc">Stocks, ETFs, and crypto from public data.</p>
               <p class="work-host">invest.trujillomingorance.com</p>
             </div>
             <a class="gh-link" href="https://github.com/ATM-Software-Labs/invest-platform" aria-label="GitHub repository for INVEST" rel="noopener noreferrer" target="_blank"><svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg><span class="visually-hidden"> (opens in a new tab)</span></a>
           </li>
           <li class="work-item">
-            <div>
-              <a class="work-name" data-hub-item href="https://focusguard.trujillomingorance.com">FocusGuard</a>
+            <div class="work-copy">
+              <a class="work-name" data-hub-item href="https://focusguard.trujillomingorance.com">FocusGuard<svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M5 11 11 5M6 5h5v5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
               <p class="work-desc">Filtered DNS and parental controls.</p>
               <p class="work-host">focusguard.trujillomingorance.com</p>
             </div>
@@ -139,31 +171,53 @@
     </section>
 
     <section class="block" id="contacto" aria-labelledby="contacto-titulo">
-      <div class="wrap contact-block">
-        <p class="section-kicker">Contact</p>
-        <h2 id="contacto-titulo">About</h2>
-        <p class="section-lead">Profile and contact for Alberto Trujillo Mingorance.</p>
-        <p><a class="contact-mail" href="mailto:contact@trujillomingorance.com">contact@trujillomingorance.com</a></p>
-        <div class="contact-links">
-          <a class="btn" href="/en/about">About</a>
+      <div class="wrap">
+        <div class="contact-block contact-card">
+          <img class="contact-avatar" src="/assets/images/Alberto.webp" width="272" height="272" alt="" loading="lazy" decoding="async">
+          <div class="contact-copy">
+            <p class="section-kicker">Contact</p>
+            <h2 id="contacto-titulo">About</h2>
+            <p class="section-lead">Profile and contact for Alberto Trujillo Mingorance.</p>
+            <p><a class="contact-mail" href="mailto:contact@trujillomingorance.com">contact@trujillomingorance.com</a></p>
+            <div class="contact-links">
+              <a class="btn btn-solid" href="/en/about">About</a>
+              <a class="btn" href="https://alberto.trujillomingorance.com">alberto.trujillomingorance.com</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
   <footer class="site-footer">
     <div class="wrap">
-      <a class="brand" href="/en/"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg?v=20261015f" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
+      <div class="foot-brand">
+        <a class="brand" href="/en/"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg?v=20261020a" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>
+        <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
+      </div>
       <nav class="footer-nav" aria-label="Footer">
-        <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden" data-newtab> (opens in a new tab)</span></a>
-        <a href="https://github.com/ATM-Software-Labs/domain-root" rel="noopener noreferrer" target="_blank">domain-root<span class="visually-hidden" data-newtab> (opens in a new tab)</span></a>
-        <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden" data-newtab> (opens in a new tab)</span></a>
-        <a href="/en/terms">Terms</a>
-        <a href="/en/privacy">Privacy</a>
+        <div class="foot-col">
+          <p class="foot-title">Sites</p>
+          <a href="https://labs.trujillomingorance.com">ATM Labs</a>
+          <a href="https://invest.trujillomingorance.com">INVEST</a>
+          <a href="https://charts.trujillomingorance.com">Markets Briefing</a>
+          <a href="https://alberto.trujillomingorance.com">Alberto</a>
+        </div>
+        <div class="foot-col">
+          <p class="foot-title">Profiles</p>
+          <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden" data-newtab> (opens in a new tab)</span></a>
+          <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden" data-newtab> (opens in a new tab)</span></a>
+          <a href="https://github.com/ATM-Software-Labs/domain-root" rel="noopener noreferrer" target="_blank">domain-root<span class="visually-hidden" data-newtab> (opens in a new tab)</span></a>
+        </div>
+        <div class="foot-col">
+          <p class="foot-title">Legal</p>
+          <a href="/en/terms">Terms</a>
+          <a href="/en/privacy">Privacy</a>
+          <a href="/en/brand/">Brand</a>
+        </div>
       </nav>
-      <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
     </div>
   </footer>
   <script type="application/json" id="hub-copy">{}</script>
-  <script src="/js/hub.js?v=20261015f" defer></script>
+  <script src="/js/hub.js?v=20261020a" defer></script>
 </body>
 </html>

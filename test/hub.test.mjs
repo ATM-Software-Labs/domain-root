@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 import { redirigeALabs } from "../functions/rutas-hub.js";
-import { COPY, LOCALES, PROJECTS } from "../site/copy.mjs";
+import { COPY, LOCALES, PROJECTS, SITES } from "../site/copy.mjs";
 import { ASSET, FAMILIES } from "../site/chrome.mjs";
 import { legalPage } from "../site/legal.mjs";
 import { renderAbout, renderBrand, renderBrandReadme, renderFirma, renderLegal, renderSitemap } from "../site/render-pages.mjs";
@@ -71,13 +71,17 @@ test("each language has hreflang, lang, meta and its own copy", () => {
   }
 });
 
-test("live hosts are linked and charts is not", () => {
+test("live hosts and the sibling sites are linked", () => {
   const shown = PROJECTS.filter((item) => item.highlight).map((item) => item.slug);
+  const sites = SITES.map((item) => item.slug);
+  assert.deepEqual(sites, ["labs", "invest", "charts", "alberto"]);
   for (const html of Object.values(pages)) {
     const linked = [...html.matchAll(/href="https:\/\/([a-z0-9-]+)\.trujillomingorance\.com"/g)].map((match) => match[1]);
-    assert.deepEqual([...new Set(linked)].sort(), [...shown, "labs"].sort());
-    assert.equal(html.includes("charts.trujillomingorance.com"), false);
+    assert.deepEqual([...new Set(linked)].sort(), [...new Set([...shown, ...sites])].sort());
+    assert.match(html, /href="https:\/\/charts\.trujillomingorance\.com"/);
+    assert.match(html, /href="https:\/\/alberto\.trujillomingorance\.com"/);
     assert.equal(html.includes("savings.trujillomingorance.com"), false);
+    assert.match(html, /\/css\/apex\.css/);
     assert.match(html, new RegExp(`href="${COPY[html === pages.es ? "es" : html === pages.en ? "en" : "ca"].aboutPath}"`));
     assert.match(html, /mailto:contact@trujillomingorance.com/);
     assert.match(html, /\/brand\/tokens\.css/);
@@ -299,6 +303,12 @@ test("shared pages match the renderer and the design system", () => {
   }
 });
 
+const pngSize0 = (path) => {
+  const bytes = readFileSync(new URL(path, import.meta.url));
+  assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+  return [bytes.readUInt32BE(16), bytes.readUInt32BE(20)];
+};
+
 test("brand files publish CORS for reuse", () => {
   assert.match(headers, /\/brand\/\*[\s\S]*Access-Control-Allow-Origin: \*/);
   assert.match(headers, /\/css\/site\.css[\s\S]*Access-Control-Allow-Origin: \*/);
@@ -327,16 +337,27 @@ test("brand files publish CORS for reuse", () => {
   assert.equal(redirigeALabs("/brand/labs/lockup.svg"), false);
   assert.equal(redirigeALabs("/brand/labs/og.png"), false);
   assert.equal(redirigeALabs("/brand/labs/banner.png"), false);
+  // The apex ships the exact icon set that labs.trujillomingorance.com serves.
   const favicon = read("../public/favicon.svg");
-  assert.equal(favicon, read("../public/brand/favicon.svg"));
-  assert.equal(favicon, read("../brand/logo/symbol-dark.svg"));
-  assert.match(favicon, /#07080b/);
-  assert.match(favicon, /#ffffff/);
-  assert.match(favicon, /fill-rule="evenodd"/);
-  assert.doesNotMatch(favicon, /#8fe8c4|#9ad7e6|gradient|currentColor|M2 3h3/);
+  assert.match(favicon, /<svg/);
+  assert.equal(read("../public/brand/favicon.svg"), read("../brand/logo/symbol-dark.svg"));
   const labsIcon = read("../public/brand/labs/favicon.svg");
   assert.equal(labsIcon, favicon);
   assert.equal(labsIcon, read("../brand/labs/favicon.svg"));
+  const bin = (path) => readFileSync(new URL(path, import.meta.url));
+  for (const name of ["apple-touch-icon.png", "icon-192.png", "icon-512.png"]) {
+    assert.deepEqual(bin(`../public/${name}`), bin(`../public/brand/labs/${name}`), name);
+  }
+  assert.deepEqual(bin("../public/assets/favicon.ico"), bin("../public/brand/labs/favicon.ico"));
+  assert.deepEqual(bin("../public/favicon.ico"), bin("../public/assets/favicon.ico"));
+  assert.deepEqual(pngSize0("../public/favicon-32.png"), [32, 32]);
+  assert.equal(redirigeALabs("/favicon-32.png"), false);
+  for (const href of ["/favicon.svg", "/assets/favicon.ico", "/favicon-32.png", "/apple-touch-icon.png", "/site.webmanifest"]) {
+    assert.match(pages.es, new RegExp(`${href.replaceAll(".", "\\.")}\\?v=${ASSET}`), href);
+  }
+  const manifest = JSON.parse(read("../public/site.webmanifest"));
+  assert.equal(manifest.theme_color, "#07080b");
+  for (const icon of manifest.icons) assert.match(icon.src, new RegExp(`\\?v=${ASSET}$`));
   const labsLockup = read("../public/brand/labs/lockup.svg");
   assert.equal(labsLockup, read("../brand/labs/lockup.svg"));
   assert.match(labsLockup, /aria-label="ATM Software Labs\. Labs"/);
@@ -365,14 +386,12 @@ test("brand files publish CORS for reuse", () => {
   assert.deepEqual(pngSize("../public/brand/labs/icon-512.png"), [512, 512]);
   assert.deepEqual(pngSize("../public/brand/labs/og.png"), [1200, 630]);
   assert.deepEqual(pngSize("../public/brand/labs/banner.png"), [1128, 191]);
-  const labsIco = readFileSync(new URL("../public/brand/labs/favicon.ico", import.meta.url));
-  assert.equal(labsIco.readUInt16LE(4), 2);
-  assert.equal(labsIco[6], 16);
-  assert.equal(labsIco[22], 32);
-  const ico = readFileSync(new URL("../public/favicon.ico", import.meta.url));
-  assert.equal(ico.readUInt16LE(4), 2);
-  assert.equal(ico[6], 16);
-  assert.equal(ico[22], 32);
+  for (const path of ["../public/brand/labs/favicon.ico", "../public/favicon.ico"]) {
+    const ico = readFileSync(new URL(path, import.meta.url));
+    assert.equal(ico.readUInt16LE(4) >= 2, true);
+    const sizes = Array.from({ length: ico.readUInt16LE(4) }, (_, i) => ico[6 + i * 16]);
+    assert.ok(sizes.includes(16) && sizes.includes(32), path);
+  }
   for (const name of ["symbol-dark.svg", "symbol-light.svg", "symbol-white.svg", "symbol-black.svg", "lockup-horizontal-dark.svg", "lockup-stacked-dark.svg", "wordmark-dark.svg"]) {
     assert.equal(existsSync(new URL(`../brand/logo/${name}`, import.meta.url)), true, name);
     assert.equal(existsSync(new URL(`../public/brand/logo/${name}`, import.meta.url)), true, name);

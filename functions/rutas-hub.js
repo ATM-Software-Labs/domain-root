@@ -11,7 +11,7 @@ export function esRecursoEstatico(path) {
     path === "/brand" || path.startsWith("/brand/") ||
     path.startsWith("/css/") || path.startsWith("/js/") || path.startsWith("/assets/") ||
     path === "/avatar.png" || path === "/favicon.ico" || path === "/favicon.svg" || path === "/apple-touch-icon.png" ||
-    path === "/icon-192.png" || path === "/icon-512.png"
+    path === "/icon-192.png" || path === "/icon-512.png" || path === "/favicon-32.png"
   );
 }
 

@@ -1,7 +1,7 @@
-import { COPY, LOCALES } from "./copy.mjs";
+import { COPY, LOCALES, SITES } from "./copy.mjs";
 
 export const ORIGIN = "https://trujillomingorance.com";
-export const ASSET = "20261015f";
+export const ASSET = "20261020a";
 
 export const FAMILIES = {
   hub: { es: "/", en: "/en/", ca: "/ca/" },
@@ -67,32 +67,53 @@ export function header(lang, paths, { ids = false } = {}) {
 export function footer(lang, { ids = false } = {}) {
   const copy = COPY[lang];
   const id = (name) => (ids ? ` id="${name}"` : "");
+  const tab = `<span class="visually-hidden" data-newtab> (${esc(copy.newTab)})</span>`;
+  const sites = SITES.map((site) => `<a href="${site.url}">${esc(site.name)}</a>`).join("\n          ");
   return `<footer class="site-footer">
     <div class="wrap">
-      ${brandLockup(copy.path, ids ? "foot-brand" : "")}
+      <div class="foot-brand">
+        ${brandLockup(copy.path, ids ? "foot-brand" : "")}
+        <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
+      </div>
       <nav class="footer-nav" aria-label="${esc(copy.footerAria)}">
-        <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub<span class="visually-hidden" data-newtab> (${esc(copy.newTab)})</span></a>
-        <a href="https://github.com/ATM-Software-Labs/domain-root" rel="noopener noreferrer" target="_blank">domain-root<span class="visually-hidden" data-newtab> (${esc(copy.newTab)})</span></a>
-        <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn<span class="visually-hidden" data-newtab> (${esc(copy.newTab)})</span></a>
-        <a${id("foot-terms")} href="${FAMILIES.terms[lang]}">${esc(copy.termsLabel)}</a>
-        <a${id("foot-privacy")} href="${FAMILIES.privacy[lang]}">${esc(copy.privacyLabel)}</a>
+        <div class="foot-col">
+          <p class="foot-title"${id("foot-sites-title")}>${esc(copy.footSites)}</p>
+          ${sites}
+        </div>
+        <div class="foot-col">
+          <p class="foot-title"${id("foot-profiles-title")}>${esc(copy.profiles)}</p>
+          <a href="https://github.com/ATM-Software-Labs" rel="me noopener noreferrer" target="_blank">GitHub${tab}</a>
+          <a href="https://www.linkedin.com/in/alberto-trujillo-mingorance-288237266" rel="me noopener noreferrer" target="_blank">LinkedIn${tab}</a>
+          <a href="https://github.com/ATM-Software-Labs/domain-root" rel="noopener noreferrer" target="_blank">domain-root${tab}</a>
+        </div>
+        <div class="foot-col">
+          <p class="foot-title">Legal</p>
+          <a${id("foot-terms")} href="${FAMILIES.terms[lang]}">${esc(copy.termsLabel)}</a>
+          <a${id("foot-privacy")} href="${FAMILIES.privacy[lang]}">${esc(copy.privacyLabel)}</a>
+          <a${id("foot-brandpage")} href="${FAMILIES.brand[lang]}">${esc(copy.brandLabel)}</a>
+        </div>
       </nav>
-      <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
     </div>
   </footer>`;
 }
 
 export function headAssets() {
   return `<link rel="icon" href="/favicon.svg?v=${ASSET}" type="image/svg+xml">
-  <link rel="icon" href="/assets/favicon.ico?v=${ASSET}" sizes="16x16 32x32">
+  <link rel="icon" href="/assets/favicon.ico?v=${ASSET}" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=${ASSET}">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=${ASSET}" sizes="180x180">
-  <link rel="manifest" href="/site.webmanifest">
+  <link rel="manifest" href="/site.webmanifest?v=${ASSET}">
   <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/brand/tokens.css?v=${ASSET}">
   <link rel="stylesheet" href="/css/fonts.css?v=${ASSET}">
-  <link rel="stylesheet" href="/css/site.css?v=${ASSET}">`;
+  <link rel="stylesheet" href="/css/site.css?v=${ASSET}">
+  <link rel="stylesheet" href="/css/apex.css?v=${ASSET}">`;
 }
+
+export const THEME_META = `<meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#07080b" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">`;
 
 export function documentPage({
   lang,
@@ -115,8 +136,7 @@ export function documentPage({
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}">
   <meta name="author" content="Alberto Trujillo Mingorance">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#07080b">
+  ${THEME_META}
   <meta name="robots" content="${robots}">
   <link rel="canonical" href="${canonical}">
 ${hreflangLinks(paths)}
@@ -133,6 +153,7 @@ ${hreflangLinks(paths)}
   <meta name="twitter:title" content="${esc(title)}">
   <meta name="twitter:description" content="${esc(description)}">
   <meta name="twitter:image" content="${ORIGIN}${image}">
+  <meta name="twitter:image:alt" content="${esc(title)}">
   ${headAssets()}
 </head>
 <body>

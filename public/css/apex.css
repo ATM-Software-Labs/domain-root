@@ -1,0 +1,217 @@
+/* Apex-only layer on top of /css/site.css (which subdomains may reuse unchanged).
+   Adds the light scheme, the split hero with the sites card, project cards and the footer columns. */
+
+/* ---------- light scheme (follows the OS; the dark tokens stay the default) ---------- */
+@media (prefers-color-scheme: light) {
+  :root {
+    --atm-bg: #f6f7f9;
+    --atm-bg-raise: #ffffff;
+    --atm-line: rgba(15, 23, 42, 0.1);
+    --atm-line-strong: rgba(15, 23, 42, 0.2);
+    --atm-text: #0b0f17;
+    --atm-body: #334155;
+    --atm-muted: #556274;
+    --atm-emerald: #0b0f17;
+    --atm-cyan: #334155;
+    --atm-soon: #5d6878;
+    color-scheme: light;
+  }
+}
+:root {
+  --apex-card: var(--apex-card-d, rgba(13, 17, 23, 0.86));
+  --apex-card-hover: var(--apex-card-hover-d, rgba(17, 22, 30, 0.95));
+  --apex-shadow: var(--apex-shadow-d, 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 18px 40px -24px rgba(0, 0, 0, 0.7));
+  --apex-shadow-hover: var(--apex-shadow-hover-d, 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 24px 48px -24px rgba(0, 0, 0, 0.85));
+  --apex-header: var(--apex-header-d, rgba(7, 8, 11, 0.82));
+  --apex-dots: var(--apex-dots-d, rgba(244, 247, 251, 0.045));
+  --apex-grid: var(--apex-grid-d, rgba(244, 247, 251, 0.04));
+  --apex-glow: var(--apex-glow-d, rgba(244, 247, 251, 0.06));
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --apex-card-d: #ffffff;
+    --apex-card-hover-d: #ffffff;
+    --apex-shadow-d: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.12);
+    --apex-shadow-hover-d: 0 2px 4px rgba(15, 23, 42, 0.05), 0 18px 36px -16px rgba(15, 23, 42, 0.2);
+    --apex-header-d: rgba(246, 247, 249, 0.86);
+    --apex-dots-d: rgba(15, 23, 42, 0.05);
+    --apex-grid-d: rgba(15, 23, 42, 0.045);
+    --apex-glow-d: rgba(15, 23, 42, 0.05);
+  }
+}
+
+body {
+  background-image:
+    radial-gradient(60rem 28rem at 70% -8rem, var(--apex-glow), transparent 70%),
+    radial-gradient(var(--apex-dots) 0.65px, transparent 0.7px);
+  background-size: 100% 100%, 3px 3px;
+  background-repeat: no-repeat, repeat;
+}
+.grid-overlay {
+  background-image:
+    linear-gradient(to right, var(--apex-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--apex-grid) 1px, transparent 1px);
+}
+.site-header { background: var(--apex-header); backdrop-filter: saturate(1.4) blur(16px); }
+.btn:hover { border-color: var(--atm-text); }
+.gh-link:hover, .gh-link:focus-visible { color: var(--atm-text); border-color: var(--atm-text); }
+.hub-card, .status-panel, .note-block, .spec { background: var(--apex-card); }
+.logo-card { background: #07080b; }
+.logo-card.is-light { background: #f4f7fb; }
+
+/* ---------- buttons ---------- */
+.btn { border-radius: 10px; gap: 0.45rem; font-weight: 500; }
+.btn-solid { background: var(--atm-text); border-color: var(--atm-text); color: var(--atm-bg); }
+.btn-solid:hover { background: var(--atm-body); border-color: var(--atm-body); color: var(--atm-bg); }
+
+/* ---------- header ---------- */
+.site-nav a { font-family: var(--atm-font-sans); letter-spacing: 0; font-size: 0.9rem; color: var(--atm-body); }
+.lang a[aria-current="page"] { color: var(--atm-text); font-weight: 600; }
+
+/* ---------- hero ---------- */
+.hero { padding: 4.5rem 0 3.75rem; }
+.hero h1 { font-size: clamp(2.7rem, 6vw, 4.9rem); line-height: 0.96; }
+.hero-split { display: grid; gap: 2.5rem; align-items: center; }
+.hero-copy { min-width: 0; }
+.hero .stack { gap: 0.45rem; padding-top: 1.25rem; margin-top: 2rem; }
+.hero .stack li {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--atm-line);
+  border-radius: var(--atm-radius-pill);
+  color: var(--atm-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.sites-card {
+  padding: 1.35rem 1.25rem 0.75rem;
+  background: var(--apex-card);
+  border: 1px solid var(--atm-line);
+  border-radius: 18px;
+  box-shadow: var(--apex-shadow);
+}
+.sites-card .section-kicker { margin-bottom: 0.4rem; }
+.sites-title { font-size: 1.3rem; margin-bottom: 0.6rem; }
+.sites-list { list-style: none; margin: 0; padding: 0; }
+.sites-list li + li { border-top: 1px solid var(--atm-line); }
+.site-link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 0.35rem;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.site-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--atm-line);
+  border-radius: 10px;
+  color: var(--atm-text);
+  background: var(--atm-bg);
+}
+.site-copy { display: flex; flex-direction: column; min-width: 0; }
+.site-name { font-weight: 500; letter-spacing: -0.01em; color: var(--atm-text); }
+.site-desc { color: var(--atm-body); font-size: 0.92rem; line-height: 1.4; }
+.site-host { margin-top: 0.15rem; color: var(--atm-muted); font-family: var(--atm-font-mono); font-size: 0.72rem; overflow-wrap: anywhere; }
+.arrow { flex: none; color: var(--atm-muted); }
+.site-link:hover .arrow, .site-link:focus-visible .arrow { color: var(--atm-text); }
+
+/* ---------- section rhythm ---------- */
+.block { padding: 4rem 0; }
+.section-kicker { display: flex; align-items: center; gap: 0.6rem; }
+.section-kicker::before { content: ""; width: 1.25rem; height: 1px; background: var(--atm-line-strong); }
+.sites-card .section-kicker::before { display: none; }
+
+/* ---------- projects as cards ---------- */
+.work-list { display: grid; gap: 1rem; margin-top: 2rem; }
+.work-item, .work-item:last-child {
+  position: relative;
+  padding: 1.4rem 1.4rem 1.3rem;
+  background: var(--apex-card);
+  border: 1px solid var(--atm-line);
+  border-radius: 16px;
+  box-shadow: var(--apex-shadow);
+  align-items: start;
+}
+.work-copy { min-width: 0; }
+.work-name { display: inline-flex; align-items: center; gap: 0.5rem; font-size: clamp(1.45rem, 2.4vw, 1.8rem); }
+.work-name::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.work-name .arrow { width: 18px; height: 18px; }
+.gh-link { position: relative; z-index: 1; background: var(--atm-bg); }
+.work-desc { color: var(--atm-body); }
+.services { margin-top: 1.5rem; }
+.services a { display: inline-flex; align-items: center; min-height: 44px; }
+
+/* ---------- contact ---------- */
+.contact-card {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.75rem;
+  background: var(--apex-card);
+  border: 1px solid var(--atm-line);
+  border-radius: 20px;
+  box-shadow: var(--apex-shadow);
+}
+.contact-avatar { width: 6rem; height: 6rem; border-radius: 50%; border: 1px solid var(--atm-line-strong); object-fit: cover; }
+.contact-copy h2 { margin-top: 0.1rem; }
+.contact-mail { overflow-wrap: anywhere; }
+
+/* ---------- 404 ---------- */
+.miss-sites { margin-top: 2.5rem; max-width: 46rem; }
+.sites-grid { display: grid; gap: 0.75rem; margin-top: 1rem; }
+.sites-grid li + li { border-top: 0; }
+.sites-grid .site-link { padding: 0.85rem 1rem; background: var(--apex-card); border: 1px solid var(--atm-line); border-radius: 14px; box-shadow: var(--apex-shadow); }
+
+/* ---------- inner pages ---------- */
+.profile-avatar { border-width: 1px; box-shadow: var(--apex-shadow); }
+.toc a { border-radius: var(--atm-radius-pill); }
+
+/* ---------- footer ---------- */
+.site-footer { padding: 2.75rem 0 2.5rem; }
+.site-footer .wrap { align-items: flex-start; gap: 2rem 3rem; }
+.foot-brand { display: flex; flex-direction: column; gap: 0.35rem; max-width: 28rem; }
+.footer-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem 2.5rem; align-items: start; }
+.foot-col { display: flex; flex-direction: column; }
+.foot-title {
+  margin: 0 0 0.25rem;
+  color: var(--atm-muted);
+  font-family: var(--atm-font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.footer-nav a { justify-content: flex-start; min-height: 36px; padding: 0.2rem 0; margin: 0; color: var(--atm-body); font-family: var(--atm-font-sans); font-size: 0.9rem; }
+.credits { font-size: 0.85rem; }
+
+@media (min-width: 720px) {
+  .work-list { grid-template-columns: 1fr 1fr; }
+  .sites-grid { grid-template-columns: 1fr 1fr; }
+  .contact-card { grid-template-columns: auto minmax(0, 1fr); padding: 2.25rem; gap: 2rem; }
+  .contact-avatar { width: 7.5rem; height: 7.5rem; }
+  .footer-nav { grid-template-columns: repeat(3, minmax(8rem, auto)); }
+}
+@media (min-width: 1000px) {
+  .hero-split { grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr); gap: 4rem; }
+  .hero { padding: 5.5rem 0 4.5rem; }
+}
+@media (max-width: 560px) {
+  .hero { padding-top: 2.75rem; }
+  .header-row { gap: 0.25rem 0.75rem; }
+  .site-nav a { padding-inline: 0.5rem; }
+  .work-item, .work-item:last-child { padding: 1.15rem; }
+  .contact-card { padding: 1.35rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-link, .work-item, .site-ico, .arrow { transition: background-color var(--atm-motion), border-color var(--atm-motion), box-shadow var(--atm-motion), transform var(--atm-motion), color var(--atm-motion); }
+  .site-link:hover { background: var(--atm-bg); }
+  .site-link:hover .arrow { transform: translate(2px, -2px); }
+  .work-item:hover, .work-item:focus-within { border-color: var(--atm-line-strong); box-shadow: var(--apex-shadow-hover); transform: translateY(-2px); }
+  .work-item:hover .work-name .arrow { transform: translate(2px, -2px); color: var(--atm-text); }
+}

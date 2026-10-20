@@ -360,7 +360,7 @@ export function renderBrand(lang) {
       <div class="wrap prose">
         <h2>${esc(copy.use)}</h2>
         <p>${esc(copy.cors)}</p>
-        <pre class="spec">&lt;link rel="stylesheet" href="${ORIGIN}/brand/tokens.css"&gt;
+        <pre class="spec" tabindex="0">&lt;link rel="stylesheet" href="${ORIGIN}/brand/tokens.css"&gt;
 &lt;link rel="stylesheet" href="${ORIGIN}/brand/fonts.css"&gt;
 &lt;link rel="stylesheet" href="${ORIGIN}/css/site.css?v=${ASSET}"&gt;</pre>
         <h2 id="tokens">${esc(copy.tokensHeading)}</h2>
@@ -374,7 +374,7 @@ export function renderBrand(lang) {
         <p>${esc(copy.fontsBody)}</p>
         <p><code>#07080b</code> · <code>#f4f7fb</code> · <code>#ffffff</code> · <code>#9aabbd</code></p>
         <h2 id="shell">${esc(copy.shell)}</h2>
-        <pre class="spec">${sample}</pre>
+        <pre class="spec" tabindex="0">${sample}</pre>
       </div>
     </section>`;
   return documentPage({

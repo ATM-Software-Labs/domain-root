@@ -121,9 +121,59 @@ export const PROJECTS = [
   }
 ];
 
+// Sibling sites linked from the hub, footer and 404. Descriptions follow each site's own meta description.
+export const SITES = [
+  {
+    slug: "labs",
+    name: "ATM Labs",
+    url: "https://labs.trujillomingorance.com",
+    desc: {
+      es: "Directorio de servicios en producción.",
+      en: "Directory of services in production.",
+      ca: "Directori de serveis en producció."
+    }
+  },
+  {
+    slug: "invest",
+    name: "INVEST",
+    url: "https://invest.trujillomingorance.com",
+    desc: {
+      es: "Acciones, ETF y cripto con datos públicos.",
+      en: "Stocks, ETFs, and crypto from public data.",
+      ca: "Accions, ETF i cripto amb dades públiques."
+    }
+  },
+  {
+    slug: "charts",
+    name: "Markets Briefing",
+    url: "https://charts.trujillomingorance.com",
+    desc: {
+      es: "Briefing diario de mercados, con cifras con fuente.",
+      en: "Daily markets briefing, with sourced figures.",
+      ca: "Briefing diari de mercats, amb xifres amb font."
+    }
+  },
+  {
+    slug: "alberto",
+    name: "Alberto",
+    url: "https://alberto.trujillomingorance.com",
+    desc: {
+      es: "Web personal: informes Trujillo AI, proyectos y notas técnicas.",
+      en: "Personal site: Trujillo AI reports, projects, and technical notes.",
+      ca: "Web personal: informes Trujillo AI, projectes i notes tècniques."
+    }
+  }
+];
+
 export const COPY = {
   es: {
     lang: "es",
+    footSites: "Sitios",
+    brandLabel: "Marca",
+    sitesKicker: "Accesos",
+    sitesTitle: "Mis sitios",
+    sitesAria: "Sitios del ecosistema",
+    notFoundSites: "O ve directamente a uno de estos sitios:",
     path: "/",
     ogLocale: "es_ES",
     title: "Alberto Trujillo Mingorance · ATM Software Labs",
@@ -182,6 +232,12 @@ export const COPY = {
   },
   en: {
     lang: "en",
+    footSites: "Sites",
+    brandLabel: "Brand",
+    sitesKicker: "Shortcuts",
+    sitesTitle: "My sites",
+    sitesAria: "Ecosystem sites",
+    notFoundSites: "Or go straight to one of these sites:",
     path: "/en/",
     ogLocale: "en_US",
     title: "Alberto Trujillo Mingorance · ATM Software Labs",
@@ -240,6 +296,12 @@ export const COPY = {
   },
   ca: {
     lang: "ca",
+    footSites: "Llocs",
+    brandLabel: "Marca",
+    sitesKicker: "Accessos",
+    sitesTitle: "Els meus llocs",
+    sitesAria: "Llocs de l'ecosistema",
+    notFoundSites: "O ves directament a un d'aquests llocs:",
     path: "/ca/",
     ogLocale: "ca_ES",
     title: "Alberto Trujillo Mingorance · ATM Software Labs",
