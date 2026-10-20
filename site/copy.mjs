@@ -227,7 +227,7 @@ export const COPY = {
     profiles: "Perfiles",
     newTab: "se abre en una pestaña nueva",
     notFoundTitle: "Página no encontrada",
-    notFoundBody: "Esta ruta no existe en el ápice.",
+    notFoundBody: "Esta dirección no existe o se ha movido.",
     notFoundHome: "Volver al inicio"
   },
   en: {
@@ -291,7 +291,7 @@ export const COPY = {
     profiles: "Profiles",
     newTab: "opens in a new tab",
     notFoundTitle: "Page not found",
-    notFoundBody: "This path does not exist on the apex.",
+    notFoundBody: "This address does not exist or has moved.",
     notFoundHome: "Back to home"
   },
   ca: {
@@ -355,7 +355,7 @@ export const COPY = {
     profiles: "Perfils",
     newTab: "s'obre en una pestanya nova",
     notFoundTitle: "Pàgina no trobada",
-    notFoundBody: "Aquesta ruta no existeix a l'àpex.",
+    notFoundBody: "Aquesta adreça no existeix o s'ha mogut.",
     notFoundHome: "Torna a l'inici"
   }
 };

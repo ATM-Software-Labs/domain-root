@@ -235,6 +235,8 @@ export function render404() {
       }
       function pick() {
         var path = location.pathname || "/";
+        var q = (location.search.match(/[?&]lang=(es|en|ca)/) || [])[1];
+        if (q) return q;
         if (path === "/en" || path.indexOf("/en/") === 0) return "en";
         if (path === "/ca" || path.indexOf("/ca/") === 0) return "ca";
         try {

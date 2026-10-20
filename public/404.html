@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Página no encontrada · ATM Software Labs</title>
-  <meta name="description" content="Esta ruta no existe en el ápice.">
+  <meta name="description" content="Esta dirección no existe o se ha movido.">
   <meta name="robots" content="noindex, nofollow">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#07080b" media="(prefers-color-scheme: dark)">
@@ -40,7 +40,7 @@
     <section class="hero wrap miss">
       <p class="kicker"><span>404</span>ATM Software Labs</p>
       <h1 id="miss-title">Página no encontrada</h1>
-      <p class="statement" id="miss-body">Esta ruta no existe en el ápice.</p>
+      <p class="statement" id="miss-body">Esta dirección no existe o se ha movido.</p>
       <p class="contact-links"><a class="btn btn-solid" id="miss-home" href="/">Volver al inicio</a></p>
       <div class="miss-sites">
         <p class="section-lead" id="miss-sites">O ve directamente a uno de estos sitios:</p>
@@ -70,7 +70,7 @@
       <div hidden id="miss-store">
       <div data-lang="es">
       <p data-field="title">Página no encontrada</p>
-      <p data-field="body">Esta ruta no existe en el ápice.</p>
+      <p data-field="body">Esta dirección no existe o se ha movido.</p>
       <p data-field="home">Volver al inicio</p>
       <p data-field="href">/</p>
       <p data-field="skip">Saltar al contenido</p>
@@ -92,7 +92,7 @@
     </div>
       <div data-lang="en">
       <p data-field="title">Page not found</p>
-      <p data-field="body">This path does not exist on the apex.</p>
+      <p data-field="body">This address does not exist or has moved.</p>
       <p data-field="home">Back to home</p>
       <p data-field="href">/en/</p>
       <p data-field="skip">Skip to content</p>
@@ -114,7 +114,7 @@
     </div>
       <div data-lang="ca">
       <p data-field="title">Pàgina no trobada</p>
-      <p data-field="body">Aquesta ruta no existeix a l'àpex.</p>
+      <p data-field="body">Aquesta adreça no existeix o s'ha mogut.</p>
       <p data-field="home">Torna a l'inici</p>
       <p data-field="href">/ca/</p>
       <p data-field="skip">Ves al contingut</p>
@@ -173,6 +173,8 @@
       }
       function pick() {
         var path = location.pathname || "/";
+        var q = (location.search.match(/[?&]lang=(es|en|ca)/) || [])[1];
+        if (q) return q;
         if (path === "/en" || path.indexOf("/en/") === 0) return "en";
         if (path === "/ca" || path.indexOf("/ca/") === 0) return "ca";
         try {
