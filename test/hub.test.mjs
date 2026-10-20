@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 import { redirigeALabs } from "../functions/rutas-hub.js";
 import { COPY, LOCALES, PROJECTS, SITES } from "../site/copy.mjs";
-import { ASSET, FAMILIES } from "../site/chrome.mjs";
+import { ASSET, CSS_V, FAMILIES } from "../site/chrome.mjs";
 import { legalPage } from "../site/legal.mjs";
 import { renderAbout, renderBrand, renderBrandReadme, renderFirma, renderLegal, renderSitemap } from "../site/render-pages.mjs";
 import { render404, renderHub } from "../site/render-hub.mjs";
@@ -227,7 +227,7 @@ test("shared pages match the renderer and the design system", () => {
     assert.equal(read(`../public/${lang === "es" ? "terms" : `${lang}/terms`}/index.html`), renderLegal("terms", lang));
     assert.equal(read(`../public/${lang === "es" ? "privacy" : `${lang}/privacy`}/index.html`), renderLegal("privacy", lang));
     for (const html of [about[lang], brand[lang], firma[lang], renderLegal("terms", lang), renderLegal("privacy", lang)]) {
-      assert.match(html, new RegExp(`href="/brand/tokens\\.css\\?v=${ASSET}"`));
+      assert.match(html, new RegExp(`href="/brand/tokens\\.css\\?v=${CSS_V}"`));
       assert.match(html, /href="\/css\/site\.css/);
       assert.match(html, /class="site-header"/);
       assert.match(html, /class="site-footer"/);

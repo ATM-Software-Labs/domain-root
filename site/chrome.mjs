@@ -1,7 +1,11 @@
 import { COPY, LOCALES, SITES } from "./copy.mjs";
+import { createRequire } from "node:module";
+const { atmNet } = createRequire(import.meta.url)("./atm-net.cjs");
 
 export const ORIGIN = "https://trujillomingorance.com";
 export const ASSET = "20261020a";
+// Stylesheets get their own version so CSS changes do not churn favicon/manifest URLs.
+export const CSS_V = "20261020b";
 
 export const FAMILIES = {
   hub: { es: "/", en: "/en/", ca: "/ca/" },
@@ -73,7 +77,6 @@ export function footer(lang, { ids = false } = {}) {
     <div class="wrap">
       <div class="foot-brand">
         ${brandLockup(copy.path, ids ? "foot-brand" : "")}
-        <p class="credits">© 2026 ATM Software Labs · Alberto Trujillo Mingorance</p>
       </div>
       <nav class="footer-nav" aria-label="${esc(copy.footerAria)}">
         <div class="foot-col">
@@ -94,6 +97,7 @@ export function footer(lang, { ids = false } = {}) {
         </div>
       </nav>
     </div>
+    ${atmNet("apex", lang, ORIGIN + FAMILIES.privacy[lang], ORIGIN + FAMILIES.terms[lang])}
   </footer>`;
 }
 
@@ -105,10 +109,10 @@ export function headAssets() {
   <link rel="manifest" href="/site.webmanifest?v=${ASSET}">
   <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/brand/tokens.css?v=${ASSET}">
-  <link rel="stylesheet" href="/css/fonts.css?v=${ASSET}">
-  <link rel="stylesheet" href="/css/site.css?v=${ASSET}">
-  <link rel="stylesheet" href="/css/apex.css?v=${ASSET}">`;
+  <link rel="stylesheet" href="/brand/tokens.css?v=${CSS_V}">
+  <link rel="stylesheet" href="/css/fonts.css?v=${CSS_V}">
+  <link rel="stylesheet" href="/css/site.css?v=${CSS_V}">
+  <link rel="stylesheet" href="/css/apex.css?v=${CSS_V}">`;
 }
 
 export const THEME_META = `<meta name="color-scheme" content="dark light">
