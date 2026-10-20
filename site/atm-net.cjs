@@ -7,8 +7,7 @@ const SITES = [
   ['ai', 'https://ai.trujillomingorance.com/', 'Trujillo AI'],
   ['guides', 'https://guides.trujillomingorance.com/', '{guides}'],
   ['tools', 'https://tools.trujillomingorance.com/', 'Tools'],
-  ['rewrite', 'https://rewrite.trujillomingorance.com/', 'Rewrite'],
-  ['alberto', 'https://alberto.trujillomingorance.com/', 'Alberto']
+  ['rewrite', 'https://rewrite.trujillomingorance.com/', 'Rewrite']
 ];
 const T = {
   es: { nav: 'Sitios de ATM Software Labs', priv: 'Privacidad', terms: 'Términos', guides: 'Guías' },

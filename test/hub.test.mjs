@@ -328,7 +328,7 @@ test("brand files publish CORS for reuse", () => {
   assert.match(sitemap, /\/firma/);
   assert.match(read("../public/brand/README.md"), /\/brand\/tokens\.css/);
   assert.match(pages.es, /class="brand-symbol"/);
-  assert.match(pages.es, /\/brand\/logo\/symbol-dark\.svg/);
+  assert.match(pages.es, /<img class="brand-symbol" src="https:\/\/trujillomingorance\.com\/favicon\.svg\?v=[^"]+" width="28" height="28" alt="ATM Software Labs">/);
   assert.match(read("../public/site.webmanifest"), /\/icon-192\.png/);
   assert.match(read("../public/site.webmanifest"), /\/icon-512\.png/);
   assert.equal(redirigeALabs("/icon-192.png"), false);

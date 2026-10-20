@@ -45,7 +45,7 @@ export function langNav(current, paths) {
 
 function brandLockup(href, id = "") {
   const idAttr = id ? ` id="${id}"` : "";
-  return `<a class="brand"${idAttr} href="${href}"><img class="brand-symbol" src="/brand/logo/symbol-dark.svg?v=${ASSET}" width="28" height="28" alt=""><span class="brand-mark">ATM</span> <span>Software Labs</span></a>`;
+  return `<a class="brand"${idAttr} href="${href}"><img class="brand-symbol" src="${ORIGIN}/favicon.svg?v=${ASSET}" width="28" height="28" alt="ATM Software Labs"><span class="brand-mark">ATM</span> <span>Software Labs</span></a>`;
 }
 
 export function header(lang, paths, { ids = false } = {}) {
@@ -72,7 +72,7 @@ export function footer(lang, { ids = false } = {}) {
   const copy = COPY[lang];
   const id = (name) => (ids ? ` id="${name}"` : "");
   const tab = `<span class="visually-hidden" data-newtab> (${esc(copy.newTab)})</span>`;
-  const sites = SITES.map((site) => `<a href="${site.url}">${esc(site.name)}</a>`).join("\n          ");
+  const sites = SITES.filter((site) => site.slug !== "alberto").map((site) => `<a href="${site.url}">${esc(site.name)}</a>`).join("\n          ");
   return `<footer class="site-footer">
     <div class="wrap">
       <div class="foot-brand">
