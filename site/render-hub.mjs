@@ -162,7 +162,7 @@ ${hreflangLinks(FAMILIES.hub)}
   ${footer(copy.lang)}
   <script type="application/json" id="hub-copy">${json}</script>
   <script src="/js/hub.js?v=${ASSET}" defer></script>
-  <script src="/js/atm-internal.js?v=20261022" defer></script>
+  <script src="/js/atm-internal.js?v=20261022b" defer></script>
 </body>
 </html>
 `;
@@ -302,7 +302,7 @@ export function render404() {
       apply(pick());
     })();
   </script>
-  <script src="/js/atm-internal.js?v=20261022" defer></script>
+  <script src="/js/atm-internal.js?v=20261022b" defer></script>
 </body>
 </html>
 `;
