@@ -167,6 +167,7 @@ ${hreflangLinks(paths)}
   </main>
   ${footer(lang)}
   ${scripts}
+  <script src="/js/atm-internal.js?v=20261022" defer></script>
 </body>
 </html>
 `;
