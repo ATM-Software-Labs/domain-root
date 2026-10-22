@@ -1,8 +1,9 @@
-/*! ATM Software Labs · enlace «Panel interno» (v1)
+/*! ATM Software Labs · enlace «Panel interno» (v2)
  * Copia este archivo en cada sitio de *.trujillomingorance.com y cárgalo con defer.
  * Pregunta a guides /api/auth/me (CORS con credenciales). Solo si la sesión es interna
  * (Microsoft Entra ID, tenant de ATM) añade el enlace al pie común y a [data-atm-internal-slot].
  * Es solo un enlace: el panel y cada /api/admin/* comprueban la sesión en el servidor.
+ * v2: guarda la respuesta en localStorage (10 min) para no llamar a /api/auth/me en cada página.
  */
 (function () {
   'use strict';
@@ -44,12 +45,34 @@
   function relabel() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-atm-internal]'), function (a) { a.textContent = label(); });
   }
-  function run() {
-    if (!window.fetch) return;
-    fetch(ME, { credentials: 'include', cache: 'no-store', headers: { Accept: 'application/json' } })
+  var KEY = 'atm_internal_v2';
+  var TTL = 10 * 60 * 1000;
+  function cached() {
+    try {
+      var c = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (c && typeof c.t === 'number' && Date.now() - c.t < TTL) return c;
+    } catch (e) {}
+    return null;
+  }
+  function remember(u) {
+    try { localStorage.setItem(KEY, JSON.stringify({ t: Date.now(), u: u ? { name: u.name, handle: u.handle, admin: !!u.admin, role: u.role, provider: u.provider } : null })); } catch (e) {}
+  }
+  function lookup() {
+    var c = cached();
+    if (c) return Promise.resolve(c.u);
+    return fetch(ME, { credentials: 'include', cache: 'no-store', headers: { Accept: 'application/json' } })
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (d) {
         var u = d && d.authenticated && d.user;
+        u = u && u.role === 'internal' && u.provider === 'microsoft' ? u : null;
+        remember(u);
+        return u;
+      });
+  }
+  function run() {
+    if (!window.fetch) return;
+    lookup()
+      .then(function (u) {
         if (!(u && u.role === 'internal' && u.provider === 'microsoft')) return;
         paint(u);
         // Pies o menús que se pintan después (apps de una sola página): reintentar unos segundos
