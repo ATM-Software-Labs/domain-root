@@ -9,8 +9,8 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "devDependencies": {
-    "esbuild": "0.25.10",
+    "esbuild": "0.28.2",
     "tailwindcss": "4.3.3",
-    "wrangler": "4.151.0"
+    "wrangler": "4.151.3"
   }
 }
