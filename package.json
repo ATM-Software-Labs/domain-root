@@ -6,11 +6,13 @@
   "type": "module",
   "scripts": {
     "build:site": "node site/render-hub.mjs && node site/render-pages.mjs",
+    "build:firma": "node scripts/build-firma.mjs",
     "build:ingress": "npm --prefix ingress run build",
     "test": "node --test test/hub.test.mjs",
     "deploy": "npm run build:ingress && npx wrangler pages deploy public --project-name=domain-root"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "2.6.2",
     "wrangler": "^4.123.0"
   },
   "author": "Alberto Trujillo Mingorance",
