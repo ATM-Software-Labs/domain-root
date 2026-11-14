@@ -22,6 +22,24 @@
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Email signature files. Pages already types these from the extension;
+# the explicit type keeps them real files under X-Content-Type-Options: nosniff.
+/assets/firma/logo.png
+  Content-Type: image/png
+
+/assets/firma/linkedin.png
+  Content-Type: image/png
+
+/assets/firma/github.png
+  Content-Type: image/png
+
+/assets/firma/email.png
+  Content-Type: image/png
+
+/assets/firma/firma.html
+  Content-Type: text/html; charset=utf-8
+  Cache-Control: public, max-age=3600
+
 /assets/fonts/*
   Access-Control-Allow-Origin: *
   Cache-Control: public, max-age=31536000, immutable

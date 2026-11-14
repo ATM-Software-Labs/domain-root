@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
+import { inflateSync } from "node:zlib";
 import { redirigeALabs } from "../functions/rutas-hub.js";
 import { COPY, LOCALES, PROJECTS, SITES } from "../site/copy.mjs";
 import { ASSET, CSS_V, FAMILIES } from "../site/chrome.mjs";
@@ -397,4 +398,111 @@ test("brand files publish CORS for reuse", () => {
     assert.equal(existsSync(new URL(`../public/brand/logo/${name}`, import.meta.url)), true, name);
     assert.match(read("../public/brand/index.html"), new RegExp(name.replace(".", "\\.")));
   }
+});
+
+function decodeRgbPng(path) {
+  const bytes = readFileSync(new URL(path, import.meta.url));
+  assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+  let offset = 8;
+  let width = 0;
+  let height = 0;
+  let colorType = -1;
+  const idat = [];
+  while (offset < bytes.length) {
+    const length = bytes.readUInt32BE(offset);
+    offset += 4;
+    const type = bytes.subarray(offset, offset + 4).toString("ascii");
+    offset += 4;
+    const data = bytes.subarray(offset, offset + length);
+    offset += length + 4;
+    if (type === "IHDR") {
+      width = data.readUInt32BE(0);
+      height = data.readUInt32BE(4);
+      assert.equal(data[8], 8);
+      colorType = data[9];
+    } else if (type === "IDAT") {
+      idat.push(data);
+    } else if (type === "IEND") {
+      break;
+    }
+  }
+  assert.equal(colorType, 2, path);
+  const raw = inflateSync(Buffer.concat(idat));
+  const stride = width * 3;
+  const rgb = Buffer.alloc(stride * height);
+  let cursor = 0;
+  for (let y = 0; y < height; y++) {
+    assert.equal(raw[cursor], 0, `${path} row ${y} filter`);
+    cursor += 1;
+    raw.copy(rgb, y * stride, cursor, cursor + stride);
+    cursor += stride;
+  }
+  return { width, height, rgb };
+}
+
+test("email signature assets are opaque files under /assets/firma", () => {
+  const routes = JSON.parse(read("../public/_routes.json"));
+  assert.ok(routes.exclude.includes("/assets/*"));
+  assert.match(read("../wrangler.toml"), /pages_build_output_dir\s*=\s*"public"/);
+  assert.doesNotMatch(read("../wrangler.toml"), /not_found_handling|single-page-application/);
+  assert.doesNotMatch(redirects, /index\.html\s+200|\/\*\s+\/|\/assets\/firma/);
+  for (const file of ["logo.png", "linkedin.png", "github.png", "email.png", "firma.html"]) {
+    assert.equal(redirigeALabs(`/assets/firma/${file}`), false, file);
+    assert.match(headers, new RegExp(`/assets/firma/${file.replace(".", "\\.")}\\s*\\n\\s*Content-Type:`));
+  }
+  assert.match(headers, /\/assets\/firma\/firma\.html[\s\S]*Content-Type: text\/html; charset=utf-8/);
+  assert.match(headers, /\/assets\/firma\/logo\.png[\s\S]*Content-Type: image\/png/);
+
+  const logo = decodeRgbPng("../public/assets/firma/logo.png");
+  assert.deepEqual([logo.width, logo.height], [128, 128]);
+  let black = 0;
+  for (let i = 0; i < logo.rgb.length; i += 3) {
+    const [r, g, b] = [logo.rgb[i], logo.rgb[i + 1], logo.rgb[i + 2]];
+    assert.ok(Math.max(r, g, b) - Math.min(r, g, b) <= 2, `tinted logo pixel ${r},${g},${b}`);
+    if (r === 0 && g === 0 && b === 0) black++;
+  }
+  assert.ok(black > 1000);
+  for (const [x, y] of [[0, 0], [127, 0], [0, 127], [127, 127]]) {
+    const i = (y * 128 + x) * 3;
+    assert.deepEqual([logo.rgb[i], logo.rgb[i + 1], logo.rgb[i + 2]], [255, 255, 255]);
+  }
+
+  const expect = {
+    "linkedin.png": [0x0a, 0x66, 0xc2],
+    "github.png": [0x18, 0x17, 0x17],
+    "email.png": [0x0a, 0x66, 0xc2]
+  };
+  for (const [name, color] of Object.entries(expect)) {
+    const icon = decodeRgbPng(`../public/assets/firma/${name}`);
+    assert.deepEqual([icon.width, icon.height], [32, 32]);
+    let found = false;
+    for (let i = 0; i < icon.rgb.length; i += 3) {
+      if (icon.rgb[i] === color[0] && icon.rgb[i + 1] === color[1] && icon.rgb[i + 2] === color[2]) found = true;
+    }
+    assert.equal(found, true, name);
+    for (const [x, y] of [[0, 0], [31, 0], [0, 31], [31, 31]]) {
+      const i = (y * 32 + x) * 3;
+      assert.deepEqual([icon.rgb[i], icon.rgb[i + 1], icon.rgb[i + 2]], [255, 255, 255], name);
+    }
+  }
+
+  const firma = read("../public/assets/firma/firma.html");
+  assert.match(firma, /border-left:\s*2px solid #0A66C2/);
+  assert.match(firma, /font-weight:\s*bold/);
+  assert.match(firma, /font-size:\s*14px/);
+  assert.match(firma, /font-size:\s*12px/);
+  assert.match(firma, />Alberto Trujillo Mingorance</);
+  assert.match(firma, />TrujilloMingorance Labs</);
+  assert.match(firma, /Arial,\s*Helvetica,\s*sans-serif/);
+  assert.match(firma, /href="https:\/\/www\.linkedin\.com\/in\/alberto-trujillo-mingorance-288237266"/);
+  assert.match(firma, /href="https:\/\/github\.com\/atrumin16"/);
+  assert.match(firma, /href="mailto:alberto@trujillomingorance\.com"/);
+  for (const file of ["logo.png", "linkedin.png", "github.png", "email.png"]) {
+    assert.match(firma, new RegExp(`src="https://trujillomingorance\\.com/assets/firma/${file}"`));
+  }
+  assert.match(firma, /width="64" height="64"/);
+  assert.match(firma, /width="16" height="16"/);
+  assert.match(firma, /border="0"/);
+  assert.match(firma, /display:block/);
+  assert.doesNotMatch(firma, /data:image|<svg|<style|@font-face|base64/i);
 });
